@@ -1,0 +1,55 @@
+Package: multilandr
+Title: multilandr: Landscape Analysis at Multiple Spatial Scales
+Version: 1.0
+Authors@R: 
+    person("Pablo Yair", "Huais", , "pablo.huais@unc.edu.ar", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0002-4062-0779"))
+Description: Provides a smooth workflow for general landscape-scale analyses of spatial data. 'multilandr' delivers a user-friendly platform to generate landscapes of multiple spatial scales and calculate landscape metrics, mainly relying on R package 'landscapemetrics'. The package provides utility functions to plot and analyze multi-scale landscapes, calculate and visualize correlations between metrics, filter landscapes that fulfill pre-defined attributes, select landscapes that comprise optimized gradients for a given metric and prepare datasets for ulterior statistical tasks. 
+License: GPL-3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+    terra (>= 1.7-29),
+    GGally (>= 2.1.2),
+    ggplot2 (>= 3.4.0),
+    tidyterra (>= 0.4.0),
+    gridExtra (>= 2.3),
+    landscapemetrics (>= 1.5.6),
+    sf (>= 1.0-12),
+    methods (>= 4.3.0)
+Depends: 
+    R (>= 4.3)
+LazyData: true
+Suggests: 
+    parallel (>= 4.2.2)
+Collate: 
+    'bind_metrics.R'
+    'check_raster.R'
+    'classes.R'
+    'data.R'
+    'export_gis.R'
+    'func_checks.R'
+    'generate_coords.R'
+    'generate_coords_checks.R'
+    'globals.R'
+    'landscape_filter.R'
+    'landscape_filter_checks.R'
+    'load_mland.R'
+    'methods.R'
+    'metrics.R'
+    'metrics_checks.R'
+    'metrics_list.R'
+    'mland.R'
+    'mland_checks.R'
+    'mland_plot.R'
+    'mland_plot_checks.R'
+    'optimize_gradient.R'
+    'optimize_gradient_checks.R'
+    'overlapping.R'
+    'overlapping_checks.R'
+    'pair_corr.R'
+    'pair_corr_checks.R'
+    'pair_plots.R'
+    'save_mland.R'
+    'utils.R'
