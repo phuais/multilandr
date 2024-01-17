@@ -209,26 +209,26 @@ patch_select <- function(df_tmp, patch_rast, patch_conditions){
 #' elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
 #'
 #' # Returns points at "random" locations, but inside cells of value equals to 1.
-#' chaco_coords <- generate_coords(elchaco, approach = "random", values = 1, n = 500)
+#' chaco_coords <- land_points(elchaco, approach = "random", values = 1, n = 500)
 #'
 #' # The same but points must be separated by at least 300 m between each other. Also, each point
 #' # is randomly displaced inside the raster cell.
-#' chaco_coords2 <- generate_coords(elchaco, approach = "random", values = 1, n = 500,
-#'                                  try = 100, distance = 300, offset = TRUE)
+#' chaco_coords2 <- land_points(elchaco, approach = "random", values = 1, n = 500,
+#'                              try = 100, distance = 300, offset = TRUE)
 #'
 #' \dontrun{
 #' # Returns as many points as patches that meet the defined condition. This is
 #' # all patches of value equal to 1 of area between 9 and 11 hectares.
-#' ernes_sites <- generate_coords(elchaco, approach = "patch",
-#'                                patch_conditions = list(list(1, "area", 8, 12)))
+#' patch_sites <- land_points(elchaco, approach = "patch",
+#'                            patch_conditions = list(list(1, "area", 8, 12)))
 #'}
-generate_coords <- function(raster, approach = "grid", n = NULL, try = NULL, values = NULL,
-                            patch_conditions = NULL, trim = TRUE, attempts = 10, distance = NULL,
-                            offset = FALSE, closest_cell = FALSE, parallel = FALSE, cores = 2,
-                            progress = TRUE){
+land_points <- function(raster, approach = "grid", n = NULL, try = NULL, values = NULL,
+                        patch_conditions = NULL, trim = TRUE, attempts = 10, distance = NULL,
+                        offset = FALSE, closest_cell = FALSE, parallel = FALSE, cores = 2,
+                        progress = TRUE){
 
-  environment(.generate_coords_chk_args) <- environment()
-  chk <- .generate_coords_chk_args()
+  environment(.land_points_chk_args) <- environment()
+  chk <- .land_points_chk_args()
   if(length(chk[[1]]) > 0)
     for(w in 1:length(chk[[1]])){
       warning(strwrap(chk[[1]], prefix = "\n", initial = ""), call. = FALSE)
@@ -266,7 +266,6 @@ generate_coords <- function(raster, approach = "grid", n = NULL, try = NULL, val
       if(!is.null(patch_s)){
         if(progress) message("Getting coordinates")
         for(i in 1:length(patch_s)){
-          patch_s[[i]] <- terra::rast(patch_s[[i]])
           total_patches <- terra::minmax(patch_s[[i]])[2, 1]
           reso <- terra::res(patch_s[[i]])
           vals <- terra::values(patch_s[[i]], mat = F)

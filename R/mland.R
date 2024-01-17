@@ -339,7 +339,7 @@ rast_tolist <- function(raster){
 #'   [mland_plot()], calculate metrics with [metrics()] and calculate buffer's overlapping with
 #'   [overlapping()]. See ?MultiLand for more details on the content of this object.
 #' @export
-#' @seealso [mland_plot()], [metrics()], [overlapping()], [generate_coords()]
+#' @seealso [mland_plot()], [metrics()], [overlapping()], [land_points()]
 #' @examples
 #' # Loads main raster and extra raster
 #' elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
@@ -395,7 +395,7 @@ rast_tolist <- function(raster){
 #'                       onthefly = T)
 #'
 #' # Creates a MultiLand object with hundreds of points. In this case, these
-#' # points were generated with generate_coords(), another function from this package. Also,
+#' # points were generated with land_points(), another function from this package. Also,
 #' # "onthefly = TRUE" assures that no intersections between buffers and the raster are
 #' # created in this step.
 #'

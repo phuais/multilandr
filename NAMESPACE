@@ -3,7 +3,7 @@
 export(bind_metrics)
 export(check_raster)
 export(export_gis)
-export(generate_coords)
+export(land_points)
 export(landscape_filter)
 export(load_mland)
 export(metrics)

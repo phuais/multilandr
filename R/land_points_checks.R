@@ -1,4 +1,4 @@
-.generate_coords_chk_args <- function(){
+.land_points_chk_args <- function(){
 
   messages <- NULL
   what     <- NULL
@@ -90,14 +90,14 @@
           if(!is.list(patch_conditions[[i]])){
             messages <- append(messages,
                                paste0("- patch condition number ", i, " is not a list. Each condition must
-                                    be a list. See ?generate_coords"))
+                                    be a list. See ?land_points"))
             what     <- append(what, 2)
           } else {
             if(length(patch_conditions[[i]]) != 4){
               messages <- append(messages,
                                  paste0("- patch_condition number ", i, " must be a list with four elements:
                                   c(class, metric, min. value, max. value).
-                                    More details in ?generate_coords"))
+                                    More details in ?land_points"))
               what     <- append(what, 2)
             } else {
 

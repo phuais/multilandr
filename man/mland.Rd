@@ -162,7 +162,7 @@ ernesdesign3 <- mland(points = elchaco_sites,
                       onthefly = T)
 
 # Creates a MultiLand object with hundreds of points. In this case, these
-# points were generated with generate_coords(), another function from this package. Also,
+# points were generated with land_points(), another function from this package. Also,
 # "onthefly = TRUE" assures that no intersections between buffers and the raster are
 # created in this step.
 
@@ -184,5 +184,5 @@ otf_design <- mland(points = otf_sites,
 }
 }
 \seealso{
-\code{\link[=mland_plot]{mland_plot()}}, \code{\link[=metrics]{metrics()}}, \code{\link[=overlapping]{overlapping()}}, \code{\link[=generate_coords]{generate_coords()}}
+\code{\link[=mland_plot]{mland_plot()}}, \code{\link[=metrics]{metrics()}}, \code{\link[=overlapping]{overlapping()}}, \code{\link[=land_points]{land_points()}}
 }
