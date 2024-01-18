@@ -58,7 +58,7 @@
 #' # specified in the function definition in the argument "n"
 #' round(sort(foo$value), digits = 2)
 #'
-#' # [1]  1.14  8.20  8.21 15.26 15.27 22.36 29.36 29.41 36.43 43.14 43.15 49.83 50.23 57.82 64.59
+#' # [1] 1.15  8.19 15.24 15.27 22.32 22.36 29.27 29.41 36.32 43.17 43.20 50.25 57.62 61.86 64.53
 #'
 #' # Alternatively, we can define specific cutpoints around the landscapes will be selected in terms
 #' # of its numeric closeness.
@@ -71,7 +71,7 @@
 #'
 #' round(sort(foo$value), digits = 2)
 #'
-#' # [1]  1.14  6.01 11.05 15.92 21.01 26.00 30.88 30.90 36.03 41.05 41.13 46.08 51.28 51.68 55.51
+#' # [1] 1.15  6.02  6.03 10.99 15.97 20.99 26.01 31.02 35.95 41.14 41.34 45.93 51.41 54.56 55.44
 #'
 #' # Both alternatives generated a well-ranged gradient of values for the forest metric "pland"
 optimize_gradient <- function(x, rasterlayer = NULL, class = NULL,
