@@ -7,7 +7,7 @@
 load_mland(path, ...)
 }
 \arguments{
-\item{path}{A string depicting the path to a zip file or to a folder, to load objects of class
+\item{path}{A string depicting the path to a zip file, to load objects of class
 'MultiLand', or to a RDS file to load objects of class 'MultiLandMetrics'.}
 
 \item{...}{Other parameters passed to \code{\link[=readRDS]{readRDS()}} when trying to load an object of class
@@ -17,7 +17,7 @@ load_mland(path, ...)
 A 'MultiLand' or a 'MultiLandMetrics' object.
 }
 \description{
-Imports a zip file or a folder into an object of class 'MultiLand' that was previously
+Imports a zip file into an object of class 'MultiLand' that was previously
 saved with \code{\link[=save_mland]{save_mland()}}. Alternatively, loads to the environment an RDS object depicting a
 'MultiLandMetrics' object.
 }

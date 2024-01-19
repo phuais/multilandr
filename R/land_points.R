@@ -224,7 +224,7 @@ patch_select <- function(df_tmp, patch_rast, patch_conditions){
 #'}
 land_points <- function(raster, approach = "grid", n = NULL, try = NULL, values = NULL,
                         patch_conditions = NULL, trim = TRUE, attempts = 10, distance = NULL,
-                        offset = FALSE, closest_cell = FALSE, parallel = FALSE, cores = 2,
+                        offset = FALSE, closest_cell = FALSE, parallel = FALSE, cores = 1,
                         progress = TRUE){
 
   environment(.land_points_chk_args) <- environment()
@@ -266,6 +266,8 @@ land_points <- function(raster, approach = "grid", n = NULL, try = NULL, values 
       if(!is.null(patch_s)){
         if(progress) message("Getting coordinates")
         for(i in 1:length(patch_s)){
+          if(!is(patch_s[[i]], "SpatRaster"))
+            patch_s[[i]] <- terra::rast(patch_s[[i]])
           total_patches <- terra::minmax(patch_s[[i]])[2, 1]
           reso <- terra::res(patch_s[[i]])
           vals <- terra::values(patch_s[[i]], mat = F)

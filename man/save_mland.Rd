@@ -7,7 +7,6 @@
 save_mland(
   x,
   name = NULL,
-  zip = TRUE,
   gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
   ...
 )
@@ -18,9 +17,6 @@ save_mland(
 \item{name}{If \code{x} is an object of class 'MultiLand', the name of the zip file or directory where
 files will be saved, or the name of the R file if \code{x} is an object of class 'MultiLandMetrics'. If NULL (default),
 the name will be 'mland_' or 'mlandmetrics_' + a large random number.}
-
-\item{zip}{If TRUE (default and recommended), the object will be exported as a zip file. Otherwise, as a
-directory. Only relevant if \code{x} is an object of class 'MultiLand'.}
 
 \item{gdal}{GDAL driver specific datasource creation options. See the GDAL documentation. With the
 \href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}, \code{\link[=save_mland]{save_mland()}} uses the
@@ -44,9 +40,9 @@ an object of class 'MultiLandMetrics' as if it was saved with \code{\link[=saveR
 }
 \details{
 'MultiLand' objects should be exported with this function rather than exporting as an
-externar representation of R objects with \code{\link[=saveRDS]{saveRDS()}}. This is because objects of classes
+external representation of R objects with \code{\link[=saveRDS]{saveRDS()}}. This is because objects of classes
 'SpatVector' and 'SpatRaster' (from package terra) contained inside a 'MultiLand'
-object cannot be exported as regular R objects. The exported object will be a zip file or a folder,
+object cannot be exported as regular R objects. The exported object will be a zip file,
 and can be loaded again into an R session with \code{\link[=load_mland]{load_mland()}}.
 
 Relevant arguments can be passed to the function \link[terra:writeRaster]{terra::writeRaster}, which is used to write
@@ -70,7 +66,6 @@ save_mland(ernesdesign2)
 
 # Save it again but defining a higher compression for rasterlayers
 save_mland(ernesdesign2, gdal = "COMPRESS=DEFLATE")
-
 
 # Loads a MultiLandMetrics object previously generated with metrics()
 mlm_obj <- system.file("extdata", "ed_metrics.rds", package = "multilandr")

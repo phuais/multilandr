@@ -58,7 +58,7 @@
 #' # specified in the function definition in the argument "n"
 #' round(sort(foo$value), digits = 2)
 #'
-#' # [1] 1.15  8.19 15.24 15.27 22.32 22.36 29.27 29.41 36.32 43.17 43.20 50.25 57.62 61.86 64.53
+#' # [1]  1.15  1.57  8.17  8.19 15.24 22.32 29.27 36.32 43.17 43.20 49.79 50.25 55.44 57.62 64.53
 #'
 #' # Alternatively, we can define specific cutpoints around the landscapes will be selected in terms
 #' # of its numeric closeness.

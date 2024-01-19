@@ -1,10 +1,10 @@
 #' Load 'MultiLand' or 'MultiLandMetrics' object
 #'
-#' Imports a zip file or a folder into an object of class 'MultiLand' that was previously
+#' Imports a zip file into an object of class 'MultiLand' that was previously
 #' saved with [save_mland()]. Alternatively, loads to the environment an RDS object depicting a
 #' 'MultiLandMetrics' object.
 #'
-#' @param path A string depicting the path to a zip file or to a folder, to load objects of class
+#' @param path A string depicting the path to a zip file, to load objects of class
 #' 'MultiLand', or to a RDS file to load objects of class 'MultiLandMetrics'.
 #' @param ... Other parameters passed to [readRDS()] when trying to load an object of class
 #' 'MultiLandMetrics'.
@@ -43,17 +43,17 @@ load_mland <- function(path, ...){
         }
         return(out)
       } else {
-        if(!dir.exists(path))
-          stop("Could not find required file or directory.")
+        stop("- argument path must be a string with the path to a zip file (for 'MultiLand' objects),
+         or to a RDS file (for 'MultiLandMetrics' objects).")
       }
       objs <- paste0(path, "/", list.files(path))
     }
   } else {
-    stop("- argument path must be a string with the path to a zip file or a directory (for 'MultiLand' objects),
+    stop("- argument path must be a string with the path to a zip file (for 'MultiLand' objects),
          or to a RDS file (for 'MultiLandMetrics' objects).")
   }
 
-  if(!all(any(grepl("info.RDS", objs)),
+  if(!all(any(grepl("info.rds", objs)),
           any(grepl("/buffers/", objs)),
           any(grepl("/points/", objs)),
           any(grepl("README.txt", objs)),
@@ -62,7 +62,7 @@ load_mland <- function(path, ...){
   }
 
   # Loads mland info
-  info <- readRDS(grep("info.RDS", objs, value = T))
+  info <- readRDS(grep("info.rds", objs, value = T))
 
   # Loads points and buffers
   info@points <- terra::vect(grep("points.shp", objs, value = T))

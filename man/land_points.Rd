@@ -17,7 +17,7 @@ land_points(
   offset = FALSE,
   closest_cell = FALSE,
   parallel = FALSE,
-  cores = 2,
+  cores = 1,
   progress = TRUE
 )
 }

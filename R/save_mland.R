@@ -1,17 +1,20 @@
-save_rasts <- function(dirpath, rast_dir, x_obj, gdal, ...){
+save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
   if(length(x_obj) > 0){
     for(i in 1:length(x_obj)){
       r_dir <- paste0("raster_", i)
-      dir.create(paste0(dirpath, rast_dir, r_dir))
+      dir.create(file.path(tmp, "MultiLand", rast_dir[1], rast_dir[2], r_dir))
       if(is.list(x_obj[[i]])){
         r_names <- as.list(names(x_obj[[i]]))
         for(j in 1:length(x_obj[[i]])){
-          terra::writeRaster(x_obj[[i]][[j]], paste0(dirpath, rast_dir, r_dir, "/",
-                                                     r_names[j], ".tif"),
+          terra::writeRaster(x_obj[[i]][[j]], file.path(tmp, "MultiLand",
+                                                        rast_dir[1], rast_dir[2], r_dir,
+                                                        paste0(r_names[j], ".tif")),
                              gdal = gdal, ...)
         }
       } else {
-        terra::writeRaster(x_obj[[i]], paste0(dirpath, rast_dir, r_dir, "/raster_", i, ".tif"),
+        terra::writeRaster(x_obj[[i]], file.path(tmp, "MultiLand",
+                                                      rast_dir[1], rast_dir[2], r_dir,
+                                                      paste0("/raster_", i, ".tif")),
                            gdal = gdal, ...)
       }
     }
@@ -27,8 +30,6 @@ save_rasts <- function(dirpath, rast_dir, x_obj, gdal, ...){
 #' @param name If `x` is an object of class 'MultiLand', the name of the zip file or directory where
 #' files will be saved, or the name of the R file if `x` is an object of class 'MultiLandMetrics'. If NULL (default),
 #' the name will be 'mland_' or 'mlandmetrics_' + a large random number.
-#' @param zip If TRUE (default and recommended), the object will be exported as a zip file. Otherwise, as a
-#' directory. Only relevant if `x` is an object of class 'MultiLand'.
 #' @param gdal GDAL driver specific datasource creation options. See the GDAL documentation. With the
 #' \href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}, [save_mland()] uses the
 #' following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"). Only relevant
@@ -38,9 +39,9 @@ save_rasts <- function(dirpath, rast_dir, x_obj, gdal, ...){
 #' Otherwise, if `x` is an object of class 'MultiLandMetrics', `...` should depict other arguments passed
 #' to [save()]. See Details.
 #' @details 'MultiLand' objects should be exported with this function rather than exporting as an
-#' externar representation of R objects with [saveRDS()]. This is because objects of classes
+#' external representation of R objects with [saveRDS()]. This is because objects of classes
 #' 'SpatVector' and 'SpatRaster' (from package terra) contained inside a 'MultiLand'
-#' object cannot be exported as regular R objects. The exported object will be a zip file or a folder,
+#' object cannot be exported as regular R objects. The exported object will be a zip file,
 #' and can be loaded again into an R session with [load_mland()].
 #'
 #' Relevant arguments can be passed to the function [terra::writeRaster], which is used to write
@@ -73,7 +74,6 @@ save_rasts <- function(dirpath, rast_dir, x_obj, gdal, ...){
 #' # Save it again but defining a higher compression for rasterlayers
 #' save_mland(ernesdesign2, gdal = "COMPRESS=DEFLATE")
 #'
-#'
 #' # Loads a MultiLandMetrics object previously generated with metrics()
 #' mlm_obj <- system.file("extdata", "ed_metrics.rds", package = "multilandr")
 #' ed_metrics2 <- load_mland(mlm_obj)
@@ -81,7 +81,7 @@ save_rasts <- function(dirpath, rast_dir, x_obj, gdal, ...){
 #' # Save it again. In this case, save_mland() is the same as using saveRDS()
 #' save_mland(ed_metrics2)
 #' }
-save_mland <- function(x, name = NULL, zip = TRUE,
+save_mland <- function(x, name = NULL,
                        gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"), ...){
 
   if(!is(x, "MultiLand") & !is(x, "MultiLandMetrics"))
@@ -107,34 +107,23 @@ save_mland <- function(x, name = NULL, zip = TRUE,
     return(invisible())
   }
 
-  if(!is.logical(zip))
-    stop("- argument 'zip' must be logical.")
+  if(file.exists(paste0(name, ".zip")))
+    stop("name: a file with the same name for the zip file already exist. Please choose another one.")
 
-  if(!zip){
-    if(dir.exists(name))
-      stop("name: specified directory name already exist. Please choose another one.")
-
-    dirpath <- name
-  } else {
-    if(file.exists(paste0(name, ".zip")))
-      stop("name: a file with the same name for the zip file already exist. Please choose another one.")
-
-    dirpath <- paste0(tempdir(), "/", name)
-  }
-
-  dir.create(dirpath)
-  dir.create(paste0(dirpath, "/points"))
-  dir.create(paste0(dirpath, "/buffers"))
-  dir.create(paste0(dirpath, "/landscapes/lsm_rasters/"), recursive = T)
-  dir.create(paste0(dirpath, "/landscapes/ext_rasters/"), recursive = T)
+  dir.create(tmp <- tempfile())
+  dir.create(file.path(tmp, "MultiLand"))
+  dir.create(file.path(tmp, "MultiLand", "points"))
+  dir.create(file.path(tmp, "MultiLand", "buffers"))
+  dir.create(file.path(tmp, "MultiLand", "/landscapes/lsm_rasters/"), recursive = T)
+  dir.create(file.path(tmp, "MultiLand", "/landscapes/ext_rasters/"), recursive = T)
 
   # Save points and buffers
-  terra::writeVector(x@points, paste0(dirpath, "/points/points.shp"))
-  terra::writeVector(x@buffers, paste0(dirpath, "/buffers/buffers.shp"))
+  terra::writeVector(x@points, file.path(tmp, "MultiLand", "points", "points.shp"))
+  terra::writeVector(x@buffers, file.path(tmp, "MultiLand", "buffers", "buffers.shp"))
 
   # Save landscapes of main and rasters
-  save_rasts(dirpath, "/landscapes/lsm_rasters/", x@landscapes$lsm_rasters, gdal, ...)
-  save_rasts(dirpath, "/landscapes/ext_rasters/", x@landscapes$ext_rasters, gdal, ...)
+  save_rasts(tmp, c("landscapes", "lsm_rasters"), x@landscapes$lsm_rasters, gdal, ...)
+  save_rasts(tmp, c("landscapes", "ext_rasters"), x@landscapes$ext_rasters, gdal, ...)
 
   # Save object info
   info <- x
@@ -149,23 +138,17 @@ save_mland <- function(x, name = NULL, zip = TRUE,
       info@landscapes$ext_rasters[[i]] <- lapply(info@landscapes$ext_rasters[[i]], function(x) NA)
     }
   }
-  saveRDS(info, file = paste0(dirpath, "/info.rds"))
+  saveRDS(info, file = file.path(tmp, "MultiLand", "info.rds"))
 
   cat(strwrap("MultiLand\n\n
               This directory was created by R package multilandr.\n
               No modifications of folders or files should be made by hand.\n
               This folder may be loaded into an R session as a 'MultiLand' object with function
               load_mland().",
-              prefix = "\n", initial = ""), file = paste0(dirpath, "/README.txt"))
+              prefix = "\n", initial = ""), file = file.path(tmp, "MultiLand", "README.txt"))
 
-  if(zip){
-    wrk_dir <- getwd()
-    setwd(dirpath)
-    zip(paste0(wrk_dir, "/", name), "./")
-    setwd(wrk_dir)
-    unlink(dirpath, recursive = T)
-    message(paste0("'MultiLand' object successfully exported as '", name, ".zip'."))
-  } else {
-    message(paste0("'MultiLand' object successfully exported into directory '", name, "'."))
-  }
+  zipfile <- paste0(getwd(), "/", name, ".zip")
+  zip::zip(zipfile, "MultiLand", root = tmp)
+  unlink(file.path(tmp), recursive = T)
+  message(paste0("'MultiLand' object successfully exported as '", name, ".zip'."))
 }
