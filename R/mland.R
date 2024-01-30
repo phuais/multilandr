@@ -414,6 +414,8 @@ rast_tolist <- function(raster){
 #'                                         6, "Urban")),
 #'                     onthefly = TRUE,
 #'                     segs = 20)
+#'
+#'
 #' }
 mland <- function(points, raster = NULL, radii, classnames = NULL, site_ref = NULL,
                   bufftype = "round", segs = 20, ext_raster = NULL, layer_names = NULL,

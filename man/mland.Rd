@@ -181,6 +181,8 @@ otf_design <- mland(points = otf_sites,
                                         6, "Urban")),
                     onthefly = TRUE,
                     segs = 20)
+
+
 }
 }
 \seealso{

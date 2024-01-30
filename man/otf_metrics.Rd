@@ -17,11 +17,18 @@ examples of the following functions: \code{\link[=landscape_filter]{landscape_fi
 }
 \details{
 The main internal object is a data.frame (accesible through \code{otf_metrics@data}) with information about the values of two landscape metrics:
-"pland" (percentage of landscape) and "np" (number of patches). The object was created from
-the MultiLand object named "otf_design".
+"pland" (percentage of landscape) and "np" (number of patches).
+
+The object was created from the MultiLand object named "otf_design", which
+received a raster layer from a small portion of the ecoregion "El Chaco" as main input.
+The rasterlayer was provided by the project "MapBiomas Chaco" for the year 2000.
 }
 \seealso{
 See the examples sections of \code{\link[=metrics]{metrics()}} and \code{\link[=mland]{mland()}}
 for more context.
+
+#' @references
+Project MapBiomas Chaco – Collection 4.0 of annual land cover and land use maps,
+accessed during July 2022 through the following link: \link{https://chaco.mapbiomas.org/}
 }
 \keyword{datasets}

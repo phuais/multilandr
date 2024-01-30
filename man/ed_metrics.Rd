@@ -18,7 +18,18 @@ examples of the following functions: \code{\link[=landscape_filter]{landscape_fi
 \details{
 The main internal object is a data.frame (accesible through \code{ed_metrics@data}) with information
 about the values of two landscape metrics: "pland" (percentage of landscape) and "np" (number of
-patches). The object was created from the MultiLand object named "ernesdesign".
+patches).
+
+The object was created from the MultiLand object named "ernesdesign", which
+received two raster layers from a small portion of the ecoregion "El Chaco" as main inputs. The main rasterlayer
+was provided by the project "MapBiomas Chaco" for the year 2000.
+The extra rasterlayer contained the NDVI values of cells within the same extent of the main rasterlayer, and was provided by Landsat.
+}
+\references{
+Project MapBiomas Chaco – Collection 4.0 of annual land cover and land use maps,
+accessed during July 2022 through the following link: \link{https://chaco.mapbiomas.org/}
+
+Landsat-5 image courtesy of the U.S. Geological Survey
 }
 \seealso{
 See the examples sections of \code{\link[=metrics]{metrics()}} and \code{\link[=mland]{mland()}}
