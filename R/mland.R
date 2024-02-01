@@ -177,7 +177,7 @@
 
   if(length(classnames) > 0){
     if(length(classnames) != length(n_classes)){
-      warning(strwrap("- number of elements of argument classnames differ with the number of raster
+      warning(strwrap("- number of elements of argument 'classnames' differ with the number of raster
                       layers. Classnames were discarded.", prefix = "\n", initial = ""),
               call. = FALSE)
 
@@ -185,7 +185,7 @@
     } else {
       for(i in 1:length(classes)){
         if(length(classnames[[i]])/2 != n_classes[i]){
-          warning(strwrap(paste0("- number of labels defined in classnames differ with the number of
+          warning(strwrap(paste0("- number of labels defined in argument 'classnames' differ with the number of
                                  classes of rasterlayer ", i , ". Classnames were discarded."),
                           prefix = "\n", initial = ""),
                   call. = FALSE)

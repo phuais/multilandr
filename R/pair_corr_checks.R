@@ -29,7 +29,7 @@
         }
         if(bad){
           messages <- append(messages,
-                             "- function defined in argument \"fun\" was not defined properly.
+                             "- function defined in argument 'fun' was not defined properly.
                            See ?pair_corr")
           what     <- append(what, 2)
           fun <- NULL
@@ -37,8 +37,8 @@
       }
     }
     if(!is.null(fun)){
-      message(strwrap("- a user-defined function was provided through argument \"fun\".
-                      Argument \"method\" was ignored.", prefix = "\n", initial = "\n"))
+      message(strwrap("- a user-defined function was provided through argument 'fun'.
+                      Argument 'method' was ignored.", prefix = "\n", initial = "\n"))
     }
   }
 

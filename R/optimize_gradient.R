@@ -55,7 +55,7 @@
 #'               select = value)
 #'
 #' # Next, we output the range of values we have obtained, note there are 15 points, as previously
-#' # specified in the function definition in the argument "n"
+#' # specified in the function definition in the argument 'n'
 #' round(sort(foo$value), digits = 2)
 #'
 #' # [1]  1.15  1.57  8.17  8.19 15.24 22.32 29.27 36.32 43.17 43.20 49.79 50.25 55.44 57.62 64.53

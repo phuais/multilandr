@@ -189,7 +189,7 @@ mland_plot <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster
                        st_ext = c("chartreuse", "firebrick1")){
 
   # Check arguments
-  if(!is(x, "MultiLand")) stop("- argument x must be an object of class 'MultiLand'.")
+  if(!is(x, "MultiLand")) stop("- argument 'x' must be an object of class 'MultiLand'.")
   environment(.mland_plot_check_args) <- environment()
   chk <- .mland_plot_check_args()
   if(length(chk[[1]]) > 0)

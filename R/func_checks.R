@@ -2,14 +2,14 @@
   # site_ref
   if(!is.logical(site_ref)){
     messages <- append(messages,
-                       "- argument site_ref must be logical. The argument was ignored.")
+                       "- argument 'site_ref' must be logical. The argument was ignored.")
     what     <- append(what, 1)
     site_ref <- FALSE
   } else {
     if(site_ref){
       if(is.null(x@site_ref)){
         messages <- append(messages,
-                           "- argument site_ref was TRUE, but x does not declare the same. Set site_ref to FALSE or get an x object with site_ref equal to TRUE.")
+                           "- argument 'site_ref' was TRUE, but x does not declare the same. Set site_ref to FALSE or get an x object with site_ref equal to TRUE.")
         what     <- append(what, 2)
       } else {
         if(!is.null(points)){
@@ -62,7 +62,7 @@
 .chk_radii <- function(messages, what, x, radii){
   if(!is.null(radii)){
     if(!is.numeric(radii) | !all(radii > 0)){
-      messages <- append(messages, "- argument radii must be a vector of positive numbers.")
+      messages <- append(messages, "- argument 'radii' must be a vector of positive numbers.")
       what     <- append(what, 2)
     } else {
       if(!all(radii %in% x@radii)){

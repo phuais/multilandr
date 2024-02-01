@@ -42,7 +42,7 @@
 overlapping <- function(x, points = NULL, radii = NULL, digits = 2, perc = TRUE, title = "id"){
 
   # Check arguments
-  if(!is(x, "MultiLand")) stop("- argument x must be an object of class 'MultiLand'.")
+  if(!is(x, "MultiLand")) stop("- argument 'x' must be an object of class 'MultiLand'.")
   environment(.overlapping_check_args) <- environment()
   chk <- .overlapping_check_args()
   if(length(chk[[1]]) > 0)

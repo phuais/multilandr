@@ -365,7 +365,7 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #' ed_metrics3 <- metrics(ernesdesign, ext_calc = list(c(1, "mean", "mean_sd")))
 #'
 #' # If metrics of different levels must be calculated, a better approach is to declare them
-#' # inside the argument "what", by naming the function associated with the metric. Also in this case,
+#' # inside the argument 'what', by naming the function associated with the metric. Also in this case,
 #' # only the landscapes with a radius of 5000 m are considered. A list of available metrics
 #' # with its names, abbreviations and function names can be seen in metrics_list() and in
 #' # the documentation of the package landscapemetrics.

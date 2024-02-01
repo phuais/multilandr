@@ -73,7 +73,7 @@
                   x@data$metric %in% metric, ]
   if(nrow(foo) == 0){
     messages <- append(messages,
-                       paste0("- no metric values where found in \"x\" given the specified
+                       paste0("- no metric values where found in 'x' given the specified
                               parameters."))
     what     <- append(what, 2)
   } else {
@@ -88,7 +88,7 @@
   if(is.numeric(n)){
     if(length(n) != 1){
       messages <- append(messages,
-                         paste0("- argument \"n\" must be a unique number."))
+                         paste0("- argument 'n' must be a unique number."))
       what     <- append(what, 2)
     } else {
       if(!2 %in% what){
@@ -104,7 +104,7 @@
     }
   } else {
     messages <- append(messages,
-                       paste0("- argument \"n\" must be numeric."))
+                       paste0("- argument 'n' must be numeric."))
     what     <- append(what, 2)
   }
 
@@ -112,7 +112,7 @@
     if(!is.null(cutpoints)){
       if(!is.numeric(cutpoints)){
         messages <- append(messages,
-                           paste0("- argument \"cutpoints\" must be numeric."))
+                           paste0("- argument 'cutpoints' must be numeric."))
         what     <- append(what, 2)
       } else {
         if(length(cutpoints) > n){
@@ -128,19 +128,19 @@
     if(is.numeric(breaks)){
       if(length(breaks) != 1){
         messages <- append(messages,
-                           paste0("- argument \"breaks\" must be a unique number."))
+                           paste0("- argument 'breaks' must be a unique number."))
         what     <- append(what, 2)
       }
     } else {
       messages <- append(messages,
-                         paste0("- argument \"breaks\" must be numeric."))
+                         paste0("- argument 'breaks' must be numeric."))
       what     <- append(what, 2)
     }
   }
 
   if(!output %in% c("MLM", "spatial", "data", "coords")){
     messages <- append(messages,
-                       "- argument output must be \"MLM\", \"spatial\", \"data\" or \"coords\". Default
+                       "- argument 'output' must be \"MLM\", \"spatial\", \"data\" or \"coords\". Default
                        \"MLM\" was taken. See ?landscape_select")
     what     <- append(what, 1)
     output <- "MLM"

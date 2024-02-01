@@ -137,7 +137,7 @@ export_gis <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster
 
   # Check arguments
   if(!is(x, "MultiLand")){
-    stop("- argument x must be an object of class 'MultiLand'.")
+    stop("- argument 'x' must be an object of class 'MultiLand'.")
   }
   environment(export_gis_chk) <- environment()
   chk <- export_gis_chk()

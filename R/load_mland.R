@@ -43,13 +43,13 @@ load_mland <- function(path, ...){
         }
         return(out)
       } else {
-        stop("- argument path must be a string with the path to a zip file (for 'MultiLand' objects),
+        stop("- argument 'path' must be a string with the path to a zip file (for 'MultiLand' objects),
          or to a RDS file (for 'MultiLandMetrics' objects).")
       }
       objs <- paste0(path, "/", list.files(path))
     }
   } else {
-    stop("- argument path must be a string with the path to a zip file (for 'MultiLand' objects),
+    stop("- argument 'path' must be a string with the path to a zip file (for 'MultiLand' objects),
          or to a RDS file (for 'MultiLandMetrics' objects).")
   }
 
