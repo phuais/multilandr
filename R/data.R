@@ -18,7 +18,7 @@
 #'
 #' @references
 #' Project MapBiomas Chaco – Collection 4.0 of annual land cover and land use maps,
-#' accessed during July 2022 through the following link: [https://chaco.mapbiomas.org/]
+#' accessed during July 2022 through the following link: \href{https://chaco.mapbiomas.org/}{MapBiomas Chaco}
 #'
 #' Landsat-5 image courtesy of the U.S. Geological Survey
 #'
@@ -42,5 +42,5 @@
 #'
 #' #' @references
 #' Project MapBiomas Chaco – Collection 4.0 of annual land cover and land use maps,
-#' accessed during July 2022 through the following link: [https://chaco.mapbiomas.org/]
+#' accessed during July 2022 through the following link: \href{https://chaco.mapbiomas.org/}{MapBiomas Chaco}
 "otf_metrics"

@@ -29,6 +29,6 @@ for more context.
 
 #' @references
 Project MapBiomas Chaco – Collection 4.0 of annual land cover and land use maps,
-accessed during July 2022 through the following link: \link{https://chaco.mapbiomas.org/}
+accessed during July 2022 through the following link: \href{https://chaco.mapbiomas.org/}{MapBiomas Chaco}
 }
 \keyword{datasets}
