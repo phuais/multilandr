@@ -17,23 +17,23 @@ knitr::opts_chunk$set(
 ```
 
 <!-- # multilandr <img src="man/figures/logo.png" align="right" width="150"/> -->
+
 # multilandr
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-The goal of **multilandr** is to provide a clean platform for
-typical landscape-scale analysis. The package builds on several
-spatial-oriented R packages to provide a useful tool to develop and
-inspect landscapes at multiple spatial scales. The main functionality
-allows to calculate landscape metrics within a multi-scale approach.
-Among other practical capabilities, the package provides several utility
-functions to: (i) plot landscapes at different spatial scales; (ii)
-visualize correlations between different metrics; (iii) filter
-landscapes that fulfill with certain pre-defined conditions regarding
-their metrics; and (iv) generate optimized gradients for a given
-landscape metric.
+The goal of **multilandr** is to provide a clean platform for typical
+landscape-scale analysis. The package builds on several spatial-oriented
+R packages to provide a useful tool to develop and inspect landscapes at
+multiple spatial scales. The main functionality allows to calculate
+landscape metrics within a multi-scale approach. Among other practical
+capabilities, the package provides several utility functions to: (i)
+plot landscapes at different spatial scales; (ii) visualize correlations
+between different metrics; (iii) filter landscapes that fulfill with
+certain pre-defined conditions regarding their metrics; and (iv)
+generate optimized gradients for a given landscape metric.
 
 **multilandr** supports several spatial objects from widespread
 spatial-oriented R packages as main inputs in their functions, including
@@ -55,21 +55,20 @@ A common landscape-scale study comprises the evaluation of a variable or
 process (e.g. species richness or any ecological response) along a set
 of landscapes varying in one or more attributes (e.g. the amount of
 natural habitat). Usually, this evaluation is made through the
-definition of several spatial-scales. Multi-scale landscapes can be defined
-as concentric circular buffers around a central point (each of the
-evaluated sites). There are plenty of examples for this experimental
+definition of several spatial-scales. Multi-scale landscapes can be
+defined as concentric circular buffers around a central point (each of
+the evaluated sites). There are plenty of examples for this experimental
 design in the literature, such as De Camargo et al. (2018), Melo et al.,
 (2017) or Verga et al. (2021).
 
-**multilandr** provides tools to generate
-landscapes at different spatial scales and calculate landscape metrics
-at each spatial scale.
+**multilandr** provides tools to generate landscapes at different
+spatial scales and calculate landscape metrics at each spatial scale.
 
 ### Generates 'MultiLand' object
 
-We will first generate an object of class 'MultiLand'. For this, we need a vector
-of points depicting the location of the sites, around which landscapes of different
-sizes will be generated (buffers). 
+We will first generate an object of class 'MultiLand'. For this, we need
+a vector of points depicting the location of the sites, around which
+landscapes of different sizes will be generated (buffers).
 
 ```{r}
 library(multilandr)
@@ -79,10 +78,11 @@ elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.shp",
                                          package = "multilandr"))
 ```
 
-We also need at least one raster layer. This will typically represent different 
-land covers within the extent of the vector layer of points. Other types of raster 
-layers can be inputted. In this example, we also input a raster layer containing NDVI 
-values within the extent of analysis.
+We also need at least one raster layer. This will typically represent
+different land covers within the extent of the vector layer of points.
+Other types of raster layers can be inputted. In this example, we also
+input a raster layer containing NDVI values within the extent of
+analysis.
 
 ```{r}
 # Loads main raster of land covers
@@ -93,8 +93,8 @@ elchaco_ndvi <- terra::rast(system.file("extdata", "elchaco_ndvi.tif",
                                         package = "multilandr"))
 ```
 
-We can define representative names for the land covers of the main raster layer 
-(here, a total of six):
+We can define representative names for the land covers of the main
+raster layer (here, a total of six):
 
 ```{r}
 cl_names <- c(1, "Forest",
@@ -105,10 +105,10 @@ cl_names <- c(1, "Forest",
               6, "Urban")
 ```
 
-We are now in conditions of generating a 'MultiLand' object with the 
-function `mland()`. We also need to specify the spatial scales to be evaluated, 
-through the argument `radii`. Here we define five increasing scales, from 
-1000 m until 5000 m, by 1000 m steps.
+We are now in conditions of generating a 'MultiLand' object with the
+function `mland()`. We also need to specify the spatial scales to be
+evaluated, through the argument `radii`. Here we define five increasing
+scales, from 1000 m until 5000 m, by 1000 m steps.
 
 ```{r}
 # Creates 'MultiLand' object by loading points, the main raster and an extra raster.
@@ -121,10 +121,11 @@ ernesdesign <- mland(points_vect = elchaco_sites,
                      layer_names = c("landuse", "NDVI"))
 ```
 
-The argument `site_ref` receives a string with the name of the attribute of 
-the vector layer of points, that contains the information about the identity of
-each point (i.e. the name of each site). We can also specify a name for the raster 
-layers in argument `layer_names`, which could be useful in further analyses.
+The argument `site_ref` receives a string with the name of the attribute
+of the vector layer of points, that contains the information about the
+identity of each point (i.e. the name of each site). We can also specify
+a name for the raster layers in argument `layer_names`, which could be
+useful in further analyses.
 
 Let's see the output for the generated object:
 
@@ -133,25 +134,28 @@ Let's see the output for the generated object:
 ernesdesign
 ```
 
-Basic information about the object is provided, including the number of main raster layers 
-(and classes for each one), the number of extra raster layers, the number of points and
-the evaluated spatial scales. The object itself contains the vector layer of 
-points, and the intersections between the required spatial scales and the inputted 
-raster layers. These are circular buffers around each point. Further exploration 
-of the object can be made through `ernesdesign@`.
+Basic information about the object is provided, including the number of
+main raster layers (and classes for each one), the number of extra
+raster layers, the number of points and the evaluated spatial scales.
+The object itself contains the vector layer of points, and the
+intersections between the required spatial scales and the inputted
+raster layers. These are circular buffers around each point. Further
+exploration of the object can be made through `ernesdesign@`.
 
-By default, when `mland()` generates an object of class 'MultiLand', it generates 
-the intersections between the buffers (defined by the specified spatial scales) and
-the provided raster layers. However, this might not be desirable when a great 
-amount of points is being evaluated (hundreds or thousands of sites), mainly due to 
-memory issues. Therefore, `mland()` can be ran with the argument `on_the_fly = TRUE`. 
-If this is the case, intersections will not be generated in this step, and will 
-be generated when needed by other functions of the package. For more information, 
-see the help page for the function, and the provided example.
+By default, when `mland()` generates an object of class 'MultiLand', it
+generates the intersections between the buffers (defined by the
+specified spatial scales) and the provided raster layers. However, this
+might not be desirable when a great amount of points is being evaluated
+(hundreds or thousands of sites), mainly due to memory issues.
+Therefore, `mland()` can be ran with the argument `on_the_fly = TRUE`.
+If this is the case, intersections will not be generated in this step,
+and will be generated when needed by other functions of the package. For
+more information, see the help page for the function, and the provided
+example.
 
-An object of class 'MultiLand' can be saved for further use in another R session, 
-through `mland_save()`. An object of this class can be loaded in a fresh R session 
-through `mland_load()`.
+An object of class 'MultiLand' can be saved for further use in another R
+session, through `mland_save()`. An object of this class can be loaded
+in a fresh R session through `mland_load()`.
 
 ```{r eval=FALSE}
 mland_save(ernesdesign)
@@ -159,18 +163,21 @@ mland_save(ernesdesign)
 
 ### Landscape plotting
 
-Multi-scale landscapes can be plotted through `mland_plot()`. Only those landscapes 
-generated by the intersections with one raster layer can be plotted at one time. 
-Here, we plot all the multi-scale landscapes around the site `"Peje"` and, by 
-default, the main raster layer containing the land covers is plotted.
+Multi-scale landscapes can be plotted through `mland_plot()`. Only those
+landscapes generated by the intersections with one raster layer can be
+plotted at one time. Here, we plot all the multi-scale landscapes around
+the site `"Peje"` and, by default, the main raster layer containing the
+land covers is plotted.
 
 ```{r eval=FALSE}
 mland_plot(ernesdesign, points = "Peje", title = "sitename")
 ```
 
-Visualizing spatial data in the R environment can be uncomfortable. Multi-scale 
-landscapes can be exported for further exploration in a GIS software, through 
-the function `mland_export_gis()`.
+<img src="man/figures/plot_peje.png" align="center" width="500"/>
+
+Visualizing spatial data in the R environment can be uncomfortable.
+Multi-scale landscapes can be exported for further exploration in a GIS
+software, through the function `mland_export_gis()`.
 
 ```{r eval=FALSE}
 mland_export_gis(ernesdesign, dir = "ernesdesign")
@@ -178,28 +185,31 @@ mland_export_gis(ernesdesign, dir = "ernesdesign")
 
 ### Calculation of metrics
 
-Once generated the 'MultiLand' object, this will serve as the main output for 
-further functions, the most important being `mland_metrics()`. This function calculates metrics for the 
-generated landscapes at each spatial scale. Landscape metrics are calculated 
-through the package `landscapemetrics` (Hesselbarth et al. 2019), and the function accepts the 
-same arguments as the functions of this package: `level`, `metric`, `name`, `type` 
-or `what`. A full description of available metrics can be explored with `metrics_list()`,
-which simply outputs the metrics available by `landscapemetrics`.
+Once generated the 'MultiLand' object, this will serve as the main
+output for further functions, the most important being
+`mland_metrics()`. This function calculates metrics for the generated
+landscapes at each spatial scale. Landscape metrics are calculated
+through the package `landscapemetrics` (Hesselbarth et al. 2019), and
+the function accepts the same arguments as the functions of this
+package: `level`, `metric`, `name`, `type` or `what`. A full description
+of available metrics can be explored with `metrics_list()`, which simply
+outputs the metrics available by `landscapemetrics`.
 
-In this example, we are calculating the percentage of the landscape (`"pland"`) and 
-the number of patches (`"np"`) for each one of the land covers of the main raster 
-(`level = "class"`). In the argument `absence_values`, one can define which value 
-should have a given metric when the class (land cover) is not present in the 
-landscape. Here, it makes sense that this value should be zero for each metric. 
-Note that, if not defined, the value in the case of absence of the given land cover 
+In this example, we are calculating the percentage of the landscape
+(`"pland"`) and the number of patches (`"np"`) for each one of the land
+covers of the main raster (`level = "class"`). In the argument
+`absence_values`, one can define which value should have a given metric
+when the class (land cover) is not present in the landscape. Here, it
+makes sense that this value should be zero for each metric. Note that,
+if not defined, the value in the case of absence of the given land cover
 will be `NA`.
 
-Calculation of other non-typical landscape metrics can be calculated, specially 
-for those raster layers with continuous values. Here, we calculate the mean 
-value and a user-defined calculation for the NDVI values, inside argument 
-`ext_calc`. The `1` indicates that calculations must be performed for the 
-first extra raster layer contained within the 'MultiLand' object (in this example, 
-the unique one).
+Calculation of other non-typical landscape metrics can be calculated,
+specially for those raster layers with continuous values. Here, we
+calculate the mean value and a user-defined calculation for the NDVI
+values, inside argument `ext_calc`. The `1` indicates that calculations
+must be performed for the first extra raster layer contained within the
+'MultiLand' object (in this example, the unique one).
 
 ```{r eval=FALSE}
 # User-defined function: quotient between mean and standard deviation
@@ -211,52 +221,65 @@ ed_metrics <- mland_metrics(ernesdesign, level = "class", metric = c("pland", "n
                             ext_calc = list(c(1, "mean"), c(1, "mean_sd")))
 ```
 
-Basic information about the object can be explored by printing the object:
+Basic information about the object can be explored by printing the
+object:
 
 ```{r}
 # Returns basic information about the object
 ed_metrics
 ```
 
-Function `mland_metrics` outputs an object of class 'MultiLandMetrics', whose 
-main object comprises a data frame with the value for each required metric at 
-each landscape and spatial scale.
+Function `mland_metrics` outputs an object of class 'MultiLandMetrics',
+whose main object comprises a data frame with the value for each
+required metric at each landscape and spatial scale.
 
 ```{r}
 head(ed_metrics@data)
 ```
 
-Data frame with metric's values can be binded with a data frame containing a 
-response variable of interest within the evaluated sites. The function `metrics_bind()` 
-fulfills this purpose, by generating a wide-format data frame, with one column 
-per metric and spatial scale. For more information and examples, explore the help 
-page of the function.
+Data frame with metric's values can be binded with a data frame
+containing a response variable of interest within the evaluated sites.
+The function `metrics_bind()` fulfills this purpose, by generating a
+wide-format data frame, with one column per metric and spatial scale.
+For more information and examples, explore the help page of the
+function.
 
 ## Further tools
 
-**multilandr** provides several other utility functions, specially when analyzing 
-multi-scale landscapes comprising a hundreds or thousands of points. Correlations 
-between metrics can be calculated with `metrics_corr()`, and pairwise plots can be 
-visualized with `metrics_plots()`. Landscapes can be filtered according to 
-predefined values for given metrics with `metrics_filter()`. In addition, the 
-function `metrics_gradient()` generates an optimized gradient of predefined size 
-for the values of a given metric, given the spectrum of landscapes with different 
-metric values. This can be useful to select those landscapes that would be evaluated 
-in a more bounded experimental design that could comprises, for instance, field 
-sampling of sites. Explore these functions in the help pages.
+**multilandr** provides several other utility functions, specially when
+analyzing multi-scale landscapes comprising a hundreds or thousands of
+points. Correlations between metrics can be calculated with
+`metrics_corr()`, and pairwise plots can be visualized with
+`metrics_plots()`. Landscapes can be filtered according to predefined
+values for given metrics with `metrics_filter()`. In addition, the
+function `metrics_gradient()` generates an optimized gradient of
+predefined size for the values of a given metric, given the spectrum of
+landscapes with different metric values. This can be useful to select
+those landscapes that would be evaluated in a more bounded experimental
+design that could comprises, for instance, field sampling of sites.
+Explore these functions in the help pages.
 
 ## Citation
 
 If you use **multilandr** for your research, use the following citation:
 
-Huais, PY. (under review). multilandr: an R package for multi-scale landscape analysis. Landscape Ecology.
+Huais, PY. (under review). multilandr: an R package for multi-scale
+landscape analysis. Landscape Ecology.
 
 ## References
 
-De Camargo, R. X., Boucher‐Lalonde, V., & Currie, D. J. (2018). At the landscape level, birds respond strongly to habitat amount but weakly to fragmentation. Diversity and Distributions, 24(5), 629-639.
+De Camargo, R. X., Boucher‐Lalonde, V., & Currie, D. J. (2018). At the
+landscape level, birds respond strongly to habitat amount but weakly to
+fragmentation. Diversity and Distributions, 24(5), 629-639.
 
-Hesselbarth, M. H., Sciaini, M., With, K. A., Wiegand, K., & Nowosad, J. (2019). landscapemetrics: an open‐source R tool to calculate landscape metrics. Ecography, 42(10), 1648-1657.
+Hesselbarth, M. H., Sciaini, M., With, K. A., Wiegand, K., & Nowosad, J.
+(2019). landscapemetrics: an open‐source R tool to calculate landscape
+metrics. Ecography, 42(10), 1648-1657.
 
-Melo, G. L., Sponchiado, J., Cáceres, N. C., & Fahrig, L. (2017). Testing the habitat amount hypothesis for South American small mammals. Biological Conservation, 209, 304-314.
+Melo, G. L., Sponchiado, J., Cáceres, N. C., & Fahrig, L. (2017).
+Testing the habitat amount hypothesis for South American small mammals.
+Biological Conservation, 209, 304-314.
 
-Verga, E. G., Huais, P. Y., & Herrero, M. L. (2021). Population responses of pest birds across a forest cover gradient in the Chaco ecosystem. Forest Ecology and Management, 491, 119174.
+Verga, E. G., Huais, P. Y., & Herrero, M. L. (2021). Population
+responses of pest birds across a forest cover gradient in the Chaco
+ecosystem. Forest Ecology and Management, 491, 119174.

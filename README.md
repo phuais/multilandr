@@ -167,6 +167,8 @@ land covers is plotted.
 mland_plot(ernesdesign, points = "Peje", title = "sitename")
 ```
 
+<img src="man/figures/plot_peje.png" align="center" width="500"/>
+
 Visualizing spatial data in the R environment can be uncomfortable.
 Multi-scale landscapes can be exported for further exploration in a GIS
 software, through the function `mland_export_gis()`.
