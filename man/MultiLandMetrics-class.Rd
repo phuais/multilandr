@@ -5,15 +5,15 @@
 \alias{MultiLandMetrics-class}
 \title{Class 'MultiLandMetrics'}
 \description{
-Objects of class \code{MultiLandMetrics} are returned by \code{\link[=metrics]{metrics()}}. It holds all the information
+Objects of class \code{MultiLandMetrics} are returned by \code{\link[=mland_metrics]{mland_metrics()}}. It holds all the information
 relative to the metrics that were calculated by the parameters inputted by the user. This object
-class can be passed to functions \code{\link[=pair_corr]{pair_corr()}}, \code{\link[=pair_plots]{pair_plots()}}, \code{\link[=landscape_filter]{landscape_filter()}}, \code{\link[=optimize_gradient]{optimize_gradient()}} and
-\code{\link[=bind_metrics]{bind_metrics()}} for further analyses.
+class can be passed to functions \code{\link[=metrics_corr]{metrics_corr()}}, \code{\link[=metrics_plots]{metrics_plots()}}, \code{\link[=metrics_filter]{metrics_filter()}}, \code{\link[=metrics_gradient]{metrics_gradient()}} and
+\code{\link[=metrics_bind]{metrics_bind()}} for further analyses.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{call}}{The call when function \code{\link[=metrics]{metrics()}} was called.}
+\item{\code{call}}{The call when function \code{\link[=mland_metrics]{mland_metrics()}} was called.}
 
 \item{\code{idkey}}{A unique identification id for the 'MultiLandMetrics' object.}
 
@@ -22,7 +22,7 @@ class can be passed to functions \code{\link[=pair_corr]{pair_corr()}}, \code{\l
 \item{\code{n_layers}}{Number of rasterlayers from which metrics were calculated.}
 
 \item{\code{layer_names}}{A list with dataframes containing the names of the rasterlayers of the
-'MultiLand' object the function \code{\link[=metrics]{metrics()}} worked with.}
+'MultiLand' object the function \code{\link[=mland_metrics]{mland_metrics()}} worked with.}
 
 \item{\code{classes}}{A data.frame depicting the rasterlayers, classes and classes names from which
 metrics were calculated.}

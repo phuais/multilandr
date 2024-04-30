@@ -1,7 +1,7 @@
 #' Metrics list
 #'
 #' List of available landscape metrics provided by package [landscapemetrics] to be calculated with
-#' [metrics()]. It simply calls [landscapemetrics::list_lsm()]. For more information regarding the
+#' [mland_metrics()]. It simply calls [landscapemetrics::list_lsm()]. For more information regarding the
 #' definition and equations of metrics, please check the user manual of [landscapemetrics].
 #'
 #' @param type Character vector. Type according to FRAGSTATS grouping. One or more of the following:

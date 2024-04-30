@@ -7,7 +7,7 @@
 #' or a list of raster objects (one of 'RasterLayer' or 'SpatRaster').
 #' @param verbose Print warning messages.
 #'
-#' @details This function extracts basic information about the inputted raster: coordinate reference system (crs) - either "geographic",
+#' @details Extracts basic information about the inputted raster: coordinate reference system (crs) - either "geographic",
 #' "projected", or NA, units of the
 #' coordinate reference system, class for the values of the inputted raster and the number of classes
 #' found in the raster.

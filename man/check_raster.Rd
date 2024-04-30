@@ -17,7 +17,7 @@ Checks the validity of rasterlayers to be inputted in \code{\link[=mland]{mland(
 \code{\link[landscapemetrics:check_landscape]{landscapemetrics::check_landscape()}}.
 }
 \details{
-This function extracts basic information about the inputted raster: coordinate reference system (crs) - either "geographic",
+Extracts basic information about the inputted raster: coordinate reference system (crs) - either "geographic",
 "projected", or NA, units of the
 coordinate reference system, class for the values of the inputted raster and the number of classes
 found in the raster.

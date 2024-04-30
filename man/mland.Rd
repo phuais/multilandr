@@ -5,24 +5,24 @@
 \title{Generates object of class 'MultiLand'}
 \usage{
 mland(
-  points,
-  raster = NULL,
+  points_vect,
+  land_rast = NULL,
   radii,
   classnames = NULL,
   site_ref = NULL,
   bufftype = "round",
   segs = 20,
-  ext_raster = NULL,
+  ext_rast = NULL,
   layer_names = NULL,
-  onthefly = FALSE,
+  on_the_fly = FALSE,
   progress = TRUE
 )
 }
 \arguments{
-\item{points}{An object of class 'SpatVector', 'SpatialPoints' or 'SpatialPointsDataFrame', or a string with the
+\item{points_vect}{An object of class 'SpatVector', 'SpatialPoints', 'SpatialPointsDataFrame' or 'sf', or a string with the
 path to a shapefile.}
 
-\item{raster, ext_raster}{An object of class 'SpatRaster', 'RasterLayer', 'RasterStack', 'RasterBrick',
+\item{land_rast, ext_rast}{An object of class 'SpatRaster', 'RasterLayer', 'RasterStack', 'RasterBrick',
 or a list of raster objects (any of 'RasterLayer' or 'SpatRaster').}
 
 \item{radii}{A numeric vector with the radii (in meters) from which buffers will be created.}
@@ -30,7 +30,7 @@ or a list of raster objects (any of 'RasterLayer' or 'SpatRaster').}
 \item{classnames}{A list matching each raster value with a class name. See Details.}
 
 \item{site_ref}{A string with the name of the column containing the identity of the sites in
-points layer data. See Details.}
+points layer data (argument \code{points_vect}). See Details.}
 
 \item{bufftype}{Type of buffer to be created: "round" for circular buffers (default) or "square".}
 
@@ -38,17 +38,17 @@ points layer data. See Details.}
 \code{bufftype = "round"}. Default is 20.}
 
 \item{layer_names}{A character vector with the names of the rasterlayers provided in \code{raster}
-and \code{ext_raster}. See Details.}
+and \code{ext_rast}. See Details.}
 
-\item{onthefly}{Logical. If FALSE (default) intersections between buffers and rasterlayers will
+\item{on_the_fly}{Logical. If FALSE (default) intersections between buffers and rasterlayers will
 be calculated. If TRUE, only buffers will be generated. See Details.}
 
 \item{progress}{Logical. If TRUE (default), progress of the analysis will be printed.}
 }
 \value{
 An object of class 'MultiLand'. This object can be used to generate useful plots with
-\code{\link[=mland_plot]{mland_plot()}}, calculate metrics with \code{\link[=metrics]{metrics()}} and calculate buffer's overlapping with
-\code{\link[=overlapping]{overlapping()}}. See ?MultiLand for more details on the content of this object.
+\code{\link[=mland_plot]{mland_plot()}}, calculate metrics with \code{\link[=mland_metrics]{mland_metrics()}} and calculate buffer's overlapping with
+\code{\link[=mland_overlap]{mland_overlap()}}. See ?MultiLand for more details on the content of this object.
 }
 \description{
 Creates an object of class 'MultiLand', which is the
@@ -61,33 +61,33 @@ analyses.
 'MultiLand' that holds relevant objects and information about points, buffers and intersections
 between the latters and rasterlayers.
 
-The function firstly creates buffers with center in the sites defined in \code{points}, and size defined by
-the values of \code{radii}. If each point defined in \code{points} has an associated name or id for
-ulterior identification, the user should provide the name of the attribute inside \code{points}
+The function firstly creates buffers with center in the sites defined in \code{points_vect}, and size defined by
+the values of \code{radii}. If each point defined in \code{points_vect} has an associated name or id for
+ulterior identification, the user should provide the name of the attribute inside \code{points_vect}
 containing this information, by passing this string through the argument \code{site_ref}.
 
 Argument \code{raster} must be provided with rasterlayers with discrete values from which different landscape metrics (provided by package \link{landscapemetrics})
-could be calculated. Extra rasterlayers can be provided in \code{ext_raster}, from which other metrics can be
+could be calculated. Extra rasterlayers can be provided in \code{ext_rast}, from which other metrics can be
 calculated. For instance, an extra rasterlayer could be one depicting continuous values of slope,
 from which a mean value per landscape may be calculated.
 
-If \code{onthefly = FALSE} (default), intersections between buffers and rasterlayers defined in
-\code{raster} and/or \code{ext_raster} will be generated. Otherwise, if \code{onthefly = TRUE}, only buffers will be generated. The
+If \code{on_the_fly = FALSE} (default), intersections between buffers and rasterlayers defined in
+\code{raster} and/or \code{ext_rast} will be generated. Otherwise, if \code{on_the_fly = TRUE}, only buffers will be generated. The
 latter approach may be particularly useful for 'MultiLand' objects with numerous points
 (hundreds or thousands), in order to avoid returning an object excessively heavy for memory. If
 this is the case, intersections between buffers and rasterlayers will be generated when
-required ("on the fly"). For instance, to calculate metrics with \code{\link[=metrics]{metrics()}}.
+required ("on the fly"). For instance, to calculate metrics with \code{\link[=mland_metrics]{mland_metrics()}}.
 
 The names of the provided rasterlayers can be defined in \code{layer_names}. If so, this must be
 a character vector with as many names (strings) as provided rasterlayers in arguments \code{raster} and
-\code{ext_raster}, in the mentioned order. If there is no need of a name for a particular raster layer, the given element in the vector
+\code{ext_rast}, in the mentioned order. If there is no need of a name for a particular rasterlayer, the given element in the vector
 should be \code{NA}. Definition of these names could be useful when applying other functions of
 the package to the object generated here. For instance, to get the name of the rasterlayer
-of a particular row of the data.frame with landscape metrics exported by \code{\link[=metrics]{metrics()}}.
+of a particular row of the data.frame with landscape metrics exported by \code{\link[=mland_metrics]{mland_metrics()}}.
 
 Classes names can be associated with each value of the rasterlayers defined in \code{raster}, for a
 easier future identification. If so, the user must provide a list with as many elements as
-rasterlayers defined in \code{raster}. If a 'SpatRaster' with multiple layers, a 'RasterStack' or a
+rasterlayers defined in \code{land_rast}. If a 'SpatRaster' with multiple layers, a 'RasterStack' or a
 'RasterBrick' is provided, the
 number of rasterlayers are extracted from these objects. Each element of the list must be a
 vector built from concatenated pairs of values, with the value of the raster (the class) in the
@@ -108,8 +108,15 @@ and two unique values for the second one), a plausible definition would be:
 }
 }
 \examples{
-# Loads main raster and extra raster
+# Loads main raster with land covers
 elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
+
+# Main raster should have discrete values (e.g. land covers). This can be
+# checked with the function check_rater():
+
+check_raster(elchaco)
+
+# Loads extra raster with NDVI values
 elchaco_ndvi <- terra::rast(system.file("extdata", "elchaco_ndvi.tif", package = "multilandr"))
 
 # Classes names
@@ -124,12 +131,12 @@ cl_names <- c(1, "Forest",
 elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.shp", package = "multilandr"))
 
 # Creates 'MultiLand' object by loading main raster, an extra raster and points.
-ernesdesign <- mland(points = elchaco_sites,
-                     raster = elchaco,
+ernesdesign <- mland(points_vect = elchaco_sites,
+                     land_rast = elchaco,
                      radii = seq(1000, 5000, 1000),
                      classnames = list(cl_names),
                      site_ref = "name",
-                     ext_raster = elchaco_ndvi,
+                     ext_rast = elchaco_ndvi,
                      layer_names = c("landuse", "NDVI"),
                      segs = 20)
 
@@ -144,34 +151,32 @@ ernesdesign@classes
 elchaco2 <- terra::rast(system.file("extdata", "elchaco2.tif", package = "multilandr"))
 
 # Creates 'MultiLand' with two rasterlayers.
-ernesdesign2 <- mland(points = elchaco_sites,
-                      raster = list(elchaco, elchaco2),
+ernesdesign2 <- mland(points_vect = elchaco_sites,
+                      land_rast = list(elchaco, elchaco2),
                       radii = seq(1000, 5000, 1000),
                       classnames = list(cl_names, cl_names),
-                      site_ref = "name",
-                      segs = 20)
+                      site_ref = "name")
 
-# Creates the same object but with "onthefly = T". Intersections between
+# Creates the same object but with "on_the_fly = T". Intersections between
 # buffers and rasters will not be generated in this step
-ernesdesign3 <- mland(points = elchaco_sites,
-                      raster = list(elchaco, elchaco2),
+ernesdesign3 <- mland(points_vect = elchaco_sites,
+                      land_rast = list(elchaco, elchaco2),
                       radii = seq(1000, 5000, 1000),
                       classnames = list(cl_names, cl_names),
                       site_ref = "name",
-                      segs = 20,
-                      onthefly = T)
+                      on_the_fly = T)
 
 # Creates a MultiLand object with hundreds of points. In this case, these
-# points were generated with land_points(), another function from this package. Also,
-# "onthefly = TRUE" assures that no intersections between buffers and the raster are
+# points were generated with generate_points(), another function from this package. Also,
+# "on_the_fly = TRUE" assures that no intersections between buffers and the raster are
 # created in this step.
 
 # Loads points
 otf_sites <- terra::vect(system.file("extdata", "otf_sites.shp", package = "multilandr"))
 
 # Creates MultiLand object
-otf_design <- mland(points = otf_sites,
-                    raster = elchaco,
+otf_design <- mland(points_vect = otf_sites,
+                    land_rast = elchaco,
                     radii = 2000,
                     classnames = list(c(1, "Forest",
                                         2, "Grassland",
@@ -179,12 +184,9 @@ otf_design <- mland(points = otf_sites,
                                         4, "Pastures",
                                         5, "Water",
                                         6, "Urban")),
-                    onthefly = TRUE,
-                    segs = 20)
-
-
+                    on_the_fly = TRUE)
 }
 }
 \seealso{
-\code{\link[=mland_plot]{mland_plot()}}, \code{\link[=metrics]{metrics()}}, \code{\link[=overlapping]{overlapping()}}, \code{\link[=land_points]{land_points()}}
+\code{\link[=mland_plot]{mland_plot()}}, \code{\link[=mland_metrics]{mland_metrics()}}, \code{\link[=mland_overlap]{mland_overlap()}}, \code{\link[=generate_points]{generate_points()}}
 }

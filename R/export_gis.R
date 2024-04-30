@@ -1,4 +1,4 @@
-export_gis_chk <- function(){
+.mland_export_gis_chk <- function(){
 
   messages <- NULL
   what     <- NULL
@@ -103,13 +103,13 @@ export_gis_chk <- function(){
 #' \href{https://gdal.org/drivers/raster/index.html}{Raster drivers}). Default are
 #' c("ESRI Shapefile", "GTiff") for points/rasters and raster intersections, respectively.
 #' @param gdal GDAL driver specific datasource creation options. See the GDAL documentation. With the
-#' \href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}, [export_gis()] uses the
+#' \href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}, [mland_export_gis()] uses the
 #' following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9").
 #' @param ... Other arguments passed to [terra::writeRaster].
 #'
 #' @details
 #' If argument `points` is a character vector,
-#' [export_gis()] will assume that the 'MultiLand' object inputted in argument `x` was created with
+#' [mland_export_gis()] will assume that the 'MultiLand' object inputted in argument `x` was created with
 #' `site_ref = TRUE`. This is, there is an attribute in points layer data with the names for
 #' each individual point. Therefore, the inputted values in argument `points` will be taken as these
 #' identification names. Otherwise, if a numeric vector is declared, the inputted values
@@ -125,12 +125,12 @@ export_gis_chk <- function(){
 #' \dontrun{
 #' # Loads a 'MultiLand' object
 #' ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
-#' ernesdesign <- load_mland(ernesdesign)
+#' ernesdesign <- mland_load(ernesdesign)
 #'
 #' # Exports as GIS data
-#' export_gis(ernesdesign, dir = "ernesdesign")
+#' mland_export_gis(ernesdesign, dir = "ernesdesign")
 #' }
-export_gis <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster = NULL,
+mland_export_gis <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster = NULL,
                        dir = getwd(), filenames = c("points", "buffers", "lsm_raster", "ext_raster"),
                        overwrite = FALSE, filetype = c("ESRI Shapefile", "GTiff"),
                        gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"), ...){
@@ -139,8 +139,8 @@ export_gis <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster
   if(!is(x, "MultiLand")){
     stop("- argument 'x' must be an object of class 'MultiLand'.")
   }
-  environment(export_gis_chk) <- environment()
-  chk <- export_gis_chk()
+  environment(.mland_export_gis_chk) <- environment()
+  chk <- .mland_export_gis_chk()
   if(length(chk[[1]]) > 0)
     for(w in 1:length(chk[[1]])){
       warning(strwrap(chk[[1]], prefix = "\n", initial = ""), call. = FALSE)
@@ -181,7 +181,7 @@ export_gis <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster
   raster_ids <- df_reference[df_reference$radius %in% max(radii), "row_id"]
 
   # Export intersections
-  if(!x@onthefly){
+  if(!x@on_the_fly){
     dir.create(paste0(dir, "/rasters/"), recursive = T)
     if(!is.null(raster)){
       for(i in 1:length(unique(raster))){
@@ -198,6 +198,6 @@ export_gis <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster
       }
     }
   } else {
-    message("- in 'x': onthefly = TRUE. No intersections were exported.")
+    message("- in 'x': on_the_fly = TRUE. No intersections were exported.")
   }
 }

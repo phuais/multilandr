@@ -33,7 +33,7 @@ regarding the level, type, metric, name and function name provided by package \l
 }
 \description{
 List of available landscape metrics provided by package \link{landscapemetrics} to be calculated with
-\code{\link[=metrics]{metrics()}}. It simply calls \code{\link[landscapemetrics:list_lsm]{landscapemetrics::list_lsm()}}. For more information regarding the
+\code{\link[=mland_metrics]{mland_metrics()}}. It simply calls \code{\link[landscapemetrics:list_lsm]{landscapemetrics::list_lsm()}}. For more information regarding the
 definition and equations of metrics, please check the user manual of \link{landscapemetrics}.
 }
 \references{

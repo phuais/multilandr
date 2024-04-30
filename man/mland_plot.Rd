@@ -88,7 +88,7 @@ could be the following:
 \dontrun{
 # Loads a 'MultiLand' object
 ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
-ernesdesign <- load_mland(ernesdesign)
+ernesdesign <- mland_load(ernesdesign)
 
 # Plots all points and radii
 mland_plot(ernesdesign)

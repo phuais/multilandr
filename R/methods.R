@@ -13,7 +13,7 @@ methods::setMethod(f = "show", signature = "MultiLand",
           definition =
           function(object){
             cat("class            : MultiLand\n")
-            cat("On the fly       :", object@onthefly, "\n")
+            cat("On the fly       :", object@on_the_fly, "\n")
             cat("Rasterlayers     :", object@n_layers, "\n")
             if(length(object@n_classes) > 0){
               cat("  n classes      :", object@n_classes, "\n")

@@ -11,9 +11,9 @@ An object of class \code{MultiLandMetrics} of length 1.
 ed_metrics
 }
 \description{
-An object of class 'MultiLandMetrics' generated with \code{\link[=metrics]{metrics()}}, for the purposes of package
-examples of the following functions: \code{\link[=landscape_filter]{landscape_filter()}}, \code{\link[=optimize_gradient]{optimize_gradient()}}, \code{\link[=pair_corr]{pair_corr()}},
-\code{\link[=pair_plots]{pair_plots()}} and \code{\link[=bind_metrics]{bind_metrics()}}. See 'MultiLand-class' for general information about these objects.
+An object of class 'MultiLandMetrics' generated with \code{\link[=mland_metrics]{mland_metrics()}}, for the purposes of package
+examples of the following functions: \code{\link[=metrics_filter]{metrics_filter()}}, \code{\link[=metrics_gradient]{metrics_gradient()}}, \code{\link[=metrics_corr]{metrics_corr()}},
+\code{\link[=metrics_plots]{metrics_plots()}} and \code{\link[=metrics_bind]{metrics_bind()}}. See 'MultiLand-class' for general information about these objects.
 }
 \details{
 The main internal object is a data.frame (accesible through \code{ed_metrics@data}) with information
@@ -32,7 +32,7 @@ accessed during July 2022 through the following link: \href{https://chaco.mapbio
 Landsat-5 image courtesy of the U.S. Geological Survey
 }
 \seealso{
-See the examples sections of \code{\link[=metrics]{metrics()}} and \code{\link[=mland]{mland()}}
+See the examples sections of \code{\link[=mland_metrics]{mland_metrics()}} and \code{\link[=mland]{mland()}}
 for more context.
 }
 \keyword{datasets}

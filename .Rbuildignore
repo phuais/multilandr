@@ -4,3 +4,4 @@
 ^scroll_script\.js$
 ^rsconnect$
 ^dev_files$
+^README\.Rmd$

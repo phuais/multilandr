@@ -1,22 +1,22 @@
 # Generates points layer
-.gen_pointlayers <- function(points, site_ref){
+.gen_pointlayers <- function(points_vect, site_ref){
 
   # Generates points layers
-  if(class(points)[1] %in% c("SpatVector", "SpatialPoints", "SpatialPointsDataFrame")){
-    if(class(points)[1] == "SpatVector"){
-      if(terra::geomtype(points) != "points"){
-        stop("- points layer must be an object of class 'SpatVector' (geom = 'points'), 'SpatialPointsDataFrame' or 'SpatialPoints'.",
+  if(class(points_vect)[1] %in% c("SpatVector", "SpatialPoints", "SpatialPointsDataFrame", "sf")){
+    if(class(points_vect)[1] == "SpatVector"){
+      if(terra::geomtype(points_vect) != "points"){
+        stop("- points_vect layer must be an object of class 'SpatVector' (geom = 'points'), 'SpatialPointsDataFrame','SpatialPoints' or 'sf'.",
              call. = FALSE)
       } else {
-        l_points <- points
+        l_points <- points_vect
       }
     } else {
-      l_points <- suppressWarnings(terra::vect(points))
+      l_points <- suppressWarnings(terra::vect(points_vect))
     }
   } else {
-    l_points <- suppressWarnings(terra::vect(points))
+    l_points <- suppressWarnings(terra::vect(points_vect))
     if(class(l_points)[1] != "SpatVector" | terra::geomtype(l_points) != "points"){
-      stop("- points layer must be an object of class 'SpatVector' (geom = 'points'), 'SpatialPointsDataFrame' or 'SpatialPoints'.",
+      stop("- points_vect layer must be an object of class 'SpatVector' (geom = 'points'), 'SpatialPointsDataFrame', 'SpatialPoints' or 'sf'.",
            call. = FALSE)
     }
   }
@@ -32,7 +32,7 @@
     if(chk != 0){
       if(chk == 1){
         warning(strwrap(paste0("- could not find a column with the provided points reference \"",
-                               site_ref, "\" in points layer data. The argument was ignored."),
+                               site_ref, "\" in points_vect layer data. The argument was ignored."),
                         prefix = "\n", initial = ""), call. = FALSE)
         site_ref <- NULL
       } else {
@@ -56,28 +56,28 @@
 }
 
 # Generates layers
-.generate_layers <- function(points, site_ref, raster, ext_raster){
+.generate_layers <- function(points_vect, site_ref, land_rast, ext_rast){
 
-  pp       <- .gen_pointlayers(points, site_ref)
+  pp       <- .gen_pointlayers(points_vect, site_ref)
   l_points <- pp[[1]]
   site_ref <- pp[[2]]
 
   # Loads class layer values
-  raster_values <- vector("list", length(raster))
-  if(length(raster) > 0){
-    for(i in 1:length(raster)){
-      cl <- raster[[i]]
+  raster_values <- vector("list", length(land_rast))
+  if(length(land_rast) > 0){
+    for(i in 1:length(land_rast)){
+      cl <- land_rast[[i]]
       chk <- .check_classCRS(l_points, cl)
-      if(chk) stop("- raster CRS must be equal to points layer CRS.",  call. = FALSE)
+      if(chk) stop("- rasters CRS must be equal to points layer CRS.",  call. = FALSE)
       # Gets layer classes
       raster_values[[i]] <- sort(terra::unique(cl)[, 1])
     }
   }
 
   # Check extra rasters
-  if(length(ext_raster) > 0){
-    for(i in 1:length(ext_raster)){
-      cl <- ext_raster[[i]]
+  if(length(ext_rast) > 0){
+    for(i in 1:length(ext_rast)){
+      cl <- ext_rast[[i]]
       chk <- .check_classCRS(l_points, cl)
       if(chk) stop("- extra rasters CRS must be equal to points layer CRS.",  call. = FALSE)
     }
@@ -108,7 +108,7 @@
 }
 
 # Generates intersections
-.intersecting <- function(l_rasters, l_buffers, classes, ext_raster, onthefly){
+.intersecting <- function(l_rasters, l_buffers, classes, ext_rast, on_the_fly){
 
   # Intersections with main rasters
   intersects <- vector("list", length(l_rasters))
@@ -116,7 +116,7 @@
   if(length(l_rasters) > 0){
     for(i in 1:length(intersects)){
       n_classes[i] <- length(classes[[i]])
-      if(!onthefly){
+      if(!on_the_fly){
         intersects[[i]] <- vector("list", length(l_buffers))
         for(j in 1:length(l_buffers)){
           clip <- suppressWarnings(tryCatch(terra::crop(l_rasters[[i]],
@@ -141,20 +141,20 @@
   }
 
   # Intersections with extra rasters
-  intersects_ext <- vector("list", length(ext_raster))
-  if(length(ext_raster) > 0){
+  intersects_ext <- vector("list", length(ext_rast))
+  if(length(ext_rast) > 0){
     for(i in 1:length(intersects_ext)){
-      if(!onthefly){
+      if(!on_the_fly){
         intersects_ext[[i]] <- vector("list", length(l_buffers))
         for(j in 1:length(l_buffers)){
-          clip <- suppressWarnings(tryCatch(terra::crop(ext_raster[[i]],
+          clip <- suppressWarnings(tryCatch(terra::crop(ext_rast[[i]],
                                                         terra::ext(l_buffers[j, ])), error = c))
           if(!is.list(clip)){
             intersects_ext[[i]][[j]] <- terra::mask(clip, l_buffers[j, ])
           } else {
             empty_raster <- terra::rast(nrows = 1, ncols = 1, crs = terra::crs(l_buffers[j, ]),
                                         ext = l_buffers[j, ],
-                                        resolution = terra::res(ext_raster[[i]]), vals = NA)
+                                        resolution = terra::res(ext_rast[[i]]), vals = NA)
             intersects_ext[[i]][[j]] <- empty_raster
           }
         }
@@ -162,7 +162,7 @@
         names(intersects_ext[[i]]) <- paste0("ExtRasterLayer", i, "-", terra::values(l_buffers)$id, "-",
                                              terra::values(l_buffers)$radius)
       } else {
-        intersects_ext[[i]] <- ext_raster[[i]]
+        intersects_ext[[i]] <- ext_rast[[i]]
         names(intersects_ext)[[i]] <- paste0("ExtRasterLayer ", i)
       }
     }
@@ -218,29 +218,29 @@
 }
 
 # Raster labeling
-rast_labels <- function(layer_names, raster, ext_raster){
+rast_labels <- function(layer_names, land_rast, ext_rast){
   if(length(layer_names) > 0){
-    total_length <- length(raster) + length(ext_raster)
+    total_length <- length(land_rast) + length(ext_rast)
     if(length(layer_names) != total_length){
       warning(strwrap(paste0("- length of argument 'layer_names' differs with the length of provided
-                               rasters in arguments 'raster' and/or 'ext_raster'. Argument was discarded."),
+                               rasters in arguments 'land_rast' and/or 'ext_rast'. Argument was discarded."),
                       prefix = "\n", initial = ""))
       layer_names <- rep(NA, total_length)
     }
-    out <- list(data.frame(rasterlayer = 1:length(raster),
-                           name = layer_names[1:length(raster)]),
-                data.frame(rasterlayer = 1:length(ext_raster),
-                           name = layer_names[(length(raster) + 1):total_length]))
+    out <- list(data.frame(rasterlayer = 1:length(land_rast),
+                           name = layer_names[1:length(land_rast)]),
+                data.frame(rasterlayer = 1:length(ext_rast),
+                           name = layer_names[(length(land_rast) + 1):total_length]))
   } else {
-    if(length(raster) > 0){
-      lsm_names <- data.frame(rasterlayer = 1:length(raster),
-                              name = rep(NA, length(raster)))
+    if(length(land_rast) > 0){
+      lsm_names <- data.frame(rasterlayer = 1:length(land_rast),
+                              name = rep(NA, length(land_rast)))
     } else {
       lsm_names <- data.frame()
     }
-    if(length(ext_raster) > 0){
-      ext_names <- data.frame(rasterlayer = 1:length(ext_raster),
-                              name = rep(NA, length(ext_raster)))
+    if(length(ext_rast) > 0){
+      ext_names <- data.frame(rasterlayer = 1:length(ext_rast),
+                              name = rep(NA, length(ext_rast)))
     } else {
       ext_names <- data.frame()
     }
@@ -268,20 +268,20 @@ rast_tolist <- function(raster){
 #' of the package to generate plots, calculate landscape metrics and perform other relevant
 #' analyses.
 #'
-#' @param points An object of class 'SpatVector', 'SpatialPoints' or 'SpatialPointsDataFrame', or a string with the
+#' @param points_vect An object of class 'SpatVector', 'SpatialPoints', 'SpatialPointsDataFrame' or 'sf', or a string with the
 #'   path to a shapefile.
 #' @param classnames A list matching each raster value with a class name. See Details.
 #' @param site_ref A string with the name of the column containing the identity of the sites in
-#'   points layer data. See Details.
+#'   points layer data (argument `points_vect`). See Details.
 #' @param radii A numeric vector with the radii (in meters) from which buffers will be created.
 #' @param bufftype Type of buffer to be created: "round" for circular buffers (default) or "square".
 #' @param segs Number of line segments to use to approximate a quarter circle during buffer generation. Only valid when
 #'   `bufftype = "round"`. Default is 20.
-#' @param raster,ext_raster An object of class 'SpatRaster', 'RasterLayer', 'RasterStack', 'RasterBrick',
+#' @param land_rast,ext_rast An object of class 'SpatRaster', 'RasterLayer', 'RasterStack', 'RasterBrick',
 #'   or a list of raster objects (any of 'RasterLayer' or 'SpatRaster').
 #' @param layer_names A character vector with the names of the rasterlayers provided in `raster`
-#' and `ext_raster`. See Details.
-#' @param onthefly Logical. If FALSE (default) intersections between buffers and rasterlayers will
+#' and `ext_rast`. See Details.
+#' @param on_the_fly Logical. If FALSE (default) intersections between buffers and rasterlayers will
 #'   be calculated. If TRUE, only buffers will be generated. See Details.
 #' @param progress Logical. If TRUE (default), progress of the analysis will be printed.
 #'
@@ -289,33 +289,33 @@ rast_tolist <- function(raster){
 #'   'MultiLand' that holds relevant objects and information about points, buffers and intersections
 #'   between the latters and rasterlayers.
 #'
-#'   The function firstly creates buffers with center in the sites defined in `points`, and size defined by
-#'   the values of `radii`. If each point defined in `points` has an associated name or id for
-#'   ulterior identification, the user should provide the name of the attribute inside `points`
+#'   The function firstly creates buffers with center in the sites defined in `points_vect`, and size defined by
+#'   the values of `radii`. If each point defined in `points_vect` has an associated name or id for
+#'   ulterior identification, the user should provide the name of the attribute inside `points_vect`
 #'   containing this information, by passing this string through the argument `site_ref`.
 #'
 #'   Argument `raster` must be provided with rasterlayers with discrete values from which different landscape metrics (provided by package [landscapemetrics])
-#'   could be calculated. Extra rasterlayers can be provided in `ext_raster`, from which other metrics can be
+#'   could be calculated. Extra rasterlayers can be provided in `ext_rast`, from which other metrics can be
 #'   calculated. For instance, an extra rasterlayer could be one depicting continuous values of slope,
 #'   from which a mean value per landscape may be calculated.
 #'
-#'   If `onthefly = FALSE` (default), intersections between buffers and rasterlayers defined in
-#'   `raster` and/or `ext_raster` will be generated. Otherwise, if `onthefly = TRUE`, only buffers will be generated. The
+#'   If `on_the_fly = FALSE` (default), intersections between buffers and rasterlayers defined in
+#'   `raster` and/or `ext_rast` will be generated. Otherwise, if `on_the_fly = TRUE`, only buffers will be generated. The
 #'   latter approach may be particularly useful for 'MultiLand' objects with numerous points
 #'   (hundreds or thousands), in order to avoid returning an object excessively heavy for memory. If
 #'   this is the case, intersections between buffers and rasterlayers will be generated when
-#'   required ("on the fly"). For instance, to calculate metrics with [metrics()].
+#'   required ("on the fly"). For instance, to calculate metrics with [mland_metrics()].
 #'
 #'   The names of the provided rasterlayers can be defined in `layer_names`. If so, this must be
 #'   a character vector with as many names (strings) as provided rasterlayers in arguments `raster` and
-#'   `ext_raster`, in the mentioned order. If there is no need of a name for a particular raster layer, the given element in the vector
+#'   `ext_rast`, in the mentioned order. If there is no need of a name for a particular rasterlayer, the given element in the vector
 #'   should be `NA`. Definition of these names could be useful when applying other functions of
 #'   the package to the object generated here. For instance, to get the name of the rasterlayer
-#'   of a particular row of the data.frame with landscape metrics exported by [metrics()].
+#'   of a particular row of the data.frame with landscape metrics exported by [mland_metrics()].
 #'
 #'   Classes names can be associated with each value of the rasterlayers defined in `raster`, for a
 #'   easier future identification. If so, the user must provide a list with as many elements as
-#'   rasterlayers defined in `raster`. If a 'SpatRaster' with multiple layers, a 'RasterStack' or a
+#'   rasterlayers defined in `land_rast`. If a 'SpatRaster' with multiple layers, a 'RasterStack' or a
 #'   'RasterBrick' is provided, the
 #'   number of rasterlayers are extracted from these objects. Each element of the list must be a
 #'   vector built from concatenated pairs of values, with the value of the raster (the class) in the
@@ -336,13 +336,20 @@ rast_tolist <- function(raster){
 #' }
 #'
 #' @return An object of class 'MultiLand'. This object can be used to generate useful plots with
-#'   [mland_plot()], calculate metrics with [metrics()] and calculate buffer's overlapping with
-#'   [overlapping()]. See ?MultiLand for more details on the content of this object.
+#'   [mland_plot()], calculate metrics with [mland_metrics()] and calculate buffer's overlapping with
+#'   [mland_overlap()]. See ?MultiLand for more details on the content of this object.
 #' @export
-#' @seealso [mland_plot()], [metrics()], [overlapping()], [land_points()]
+#' @seealso [mland_plot()], [mland_metrics()], [mland_overlap()], [generate_points()]
 #' @examples
-#' # Loads main raster and extra raster
+#' # Loads main raster with land covers
 #' elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
+#'
+#' # Main raster should have discrete values (e.g. land covers). This can be
+#' # checked with the function check_rater():
+#'
+#' check_raster(elchaco)
+#'
+#' # Loads extra raster with NDVI values
 #' elchaco_ndvi <- terra::rast(system.file("extdata", "elchaco_ndvi.tif", package = "multilandr"))
 #'
 #' # Classes names
@@ -357,12 +364,12 @@ rast_tolist <- function(raster){
 #' elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.shp", package = "multilandr"))
 #'
 #' # Creates 'MultiLand' object by loading main raster, an extra raster and points.
-#' ernesdesign <- mland(points = elchaco_sites,
-#'                      raster = elchaco,
+#' ernesdesign <- mland(points_vect = elchaco_sites,
+#'                      land_rast = elchaco,
 #'                      radii = seq(1000, 5000, 1000),
 #'                      classnames = list(cl_names),
 #'                      site_ref = "name",
-#'                      ext_raster = elchaco_ndvi,
+#'                      ext_rast = elchaco_ndvi,
 #'                      layer_names = c("landuse", "NDVI"),
 #'                      segs = 20)
 #'
@@ -377,34 +384,32 @@ rast_tolist <- function(raster){
 #' elchaco2 <- terra::rast(system.file("extdata", "elchaco2.tif", package = "multilandr"))
 #'
 #' # Creates 'MultiLand' with two rasterlayers.
-#' ernesdesign2 <- mland(points = elchaco_sites,
-#'                       raster = list(elchaco, elchaco2),
+#' ernesdesign2 <- mland(points_vect = elchaco_sites,
+#'                       land_rast = list(elchaco, elchaco2),
 #'                       radii = seq(1000, 5000, 1000),
 #'                       classnames = list(cl_names, cl_names),
-#'                       site_ref = "name",
-#'                       segs = 20)
+#'                       site_ref = "name")
 #'
-#' # Creates the same object but with "onthefly = T". Intersections between
+#' # Creates the same object but with "on_the_fly = T". Intersections between
 #' # buffers and rasters will not be generated in this step
-#' ernesdesign3 <- mland(points = elchaco_sites,
-#'                       raster = list(elchaco, elchaco2),
+#' ernesdesign3 <- mland(points_vect = elchaco_sites,
+#'                       land_rast = list(elchaco, elchaco2),
 #'                       radii = seq(1000, 5000, 1000),
 #'                       classnames = list(cl_names, cl_names),
 #'                       site_ref = "name",
-#'                       segs = 20,
-#'                       onthefly = T)
+#'                       on_the_fly = T)
 #'
 #' # Creates a MultiLand object with hundreds of points. In this case, these
-#' # points were generated with land_points(), another function from this package. Also,
-#' # "onthefly = TRUE" assures that no intersections between buffers and the raster are
+#' # points were generated with generate_points(), another function from this package. Also,
+#' # "on_the_fly = TRUE" assures that no intersections between buffers and the raster are
 #' # created in this step.
 #'
 #' # Loads points
 #' otf_sites <- terra::vect(system.file("extdata", "otf_sites.shp", package = "multilandr"))
 #'
 #' # Creates MultiLand object
-#' otf_design <- mland(points = otf_sites,
-#'                     raster = elchaco,
+#' otf_design <- mland(points_vect = otf_sites,
+#'                     land_rast = elchaco,
 #'                     radii = 2000,
 #'                     classnames = list(c(1, "Forest",
 #'                                         2, "Grassland",
@@ -412,14 +417,11 @@ rast_tolist <- function(raster){
 #'                                         4, "Pastures",
 #'                                         5, "Water",
 #'                                         6, "Urban")),
-#'                     onthefly = TRUE,
-#'                     segs = 20)
-#'
-#'
+#'                     on_the_fly = TRUE)
 #' }
-mland <- function(points, raster = NULL, radii, classnames = NULL, site_ref = NULL,
-                  bufftype = "round", segs = 20, ext_raster = NULL, layer_names = NULL,
-                  onthefly = FALSE, progress = TRUE){
+mland <- function(points_vect, land_rast = NULL, radii, classnames = NULL, site_ref = NULL,
+                  bufftype = "round", segs = 20, ext_rast = NULL, layer_names = NULL,
+                  on_the_fly = FALSE, progress = TRUE){
 
   # Check arguments
   environment(.mland_chk_args) <- environment()
@@ -436,23 +438,23 @@ mland <- function(points, raster = NULL, radii, classnames = NULL, site_ref = NU
     for(i in 3:length(chk)){ assign(objs[i], chk[[i]]) }
   }
 
-  # Transform raster and ext_raster arguments into lists
-  raster     <- rast_tolist(raster)
-  ext_raster <- rast_tolist(ext_raster)
+  # Transform land_rast and ext_rast arguments into lists
+  land_rast <- rast_tolist(land_rast)
+  ext_rast <- rast_tolist(ext_rast)
 
   # Sort radii
   radii <- radii[order(unique(radii))]
 
   # Generate class layers and points
   if(progress) message("Loading layers")
-  list_layers <- tryCatch(.generate_layers(points, site_ref, raster, ext_raster),
+  list_layers <- tryCatch(.generate_layers(points_vect, site_ref, land_rast, ext_rast),
                          error = function(e){
                            message("")
                            stop(e)})
   classes     <- list_layers[[1]]
   l_points    <- list_layers[[2]]
   site_ref    <- list_layers[[3]]
-  l_rasters   <- raster
+  l_rasters   <- land_rast
   n_points    <- length(l_points)
 
   # Generate buffers
@@ -463,8 +465,8 @@ mland <- function(points, raster = NULL, radii, classnames = NULL, site_ref = NU
   crs_proj <- terra::crs(l_points)
 
   # Generate intersections between buffers and classes
-  if(progress & !onthefly) message("Generating intersections")
-  ints       <- .intersecting(l_rasters, l_buffers, classes, ext_raster, onthefly)
+  if(progress & !on_the_fly) message("Generating intersections")
+  ints       <- .intersecting(l_rasters, l_buffers, classes, ext_rast, on_the_fly)
   n_classes  <- ints[[2]]
   landscapes <- list(ints[[1]], ints[[3]])
   names(landscapes) <- c("lsm_rasters", "ext_rasters")
@@ -489,7 +491,7 @@ mland <- function(points, raster = NULL, radii, classnames = NULL, site_ref = NU
     df_classes <- data.frame()
   }
   # Extra raster names
-  layer_names <- rast_labels(layer_names, raster, ext_raster)
+  layer_names <- rast_labels(layer_names, land_rast, ext_rast)
   names(layer_names) <- c("lsm", "ext")
 
   # Data frame with references for each point and radii
@@ -518,7 +520,7 @@ mland <- function(points, raster = NULL, radii, classnames = NULL, site_ref = NU
              classes     = df_classes,
              points      = l_points,
              buffers     = l_buffers,
-             onthefly    = onthefly,
+             on_the_fly  = on_the_fly,
              landscapes  = landscapes,
              layer_names = layer_names,
              l_ref       = df_reference,

@@ -145,7 +145,7 @@ get_ext_range <- function(x, ext_range){
 #' \dontrun{
 #' # Loads a 'MultiLand' object
 #' ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
-#' ernesdesign <- load_mland(ernesdesign)
+#' ernesdesign <- mland_load(ernesdesign)
 #'
 #' # Plots all points and radii
 #' mland_plot(ernesdesign)
@@ -251,7 +251,7 @@ mland_plot <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster
       t_slot <- x@landscapes$lsm_rasters
     }
 
-    if(!x@onthefly){
+    if(!x@on_the_fly){
       sub_int <- t_slot[[raster]][[pos]]
     } else {
       clip <- suppressWarnings(tryCatch(terra::crop(t_slot[[raster]],

@@ -13,7 +13,7 @@ contained in the slot \verb{@points} and each radius defined in slot \verb{@radi
 point id and a radius value).
 }
 \details{
-If the slot \verb{@onthefly} equals \code{FALSE}, the slot \verb{@landscapes} holds the intersections (objects of class 'SpatRaster') between
+If the slot \verb{@on_the_fly} equals \code{FALSE}, the slot \verb{@landscapes} holds the intersections (objects of class 'SpatRaster') between
 buffers and the rasterlayers inputted by the user when running \code{\link[=mland]{mland()}}. Intersections
 between buffers and rasterlayers with discrete values (inputted in argument \code{raster} in \code{\link[=mland]{mland()}}) are
 contained inside a list named 'lsm_rasters', whereas intersections between extra rasterlayers
@@ -29,9 +29,9 @@ intersection may be named as "RasterLayer1-5-1500", indicating that this element
 layer which is the result of the intersection between RasterLayer1 and the buffer around point 5 and
 radius 1500 m.
 
-If slot \verb{@onthefly} equals \code{FALSE}, the slot \verb{@landscapes} holds a list containing two named lists
+If slot \verb{@on_the_fly} equals \code{FALSE}, the slot \verb{@landscapes} holds a list containing two named lists
 as 'lsm_rasters' and 'ext_rasters'. Each one contains a list with as many rasterlayers were initially
-inputted by the user when running \code{\link[=mland]{mland()}} in arguments \code{raster} and \code{ext_raster}.
+inputted by the user when running \code{\link[=mland]{mland()}} in arguments \code{land_rast} and \code{ext_rast}.
 This means that no intersections were
 made when creating the 'MultiLand' object. Intersections will be created "on the fly" when other functions of
 the package requires them.
@@ -55,7 +55,7 @@ the one that identifies individual points and is contained inside the layer of p
 \item{\code{radii}}{Vector of numbers containing the radii that defined the creation of buffers.}
 
 \item{\code{n_layers}}{Number of rasterlayers (defined in argument \code{raster} in \code{\link[=mland]{mland()}}) from which i
-ntersections between were created (or will be if slot \verb{@onthefly = TRUE}).}
+ntersections between were created (or will be if slot \verb{@on_the_fly = TRUE}).}
 
 \item{\code{n_classes}}{A numeric vector depicting the number of classes (raster values) per raster
 layer (defined in argument \code{raster} in \code{\link[=mland]{mland()}}).}
@@ -63,18 +63,18 @@ layer (defined in argument \code{raster} in \code{\link[=mland]{mland()}}).}
 \item{\code{classes}}{A data.frame depicting the classes (and classes names) for each rasterlayer
 (defined in argument \code{raster} in \code{\link[=mland]{mland()}}).}
 
-\item{\code{onthefly}}{A logical value indicating whether intersections between buffers and rasterlayers
+\item{\code{on_the_fly}}{A logical value indicating whether intersections between buffers and rasterlayers
 were created (FALSE) or not (TRUE).}
 
-\item{\code{landscapes}}{If \code{onthefly = FALSE}, this slot holds the intersections between buffers and
-rasterlayers. Otherwise, if \code{onthefly = TRUE}, it holds the raw rasterlayers.}
+\item{\code{landscapes}}{If \code{on_the_fly = FALSE}, this slot holds the intersections between buffers and
+rasterlayers. Otherwise, if \code{on_the_fly = TRUE}, it holds the raw rasterlayers.}
 
 \item{\code{l_ref}}{A data.frame relating each point and radius with a "row_id", equal to the position of
 its buffer in the slot \verb{@buffers} and to the position of the intersection for each point/radius in
-the slot \verb{@landscapes} (if \code{onthefly = TRUE}).}
+the slot \verb{@landscapes} (if \code{on_the_fly = TRUE}).}
 
 \item{\code{layer_names}}{A list containing two data.frame with the names assigned by the user for the main rasterlayers
-and extra rasterlayers defined in argument \code{raster} and \code{ext_raster} in \code{\link[=mland]{mland()}}.}
+and extra rasterlayers defined in argument \code{land_rast} and \code{ext_rast} in \code{\link[=mland]{mland()}}.}
 }}
 
 \examples{

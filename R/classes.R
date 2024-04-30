@@ -12,7 +12,7 @@ setClassUnion("null_chr", c("NULL", "character"))
 #' `@buffers@data` holds a data.frame with the identification of each buffer (individualized by a
 #'  point id and a radius value).
 #'
-#'  If the slot `@onthefly` equals `FALSE`, the slot `@landscapes` holds the intersections (objects of class 'SpatRaster') between
+#'  If the slot `@on_the_fly` equals `FALSE`, the slot `@landscapes` holds the intersections (objects of class 'SpatRaster') between
 #'  buffers and the rasterlayers inputted by the user when running [mland()]. Intersections
 #'  between buffers and rasterlayers with discrete values (inputted in argument `raster` in [mland()]) are
 #'  contained inside a list named 'lsm_rasters', whereas intersections between extra rasterlayers
@@ -28,9 +28,9 @@ setClassUnion("null_chr", c("NULL", "character"))
 #'  layer which is the result of the intersection between RasterLayer1 and the buffer around point 5 and
 #'  radius 1500 m.
 #'
-#'  If slot `@onthefly` equals `FALSE`, the slot `@landscapes` holds a list containing two named lists
+#'  If slot `@on_the_fly` equals `FALSE`, the slot `@landscapes` holds a list containing two named lists
 #'  as 'lsm_rasters' and 'ext_rasters'. Each one contains a list with as many rasterlayers were initially
-#'  inputted by the user when running [mland()] in arguments `raster` and `ext_raster`.
+#'  inputted by the user when running [mland()] in arguments `land_rast` and `ext_rast`.
 #'  This means that no intersections were
 #'  made when creating the 'MultiLand' object. Intersections will be created "on the fly" when other functions of
 #'  the package requires them.
@@ -44,20 +44,20 @@ setClassUnion("null_chr", c("NULL", "character"))
 #' the one that identifies individual points and is contained inside the layer of points.
 #' @slot radii Vector of numbers containing the radii that defined the creation of buffers.
 #' @slot n_layers Number of rasterlayers (defined in argument `raster` in [mland()]) from which i
-#' ntersections between were created (or will be if slot `@onthefly = TRUE`).
+#' ntersections between were created (or will be if slot `@on_the_fly = TRUE`).
 #' @slot n_classes A numeric vector depicting the number of classes (raster values) per raster
 #' layer (defined in argument `raster` in [mland()]).
 #' @slot classes A data.frame depicting the classes (and classes names) for each rasterlayer
 #' (defined in argument `raster` in [mland()]).
-#' @slot onthefly A logical value indicating whether intersections between buffers and rasterlayers
+#' @slot on_the_fly A logical value indicating whether intersections between buffers and rasterlayers
 #' were created (FALSE) or not (TRUE).
-#' @slot landscapes If `onthefly = FALSE`, this slot holds the intersections between buffers and
-#' rasterlayers. Otherwise, if `onthefly = TRUE`, it holds the raw rasterlayers.
+#' @slot landscapes If `on_the_fly = FALSE`, this slot holds the intersections between buffers and
+#' rasterlayers. Otherwise, if `on_the_fly = TRUE`, it holds the raw rasterlayers.
 #' @slot l_ref A data.frame relating each point and radius with a "row_id", equal to the position of
 #' its buffer in the slot `@buffers` and to the position of the intersection for each point/radius in
-#' the slot `@landscapes` (if `onthefly = TRUE`).
+#' the slot `@landscapes` (if `on_the_fly = TRUE`).
 #' @slot layer_names A list containing two data.frame with the names assigned by the user for the main rasterlayers
-#' and extra rasterlayers defined in argument `raster` and `ext_raster` in [mland()].
+#' and extra rasterlayers defined in argument `land_rast` and `ext_rast` in [mland()].
 #'
 #' @examples
 #' # Shows information of object 'MultiLand'
@@ -94,7 +94,7 @@ setClass("MultiLand",
            buffers = "SpatVector",
 
            # on the fly?
-           onthefly = "logical",
+           on_the_fly = "logical",
 
            # landscapes
            landscapes = "list",
@@ -114,17 +114,17 @@ setClass("MultiLand",
 
 #' Class 'MultiLandMetrics'
 #'
-#' Objects of class `MultiLandMetrics` are returned by [metrics()]. It holds all the information
+#' Objects of class `MultiLandMetrics` are returned by [mland_metrics()]. It holds all the information
 #' relative to the metrics that were calculated by the parameters inputted by the user. This object
-#' class can be passed to functions [pair_corr()], [pair_plots()], [landscape_filter()], [optimize_gradient()] and
-#' [bind_metrics()] for further analyses.
+#' class can be passed to functions [metrics_corr()], [metrics_plots()], [metrics_filter()], [metrics_gradient()] and
+#' [metrics_bind()] for further analyses.
 #'
-#' @slot call The call when function [metrics()] was called.
+#' @slot call The call when function [mland_metrics()] was called.
 #' @slot idkey A unique identification id for the 'MultiLandMetrics' object.
 #' @slot crs_proj A string depicting the CRS of points layer.
 #' @slot n_layers Number of rasterlayers from which metrics were calculated.
 #' @slot layer_names A list with dataframes containing the names of the rasterlayers of the
-#' 'MultiLand' object the function [metrics()] worked with.
+#' 'MultiLand' object the function [mland_metrics()] worked with.
 #' @slot classes A data.frame depicting the rasterlayers, classes and classes names from which
 #' metrics were calculated.
 #' @slot n_classes Numeric vector depicting the number of distinct classes per rasterlayer
