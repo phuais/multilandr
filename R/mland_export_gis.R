@@ -16,13 +16,13 @@
     # Rasterlayers
     if(!is.null(raster)){
       if(is.character(raster)){
-        if(!all(raster %in% x@layer_names[[1]]$name)){
+        if(!all(raster %in% x@rast_names[[1]]$name)){
           messages <- append(messages,
                              "- in argument 'raster': required rasterlayers were not found in
                            'x'. Mispelled?")
           what     <- append(what, 2)
         } else {
-          raster <- sort(x@layer_names[[1]][x@layer_names[[1]]$name %in% raster, "rasterlayer"])
+          raster <- sort(x@rast_names[[1]][x@rast_names[[1]]$name %in% raster, "rasterlayer"])
         }
       } else {
         if(!all(is.positive.wholenumber(raster))){
@@ -41,13 +41,13 @@
     # Extra rasters
     if(!is.null(ext_raster)){
       if(is.character(ext_raster)){
-        if(!all(ext_raster %in% x@layer_names[[2]]$name)){
+        if(!all(ext_raster %in% x@rast_names[[2]]$name)){
           messages <- append(messages,
                              "- in argument 'ext_raster': required rasterlayers were not found in
                            'x'. Mispelled?")
           what     <- append(what, 2)
         } else {
-          ext_raster <- sort(x@layer_names[[2]][x@layer_names[[2]]$name %in% ext_raster,
+          ext_raster <- sort(x@rast_names[[2]][x@rast_names[[2]]$name %in% ext_raster,
                                                 "rasterlayer"])
         }
       } else {
@@ -55,7 +55,7 @@
           messages <- append(messages, "- argument 'ext_raster' must be a vector of positive wholenumbers.")
           what     <- append(what, 2)
         } else {
-          if(!all(ext_raster %in% 1:max(x@layer_names[[2]]$rasterlayer))){
+          if(!all(ext_raster %in% 1:max(x@rast_names[[2]]$rasterlayer))){
             messages <- append(messages,"- in argument 'ext_raster': one or more required rasterlayer was not found in x.
                            Mispelled?")
             what     <- append(what, 2)
@@ -84,27 +84,17 @@
 
 #' Exports a 'MultiLand' object as GIS data
 #'
-#' Exports points, buffers and intersections between buffers and rasterlayers, as shapefiles and raster
+#' Exports points, buffers and intersections between buffers and rasterlayers, as vector and raster
 #' files.
 #'
 #' @param x  An object of class 'MultiLand' generated with [mland()].
 #' @param points Numeric or character vector of points to be processed. See Details.
 #' @param radii Numeric vector of radii to be processed.
-#' @param dir Character. Name of the target directory where files will be exported. Provide a
-#' string with an existing folder, otherwise the function will create it.
+#' @param name Character. Name of the zip file where files will be exported.
 #' @param raster,ext_raster Numeric. The rasterlayers to be exported.
-#' @param filenames Character vector with the root of the file names to be exported, for
-#' points, buffers, main rasterlayers and extra rasters, respectively. Default is
-#' c("points", "buffers", "lsm_raster", "ext_raster").
-#' @param overwrite Logical. Whether to overwrite (TRUE) or not (FALSE, default) existing files
-#' with the same names.
-#' @param filetype Character. File format expressed as GDAL driver names
-#' (\href{https://gdal.org/drivers/vector/index.html}{Vector Drivers},
-#' \href{https://gdal.org/drivers/raster/index.html}{Raster drivers}). Default are
-#' c("ESRI Shapefile", "GTiff") for points/rasters and raster intersections, respectively.
-#' @param gdal GDAL driver specific datasource creation options. See the GDAL documentation. With the
-#' \href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}, [mland_export_gis()] uses the
-#' following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9").
+#' @param gdal GeoTiff creation options for rasters (\href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}).
+#' [mland_export_gis()] uses the following compression options:
+#' c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9").
 #' @param ... Other arguments passed to [terra::writeRaster].
 #'
 #' @details
@@ -115,9 +105,9 @@
 #' identification names. Otherwise, if a numeric vector is declared, the inputted values
 #' will be taken as the automatically generated point ids (created when running [mland()]).
 #'
-#' @return No return of an R object. GIS data from a 'MultiLand' object is exported.
+#' @return GIS data from a 'MultiLand' object is exported through a zip file.
 #'
-#' @seealso [mland()]
+#' @seealso [mland()], [mland_save()], [mland_load()]
 #'
 #' @export
 #'
@@ -131,9 +121,7 @@
 #' mland_export_gis(ernesdesign, dir = "ernesdesign")
 #' }
 mland_export_gis <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster = NULL,
-                       dir = getwd(), filenames = c("points", "buffers", "lsm_raster", "ext_raster"),
-                       overwrite = FALSE, filetype = c("ESRI Shapefile", "GTiff"),
-                       gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"), ...){
+                       name = NULL, gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"), ...){
 
   # Check arguments
   if(!is(x, "MultiLand")){
@@ -153,7 +141,16 @@ mland_export_gis <- function(x, raster = NULL, points = NULL, radii = NULL, ext_
     for(i in 3:length(chk)){ assign(objs[i], chk[[i]]) }
   }
 
-  if(!dir.exists(dir)) dir.create(dir, recursive = T)
+  if(!is.null(name)){
+    if(!is.character(name))
+      stop("- if not NULL, argument 'name' must be a string with the name of the file.")
+  } else {
+    name <- keygen()
+    name <- paste0("mland-GIS_", name)
+  }
+
+  if(file.exists(paste0(name, ".zip")))
+    stop("name: a file with the same name for the zip file already exist. Please choose another one.")
 
   df_reference <- x@l_ref
 
@@ -169,35 +166,56 @@ mland_export_gis <- function(x, raster = NULL, points = NULL, radii = NULL, ext_
   points <- sort(unique(df_reference$point_id))
   radii  <- sort(unique(df_reference$radius))
 
+
+  dir.create(tmp <- tempfile())
+  dir.create(file.path(tmp, "MultiLand-GIS_data"))
+  dir.create(file.path(tmp, "MultiLand-GIS_data", "rasters"))
+
   # Export points
-  terra::writeVector(x@points[x@points$id %in% points, ],
-                     paste0(dir, "/", filenames[1]), overwrite = overwrite, filetype = filetype[1])
+  suppressWarnings(terra::writeVector(x@points[x@points$id %in% points, ],
+                                      file.path(tmp, "MultiLand-GIS_data", "points.gpkg"),
+                                      options = NULL))
 
   # Export buffers
-  terra::writeVector(x@buffers[df_reference$row_id, ],
-                     paste0(dir, "/", filenames[2]), overwrite = overwrite,
-                     filetype = filetype[1])
+  suppressWarnings(terra::writeVector(x@buffers[df_reference$row_id, ],
+                                      file.path(tmp, "MultiLand-GIS_data", "buffers.gpkg"),
+                                      options = NULL))
 
   raster_ids <- df_reference[df_reference$radius %in% max(radii), "row_id"]
 
-  # Export intersections
+ # Export intersections
   if(!x@on_the_fly){
-    dir.create(paste0(dir, "/rasters/"), recursive = T)
     if(!is.null(raster)){
       for(i in 1:length(unique(raster))){
         int_tmp <- mmerge(x@landscapes$lsm_rasters[[raster[i]]][raster_ids])
-        terra::writeRaster(int_tmp, paste0(dir, paste0("/rasters/", filenames[3], "_", raster[i])),
-                            filetype = filetype[2], overwrite = overwrite, gdal = gdal, ...)
+        terra::writeRaster(int_tmp, file.path(tmp, "MultiLand-GIS_data", "rasters",
+                                              paste0("lsm_raster_", raster[i], ".tif")),
+                           gdal = gdal, ...)
       }
     }
     if(!is.null(ext_raster)){
       for(i in 1:length(unique(ext_raster))){
         int_tmp <- mmerge(x@landscapes$ext_rasters[[ext_raster[i]]][raster_ids])
-        terra::writeRaster(int_tmp, paste0(dir, paste0("/rasters/", filenames[4], "_", ext_raster[i])),
-                            filetype = filetype[2], overwrite = overwrite, gdal = gdal, ...)
+        terra::writeRaster(int_tmp, file.path(tmp, "MultiLand-GIS_data", "rasters",
+                                              paste0("ext_raster_", raster[i], ".tif")),
+                           gdal = gdal, ...)
       }
     }
   } else {
     message("- in 'x': on_the_fly = TRUE. No intersections were exported.")
   }
+
+  cat(strwrap("MultiLand-GIS_data\n\n
+              This directory was created by R package multilandr.\n
+              GIS data was generated while exporting an object of class 'MultiLand'.",
+              prefix = "\n", initial = ""), file = file.path(tmp, "MultiLand-GIS_data", "README.txt"))
+
+  # Generates zip file
+  last_wd <- getwd()
+  zipfile <- paste0(last_wd, "/", name, ".zip")
+  setwd(tmp)
+  utils::zip(zipfile, ".")
+  setwd(last_wd)
+  unlink(file.path(tmp), recursive = T)
+  message(paste0("GIS data was successfully exported within file '", name, ".zip'."))
 }

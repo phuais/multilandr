@@ -42,6 +42,6 @@ an open-source R tool to calculate landscape metrics. - Ecography 42:1648-1657(v
 
 McGarigal, K., SA Cushman, and E Ene. 2012. FRAGSTATS v4: Spatial Pattern Analysis Program for
 Categorical and Continuous Maps. Computer software program produced by the authors at the
-University of Massachusetts, Amherst. Available at the following web site:
-https://www.umass.edu/landeco/
+University of Massachusetts, Amherst. \cr
+Available at the following web site: https://www.umass.edu/landeco/
 }

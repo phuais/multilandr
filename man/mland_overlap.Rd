@@ -25,15 +25,7 @@ into account.}
 \item{digits}{Numeric. Number of digits for the values of overlapped areas. Default is 2.}
 
 \item{perc}{Logical. If TRUE (default) the degree of overlapped areas will be
-presented as percentages. If FALSE, proportions will be outputted.
-
-@details
-If argument \code{points} is a character vector,
-\code{\link[=mland_overlap]{mland_overlap()}} will assume that the 'MultiLand' object inputted in argument \code{x} was created with
-\code{site_ref = TRUE}. This is, there is a column/attribute in the points layer with the names for
-each distinct point. Therefore, the inputted values in argument \code{points} will be taken as these
-identification names. Otherwise, if a numeric vector is declared, the inputted values
-will be taken as the automatically generated point ids (created when executing \code{\link[=mland]{mland()}}).}
+presented as percentages. If FALSE, proportions will be outputted.}
 
 \item{title}{One of the following: "id" to output each point with its id (default), or "sitename" to
 output each point with its pre-defined point name in \code{x}.}
@@ -45,6 +37,14 @@ matrix with the percentages (or proportions if \code{perc = FALSE}) of overlappi
 \description{
 Returns matrices informing the degree of overlapped area
 between buffers of a 'MultiLand' object.
+}
+\details{
+If argument \code{points} is a character vector,
+\code{\link[=mland_overlap]{mland_overlap()}} will assume that the 'MultiLand' object inputted in argument \code{x} was created with
+\code{site_ref = TRUE}. This is, there is a column/attribute in the points layer with the names for
+each distinct point. Therefore, the inputted values in argument \code{points} will be taken as these
+identification names. Otherwise, if a numeric vector is declared, the inputted values
+will be taken as the automatically generated point ids (created when executing \code{\link[=mland]{mland()}}).
 }
 \examples{
 \dontrun{

@@ -89,6 +89,11 @@
 #'
 #' # An example with hundreds of points
 #' metrics_plots(otf_metrics, classes = c("Forest", "Crops"))
+#'
+#' # Plots can be combined with ggplot2::theme
+#' # library(ggplot2)
+#' metrics_plots(otf_metrics, classes = c("Forest", "Crops")) +
+#'   theme_bw()
 #' }
 metrics_plots <- function(x, raster = NULL, classes = NULL, radii = NULL, c_level = NULL, l_level = NULL,
                        ext_raster = NULL, classnames = FALSE,
@@ -129,8 +134,9 @@ metrics_plots <- function(x, raster = NULL, classes = NULL, radii = NULL, c_leve
   # Credit to user20650 from stackoverflow
   my_fn <- function(data, mapping, meth = method, ...){
     p <- ggplot2::ggplot(data = data, mapping = mapping) +
-      ggplot2::geom_point(shape = st_points$shape, fill = st_points$fill, col = st_points$col,
-                          alpha = st_points$alpha, size = st_points$size, na.rm = T)
+      ggplot2::geom_point(shape = st_points$shape, fill = st_points$fill,
+                          col = st_points$col, alpha = st_points$alpha,
+                          size = st_points$size, na.rm = T)
 
     if(smooth){
       p <- p + ggplot2::geom_smooth(method = meth, formula = y ~ x, se = se, na.rm = T,
@@ -143,7 +149,8 @@ metrics_plots <- function(x, raster = NULL, classes = NULL, radii = NULL, c_leve
   # Pair scatterplots
   if(upper) upper <- list(continuous = my_fn) else upper = "blank"
   if(diag) diag <- list(continuous = "densityDiag") else diag = list(continuous = "blankDiag")
-  suppressWarnings(print(GGally::ggpairs(new_df_wide[3:ncol(new_df_wide)], lower = list(continuous = my_fn),
-                  upper = upper, diag = diag, progress = F)))
+  suppressWarnings(GGally::ggpairs(new_df_wide[3:ncol(new_df_wide)],
+                                   lower = list(continuous = my_fn),
+                                   upper = upper, diag = diag, progress = F))
 }
 

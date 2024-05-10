@@ -1,6 +1,6 @@
 #' Check input raster
 #'
-#' Checks the validity of rasterlayers to be inputted in [mland()]. The function directly calls
+#' Checks the validity of raster layers to be inputted in [mland()], intended to represent land cover. The function directly calls
 #' [landscapemetrics::check_landscape()].
 #'
 #' @param raster An object of class 'RasterLayer', 'RasterStack', 'RasterBrick', 'SpatRaster',

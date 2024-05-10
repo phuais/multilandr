@@ -21,7 +21,7 @@ class can be passed to functions \code{\link[=metrics_corr]{metrics_corr()}}, \c
 
 \item{\code{n_layers}}{Number of rasterlayers from which metrics were calculated.}
 
-\item{\code{layer_names}}{A list with dataframes containing the names of the rasterlayers of the
+\item{\code{rast_names}}{A list with dataframes containing the names of the rasterlayers of the
 'MultiLand' object the function \code{\link[=mland_metrics]{mland_metrics()}} worked with.}
 
 \item{\code{classes}}{A data.frame depicting the rasterlayers, classes and classes names from which

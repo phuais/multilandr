@@ -20,8 +20,8 @@
 #' mland_obj <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 #' ernesdesign <- mland_load(mland_obj)
 #'
-#' # Loads a MultiLandMetrics object previously generated with mland_metrics() and exported as a
-#' # RDS object with mland_save() or saveRDS()
+#' # Loads a MultiLandMetrics object previously generated with mland_metrics() and
+#' # exported as a RDS object with mland_save() or saveRDS()
 #'
 #' mlm_obj <- system.file("extdata", "ed_metrics.rds", package = "multilandr")
 #' ed_metrics <- mland_load(mlm_obj)
@@ -65,8 +65,8 @@ mland_load <- function(path, ...){
   info <- readRDS(grep("info.rds", objs, value = T))
 
   # Loads points and buffers
-  info@points <- terra::vect(grep("points.shp", objs, value = T))
-  info@buffers <- terra::vect(grep("buffers.shp", objs, value = T))
+  info@points <- terra::vect(grep("points.gpkg", objs, value = T))
+  info@buffers <- terra::vect(grep("buffers.gpkg", objs, value = T))
 
   ff <- function(x, objs){
     terra::rast(grep(x, objs, value = T))

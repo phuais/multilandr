@@ -289,7 +289,7 @@ mland_plot <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster
                                                      na.value = "transparent", limits = ext_range)
     }
     df <- data.frame(value = ext_range[1]:ext_range[2])
-    legend_name <- x@layer_names[[2]][x@layer_names[[2]]$rasterlayer == raster, "name"]
+    legend_name <- x@rast_names[[2]][x@rast_names[[2]]$rasterlayer == raster, "name"]
     if(is.na(legend_name)) legend_name <- "value"
     art_plot <- ggplot2::ggplot(data = df, ggplot2::aes(x = 0, y = value, fill = value)) +
       ggplot2::geom_point() +
@@ -306,7 +306,7 @@ mland_plot <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster
     art_pos  <- rep(0, length(cl_names))
     df <- data.frame(art_pos, classes = cl_names)
     df$classes <- factor(df$classes, levels = cl_names)
-    legend_name <- x@layer_names[[1]][x@layer_names[[1]]$rasterlayer == raster, "name"]
+    legend_name <- x@rast_names[[1]][x@rast_names[[1]]$rasterlayer == raster, "name"]
     if(is.na(legend_name)) legend_name <- "classes"
     art_plot <- ggplot2::ggplot(data = df, ggplot2::aes(art_pos, fill = classes, alpha = classes)) +
       ggplot2::geom_bar() +

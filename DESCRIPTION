@@ -4,7 +4,7 @@ Version: 1.0.0
 Authors@R: 
     person("Pablo Yair", "Huais", , "pablo.huais@unc.edu.ar", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-4062-0779"))
-Description: Provides a user-friendly workflow for general landscape-scale analyses of spatial data. 'multilandr' delivers a platform to generate landscapes of multiple spatial scales and calculate landscape metrics, mainly relying on R package 'landscapemetrics'. The package provides utility functions to plot and analyze multi-scale landscapes, calculate and visualize correlations between metrics, filter landscapes that fulfill pre-defined attributes, select landscapes that comprise optimized gradients for a given metric and prepare datasets for ulterior statistical tasks. 
+Description: Provides a tidy workflow for general landscape-scale analysis. 'multilandr' provides the tools to generate landscapes at multiple spatial scales and calculate landscape metrics, mainly relying on R package 'landscapemetrics'. The package provides utility functions to plot and analyze multi-scale landscapes, calculate and visualize correlations between metrics, filter landscapes that fulfill certain conditions, generate gradients of landscapes for a given metric and prepare datasets for further statistical tasks. 
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -28,7 +28,6 @@ Collate:
     'check_raster.R'
     'classes.R'
     'data.R'
-    'export_gis.R'
     'func_checks.R'
     'generate_points.R'
     'generate_points_checks.R'
@@ -45,6 +44,7 @@ Collate:
     'metrics_plots.R'
     'mland.R'
     'mland_checks.R'
+    'mland_export_gis.R'
     'mland_load.R'
     'mland_metrics.R'
     'mland_metrics_checks.R'

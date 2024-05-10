@@ -7,7 +7,6 @@
 mland_save(
   x,
   name = NULL,
-  dir = getwd(),
   gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
   ...
 )
@@ -19,11 +18,8 @@ mland_save(
 files will be saved (without the '.zip'). If \code{x} is an object of class 'MultiLandMetrics',  the name of the R file (.rds). If NULL (default),
 the name will be 'mland_' or 'mlandmetrics_' + a large random number.}
 
-\item{dir}{The directory where to save the file, without the '/' at the beginning/ending of the string.}
-
-\item{gdal}{GDAL driver specific datasource creation options. See the GDAL documentation. With the
-\href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}, \code{\link[=mland_save]{mland_save()}} uses the
-following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"). Only relevant
+\item{gdal}{GeoTiff creation options for rasters (\href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}).
+\code{\link[=mland_save]{mland_save()}} uses the following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"). Only relevant
 if \code{x} is an object of class 'MultiLand'.}
 
 \item{...}{If \code{x} is an object of class 'MultiLand', \code{...} should depict other arguments passed to

@@ -43,27 +43,29 @@
 #'
 #' @examples
 #' # Generates an optimized gradient for the landscape metric "pland", for the class "Forest".
-#' pland_gradient <- metrics_gradient(otf_metrics, rasterlayer = 1, class = "Forest", radius = 2000,
-#'                                    metric = "pland", n = 15, breaks = 10)
-#' # Note that, in this case, specifications for the rasterlayer and the radius are redundant, and
-#' # could be simply ignored and left as default, asthe object otf_metrics only comprises a unique
-#' # rasterlayer and radius.
+#' pland_gradient <- metrics_gradient(otf_metrics, rasterlayer = 1, class = "Forest",
+#'                                    radius = 2000, metric = "pland", n = 15, breaks = 10)
+#' # Note that, in this case, specifications for the rasterlayer and the radius are
+#' # redundant, and could be simply ignored and left as default, asthe object otf_metrics
+#' # only comprises a unique rasterlayer and radius.
 #'
-#' # By default, the output is an updated version of the object otf_metrics. In order to inspect
-#' # the returned values, let's select only the dataframe containing the metric's values.
+#' # By default, the output is an updated version of the object otf_metrics. In order to
+#' # inspect the returned values, let's select only the dataframe containing the
+#' # metric's values.
 #' foo <- subset(pland_gradient@data, metric == "pland" & classname == "Forest",
 #'               select = value)
 #'
-#' # Next, we output the range of values we have obtained, note there are 15 points, as previously
-#' # specified in the function definition in the argument 'n'
+#' # Next, we output the range of values we have obtained, note there are 15 points, as
+#' # previously specified in the function definition in the argument 'n'
 #' round(sort(foo$value), digits = 2)
 #'
-#' # [1]  1.15  1.57  8.17  8.19 15.24 22.32 29.27 36.32 43.17 43.20 49.79 50.25 55.44 57.62 64.53
+#' # 1.15  1.57  8.17  8.19 15.24 22.32 29.27 36.32 43.17 43.20 49.79 50.25 55.44 57.62 64.53
 #'
-#' # Alternatively, we can define specific cutpoints around the landscapes will be selected in terms
-#' # of its numeric closeness.
-#' pland_gradient <- metrics_gradient(otf_metrics, rasterlayer = 1, class = "Forest", radius = 2000,
-#'                                    metric = "pland", n = 15, cutpoints = seq(1, 60, 5))
+#' # Alternatively, we can define specific cutpoints around the landscapes will be selected
+#' # in termsof its numeric closeness.
+#' pland_gradient <- metrics_gradient(otf_metrics, rasterlayer = 1, class = "Forest",
+#'                                    radius = 2000,metric = "pland", n = 15,
+#'                                    cutpoints = seq(1, 60, 5))
 #'
 #' # Again, we inspect the dataframe with the metric values to see our results.
 #' foo <- subset(pland_gradient@data, metric == "pland" & classname == "Forest",
@@ -71,7 +73,7 @@
 #'
 #' round(sort(foo$value), digits = 2)
 #'
-#' # [1] 1.15  6.02  6.03 10.99 15.97 20.99 26.01 31.02 35.95 41.14 41.34 45.93 51.41 54.56 55.44
+#' # 1.15  6.02  6.03 10.99 15.97 20.99 26.01 31.02 35.95 41.14 41.34 45.93 51.41 54.56 55.44
 #'
 #' # Both alternatives generated a well-ranged gradient of values for the forest metric "pland"
 metrics_gradient <- function(x, rasterlayer = NULL, class = NULL,
@@ -160,7 +162,7 @@ metrics_gradient <- function(x, rasterlayer = NULL, class = NULL,
     points_vec <- terra::vect(cbind(x = x@points$x, y = x@points$y),
                               atts = x@points[3:ncol(x@points)],
                               crs = terra::crs(x@crs_proj))
-    # output shapefile
+    # output vector
     if(output == "spatial"){
       out <- points_vec[unique(df_tmp$point_id), ]
     } else {

@@ -12,8 +12,9 @@ otf_metrics
 }
 \description{
 An object of class 'MultiLandMetrics' generated with \code{\link[=mland_metrics]{mland_metrics()}}, for the purposes of package
-examples of the following functions: \code{\link[=metrics_filter]{metrics_filter()}}, \code{\link[=metrics_gradient]{metrics_gradient()}}, \code{\link[=metrics_corr]{metrics_corr()}},
-\code{\link[=metrics_plots]{metrics_plots()}} and \code{\link[=metrics_bind]{metrics_bind()}}. See 'MultiLand-class' for general information about these objects.
+examples of the following functions: \code{\link[=metrics_filter]{metrics_filter()}}, \code{\link[=metrics_gradient]{metrics_gradient()}},
+\code{\link[=metrics_corr]{metrics_corr()}}, \code{\link[=metrics_plots]{metrics_plots()}} and \code{\link[=metrics_bind]{metrics_bind()}}. See 'MultiLand-class' for general
+information about these objects.
 }
 \details{
 The main internal object is a data.frame (accesible through \code{otf_metrics@data}) with information about the values of two landscape metrics:

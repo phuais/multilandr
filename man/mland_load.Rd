@@ -26,8 +26,8 @@ saved with \code{\link[=mland_save]{mland_save()}}. Alternatively, loads to the 
 mland_obj <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 ernesdesign <- mland_load(mland_obj)
 
-# Loads a MultiLandMetrics object previously generated with mland_metrics() and exported as a
-# RDS object with mland_save() or saveRDS()
+# Loads a MultiLandMetrics object previously generated with mland_metrics() and
+# exported as a RDS object with mland_save() or saveRDS()
 
 mlm_obj <- system.file("extdata", "ed_metrics.rds", package = "multilandr")
 ed_metrics <- mland_load(mlm_obj)

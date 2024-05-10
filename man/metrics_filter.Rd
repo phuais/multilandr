@@ -89,7 +89,7 @@ otf_subset_points <- metrics_filter(otf_metrics,
                                     output = "coords")
 
 # Filter landscapes that have between 20 and 30\% of forest at a radius of 2000 m
-# and a maximum of 60$ of Crops.
+# and a maximum of 60\% of Crops.
 conds <- conditions(list(NA, "Forest", 2000, "pland", 20, 30),
                     list(NA, "Crops", 2000, "pland", -Inf, 60))
 otf_subset2 <- metrics_filter(otf_metrics,

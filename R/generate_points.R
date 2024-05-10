@@ -166,8 +166,8 @@ patch_select <- function(df_tmp, patch_rast, patch_conditions){
 #' The user may try different values for `n`, `try` and `attempts` to get a desirable result.
 #'
 #' If `approach = "patch"`, the function will return as many points as patches that meet certain
-#' conditions in relation to pre-defined metric values. Conditions can be defined inside argument
-#' `patch_conditions`, for which the helper function [conditions()] is available:
+#' conditions in relation to pre-defined metric values. Conditions can be defined in
+#' argument `patch_conditions`, for which the helper function [conditions()] is available:
 #'
 #' \preformatted{
 #'  conditions(list(class, metric, minimum value, maximum value),

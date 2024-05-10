@@ -14,13 +14,13 @@
   raster <- sort(unique(raster))
   if(!is.null(raster)){
     if(is.character(raster)){
-      if(!all(raster %in% x@layer_names[[1]]$name)){
+      if(!all(raster %in% x@rast_names[[1]]$name)){
         messages <- append(messages,
                            "- in argument 'raster': required rasterlayers were not found in
                            'x'. Mispelled?")
         what     <- append(what, 2)
       } else {
-        raster <- sort(x@layer_names[[1]][x@layer_names[[1]]$name %in% raster, "rasterlayer"])
+        raster <- sort(x@rast_names[[1]][x@rast_names[[1]]$name %in% raster, "rasterlayer"])
       }
     } else {
       if(!is.positive.wholenumber(raster)){
@@ -52,12 +52,12 @@
           if(length(ext_calc[[i]]) > 1){
             if(!is.numberinchar(ext_calc[[i]][1])){
               layname <- ext_calc[[i]][1]
-              lay <- x@layer_names[[2]][x@layer_names[[2]]$name == layname, "rasterlayer"]
+              lay <- x@rast_names[[2]][x@rast_names[[2]]$name == layname, "rasterlayer"]
               if(length(lay) == 0) lay <- NA
             } else {
               lay <- layname <- as.numeric(ext_calc[[i]][1])
             }
-            if(!lay %in% x@layer_names[[2]]$rasterlayer){
+            if(!lay %in% x@rast_names[[2]]$rasterlayer){
               messages <- append(messages,
                                  paste0("- in argument 'ext_calc': defined extra rasterlayer \"",
                                         layname,"\" was not found as an extra raster in 'x'.
@@ -67,8 +67,8 @@
               for(j in 2:length(ext_calc[[i]])){
                 if(exists(ext_calc[[i]][j])){
                   ext_calc_ref <- rbind(ext_calc_ref, data.frame(rasterlayer = lay,
-                                                                 name = x@layer_names[[2]][
-                                                                   x@layer_names[[2]]$rasterlayer == lay,
+                                                                 name = x@rast_names[[2]][
+                                                                   x@rast_names[[2]]$rasterlayer == lay,
                                                                    "name"],
                                                                  fun = ext_calc[[i]][j]))
                 } else {

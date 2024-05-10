@@ -124,9 +124,10 @@ metrics_corr(ed_metrics, radii = 5000, classnames = TRUE, c_level = "-pland")
 # Excluding the metric radii of 4000 and 5000 m
 metrics_corr(ed_metrics, radii = c(-4000, -5000), classnames = TRUE)
 
-# Correlations of metric "pland" between classes 1 to 3, an between radii 1000 and 5000 m
-# and disaggregating by rasterlayer.
-metrics_corr(ed_metrics, radii = c(1000, 5000), classes = 1:3, c_level = "pland", display = "rl")
+# Correlations of metric "pland" between classes 1 to 3, and between radii
+# 1000 and 5000 m, disaggregating by rasterlayer.
+metrics_corr(ed_metrics, radii = c(1000, 5000), classes = 1:3,
+             c_level = "pland", display = "rl")
 }
 \seealso{
 \code{\link[=mland_metrics]{mland_metrics()}}, \code{\link[=metrics_plots]{metrics_plots()}}

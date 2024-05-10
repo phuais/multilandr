@@ -76,17 +76,19 @@ and must be provided as "fun_" + the name of the function.
 }
 }
 \examples{
-#' # Get sites names from ed_metrics and creates ad-hoc data.frame with random values of "richness"
-# (the response variable). Only for the purpose of this example
+# Get sites names from ed_metrics and creates ad-hoc data.frame with random values of
+# "richness" (the response variable). Only for the purpose of this example
 sites <- ed_metrics@points$name
-sampling_data <- data.frame(site = rep(sites, each = 10), richness = sample(1:500, 150))
+sampling_data <- data.frame(site = rep(sites, each = 10),
+                            richness = sample(1:500, 150))
 
-# With no filters, all columns with all metrics at all spatial scales are added to the sampling data
+# With no filters, all columns with all metrics at all spatial scales are added to
+# the sampling data
 new_data <- metrics_bind(ed_metrics, sampling_data)
 
 # Subset for metrics of class "Forest", radius 5000 and metric "pland"
-new_data <- metrics_bind(ed_metrics, sampling_data, classnames = TRUE, classes = "Forest",
-                         radii = 3000, c_level = "pland")
+new_data <- metrics_bind(ed_metrics, sampling_data, classnames = TRUE,
+                         classes = "Forest", radii = 3000, c_level = "pland")
 
 # In this format, the data.frame can be passed to a fitting model
 fit <- lm(richness ~ r1_Forest_pland_3000, data = new_data)

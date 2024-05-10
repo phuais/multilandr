@@ -14,7 +14,7 @@
 #' @param perc Logical. If TRUE (default) the degree of overlapped areas will be
 #' presented as percentages. If FALSE, proportions will be outputted.
 #'
-#'  @details
+#' @details
 #' If argument `points` is a character vector,
 #' [mland_overlap()] will assume that the 'MultiLand' object inputted in argument `x` was created with
 #' `site_ref = TRUE`. This is, there is a column/attribute in the points layer with the names for

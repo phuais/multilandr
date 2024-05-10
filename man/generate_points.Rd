@@ -87,8 +87,8 @@ terminate, and return the points that were successfully generated given the requ
 The user may try different values for \code{n}, \code{try} and \code{attempts} to get a desirable result.
 
 If \code{approach = "patch"}, the function will return as many points as patches that meet certain
-conditions in relation to pre-defined metric values. Conditions can be defined inside argument
-\code{patch_conditions}, for which the helper function \code{\link[=conditions]{conditions()}} is available:
+conditions in relation to pre-defined metric values. Conditions can be defined in
+argument \code{patch_conditions}, for which the helper function \code{\link[=conditions]{conditions()}} is available:
 
 \preformatted{
  conditions(list(class, metric, minimum value, maximum value),

@@ -30,10 +30,8 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #' @param name If `x` is an object of class 'MultiLand', the name of the zip file where
 #' files will be saved (without the '.zip'). If `x` is an object of class 'MultiLandMetrics',  the name of the R file (.rds). If NULL (default),
 #' the name will be 'mland_' or 'mlandmetrics_' + a large random number.
-#' @param dir The directory where to save the file, without the '/' at the beginning/ending of the string.
-#' @param gdal GDAL driver specific datasource creation options. See the GDAL documentation. With the
-#' \href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}, [mland_save()] uses the
-#' following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"). Only relevant
+#' @param gdal GeoTiff creation options for rasters (\href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}).
+#' [mland_save()] uses the following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"). Only relevant
 #' if `x` is an object of class 'MultiLand'.
 #' @param ... If `x` is an object of class 'MultiLand', `...` should depict other arguments passed to
 #' [terra::writeRaster], the function to write rasterlayers (from intersections and plain rasterlayers).
@@ -82,7 +80,7 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #' # Save it again. In this case, mland_save() is the same as using saveRDS()
 #' mland_save(ed_metrics2)
 #' }
-mland_save <- function(x, name = NULL, dir = getwd(),
+mland_save <- function(x, name = NULL,
                        gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"), ...){
 
   if(!is(x, "MultiLand") & !is(x, "MultiLandMetrics"))
@@ -99,9 +97,6 @@ mland_save <- function(x, name = NULL, dir = getwd(),
       name <- paste0("mland_", name)
     }
   }
-
-  if(!dir.exists(dir))
-    stop("- directory provided in 'dir' does not exist.")
 
   if(is(x, "MultiLandMetrics")){
     if(!substr(name, (nchar(name) + 1) - 4, nchar(name)) == ".rds"){
@@ -122,8 +117,10 @@ mland_save <- function(x, name = NULL, dir = getwd(),
   dir.create(file.path(tmp, "MultiLand", "/landscapes/ext_rasters/"), recursive = T)
 
   # Save points and buffers
-  terra::writeVector(x@points, file.path(tmp, "MultiLand", "points", "points.shp"))
-  terra::writeVector(x@buffers, file.path(tmp, "MultiLand", "buffers", "buffers.shp"))
+  suppressWarnings(terra::writeVector(x@points, file.path(tmp, "MultiLand", "points", "points.gpkg"),
+                                      options = NULL))
+  suppressWarnings(terra::writeVector(x@buffers, file.path(tmp, "MultiLand", "buffers", "buffers.gpkg"),
+                                      options = NULL))
 
   # Save landscapes of main and rasters
   save_rasts(tmp, c("landscapes", "lsm_rasters"), x@landscapes$lsm_rasters, gdal, ...)
@@ -153,7 +150,7 @@ mland_save <- function(x, name = NULL, dir = getwd(),
 
   # Generates zip file
   last_wd <- getwd()
-  zipfile <- paste0(last_wd, "/", dir, "/", name, ".zip")
+  zipfile <- paste0(last_wd, "/", name, ".zip")
   setwd(tmp)
   utils::zip(zipfile, ".")
   setwd(last_wd)

@@ -26,13 +26,13 @@
         raster <- ext_raster
         arg_name <- "ext_raster"
         if(length(x@landscapes$ext_rasters) > 0){
-          rast_search <- x@layer_names[[2]]
+          rast_search <- x@rast_names[[2]]
         } else {
           rast_search <- F
         }
       } else {
         if(length(x@landscapes$lsm_rasters) > 0){
-          rast_search <- x@layer_names[[1]]
+          rast_search <- x@rast_names[[1]]
         } else {
           rast_search <- F
         }

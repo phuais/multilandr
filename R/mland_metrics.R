@@ -80,8 +80,8 @@ ext_calc_func <- function(){
       tmp_tab$metric <- paste0("fun_", func)
       tmp_tab$value <- vals
       tmp_tab$rasterlayer <- paste0("ext", layers[j])
-      if(nrow(x@layer_names[[2]] > 0)){
-        foo <- x@layer_names[[2]][x@layer_names[[2]]$rasterlayer == layers[j], "name"]
+      if(nrow(x@rast_names[[2]] > 0)){
+        foo <- x@rast_names[[2]][x@rast_names[[2]]$rasterlayer == layers[j], "name"]
         if(is.na(foo)){
           tmp_tab$layer_name <- NA
         } else {
@@ -191,15 +191,15 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
   rownames(df) <- 1:nrow(df)
 
   # Names for used rasterlayers
-  if(nrow(x@layer_names[[1]]) > 0){
-    x@layer_names[[1]] <- x@layer_names[[1]][x@layer_names[[1]]$rasterlayer %in%
+  if(nrow(x@rast_names[[1]]) > 0){
+    x@rast_names[[1]] <- x@rast_names[[1]][x@rast_names[[1]]$rasterlayer %in%
                                                unique(rasters_classes_tab$rasterlayer), ]
-    colnames(x@layer_names[[1]])[2] <- "name"
+    colnames(x@rast_names[[1]])[2] <- "name"
   }
-  if(nrow(x@layer_names[[2]]) > 0){
-    x@layer_names[[2]] <- x@layer_names[[2]][x@layer_names[[2]]$rasterlayer %in%
+  if(nrow(x@rast_names[[2]]) > 0){
+    x@rast_names[[2]] <- x@rast_names[[2]][x@rast_names[[2]]$rasterlayer %in%
                                                unique(ext_calc_ref$rasterlayer), ]
-    colnames(x@layer_names[[2]])[2] <- "name"
+    colnames(x@rast_names[[2]])[2] <- "name"
   }
 
   if(nrow(rasters_classes_tab) > 0){
@@ -220,8 +220,8 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #' @param x An object of class 'Multiland' generated with [mland()].
 #' @param ... Other arguments passed to [landscapemetrics::calculate_lsm()]. See Details.
 #' @param raster Vector depicting the rasterlayers of `x` from which metrics will be
-#' calculated. It can be a numeric vector, for rasterlayers numbers, or a character vector, for
-#' rasterlayers names (if provided during the generation of `x`). If NULL, all rasterlayers will be
+#' calculated. It can be a numeric vector, for rasterlayer numbers, or a character vector, for
+#' rasterlayer names (if provided during the generation of `x`). If NULL, all rasterlayers will be
 #' considered.
 #' @param points Numeric or character vector with the points from which metrics will be calculated.
 #' If NULL, all points will be considered. See Details.
@@ -229,8 +229,8 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #' If NULL, all radii will be considered.
 #' @param classes List containing the classes or classes names from which metrics will be calculated.
 #' If NULL, all classes will be considered. See Details.
-#' @param level,metric,name,type,what Arguments passed to [landscapemetrics::calculate_lsm()], which
-#' define which metrics will be calculated. See Details.
+#' @param level,metric,name,type,what Arguments passed to [landscapemetrics::calculate_lsm()],
+#' which define which metrics will be calculated. See Details.
 #' @param report_absences Logical. If TRUE (default), intersections with absences of particular
 #' classes will be returned in the final data.frame. See Details.
 #' @param absence_values A list depicting which value for each class-level metric should be printed
@@ -250,8 +250,8 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #'
 #' @details Calculates landscape metrics from an object of class `MultiLand`
 #' created with [mland()]. The function allows to define which metrics will be calculated in the
-#' form defined by the function [landscapemetrics::calculate_lsm()], by specifying one or more of
-#' the following arguments:
+#' form defined by the function [calculate_lsm()]] from package [landscapemetrics], by
+#' specifying one or more of the following arguments:
 #'
 #' * level: level of metrics. Either "patch", "class" or "landscape" (or vector with combination).
 #' * metric: abbreviation of metrics (e.g. "area").
@@ -333,10 +333,10 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #' ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 #' ernesdesign <- mland_load(ernesdesign)
 #'
-#' # Creates a 'MultiLandMetrics' object. It will calculate the metric "percentage of landscape"
-#' # ("pland") and "number of patches" ("np") for all classes. Note that an absence value for
-#' # each metric is declared, as the absence of a class for these metrics should be acknowledged as
-#' # a 0 (percentage of zero and zero patches).
+#' # Creates a 'MultiLandMetrics' object. It will calculate the "percentage of landscape"
+#' # ("pland") and "number of patches" ("np") for all classes. Note that an absence value
+#' # for each metric is declared, as the absence of a class for these metrics should be
+#' # acknowledged as a 0 (percentage of zero and zero patches).
 #' ed_metrics <- mland_metrics(ernesdesign, level = "class", metric = c("pland", "np"),
 #'                             absence_values = list("pland" = 0, "np" = 0))
 #'
@@ -348,32 +348,37 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #'
 #' # If output = "data", only the data.frame will be returned
 #' data <- mland_metrics(ernesdesign, level = "class", metric = "pland",
-#'                       classes = c("Forest", "Crops"), absence_values = list("pland" = 0),
+#'                       classes = c("Forest", "Crops"),
+#'                       absence_values = list("pland" = 0),
 #'                       output = "data")
 #'
 #' # Calculate landscape metrics plus extra calculations for extra rasterlayer 1,
-#' # the mean value, and a user defined function, which is the mean divided standard deviation.
+#' # the mean value, and a user defined function, which is the mean divided
+#' # standard deviation.
 #'
 #' # User-defined function
 #' mean_sd <- function(x){ mean(x)/sd(x) }
 #'
-#' ed_metrics2 <- mland_metrics(ernesdesign, level = "class", metric = c("pland", "np"),
+#' ed_metrics2 <- mland_metrics(ernesdesign, level = "class",
+#'                              metric = c("pland", "np"),
 #'                              absence_values = list("pland" = 0, "np" = 0),
 #'                              ext_calc = list(c(1, "mean"), c(1, "mean_sd")))
 #'
 #' # We can calculate metrics for extra rasterlayers only
 #' ed_metrics3 <- mland_metrics(ernesdesign, ext_calc = list(c(1, "mean", "mean_sd")))
 #'
-#' # If metrics of different levels must be calculated, a better approach is to declare them
-#' # inside the argument 'what', by naming the function associated with the metric. Also in this case,
-#' # only the landscapes with a radius of 5000 m are considered. A list of available metrics
-#' # with its names, abbreviations and function names can be seen in metrics_list() and in
-#' # the documentation of the package landscapemetrics.
-#' ed_metrics4 <- mland_metrics(ernesdesign, what = c("lsm_c_area_mn", "lsm_l_np", "lsm_l_shdi"),
+#' # If metrics of different levels must be calculated, a better approach is to declare
+#' # them inside the argument 'what', by naming the function associated with the metric.
+#' # Also in this case, only the landscapes with a radius of 5000 m are considered.
+#' # A list of available metrics with its names, abbreviations and function names can
+#' # be seen in metrics_list() and in the documentation of the package landscapemetrics.
+#' ed_metrics4 <- mland_metrics(ernesdesign,
+#'                              what = c("lsm_c_area_mn", "lsm_l_np", "lsm_l_shdi"),
 #'                              radii = 5000)
 #'
 #' # Calculates patch-level metrics of a particular landscape
-#' ed_patchs <- mland_metrics(ernesdesign, points = "Algarrobo", level = "patch", class = "Forest",
+#' ed_patchs <- mland_metrics(ernesdesign, points = "Algarrobo",
+#'                            level = "patch", class = "Forest",
 #'                            radii = 1000)
 #' }
 mland_metrics <- function(x, raster = NULL, points = NULL, radii = NULL,
@@ -549,9 +554,9 @@ mland_metrics <- function(x, raster = NULL, points = NULL, radii = NULL,
         tab2 <- merge(tab2, cl, "class")
 
         # addition of rasterlayers names
-        if(nrow(x@layer_names[[1]] > 0)){
-          colnames(x@layer_names[[1]])[2] <- "layer_name"
-          tab2 <- merge(tab2, x@layer_names[[1]], "rasterlayer")
+        if(nrow(x@rast_names[[1]] > 0)){
+          colnames(x@rast_names[[1]])[2] <- "layer_name"
+          tab2 <- merge(tab2, x@rast_names[[1]], "rasterlayer")
         } else {
           tab2$layer_name <- NA
         }
@@ -617,7 +622,7 @@ mland_metrics <- function(x, raster = NULL, points = NULL, radii = NULL,
                idkey       = x@idkey,
                crs_proj    = terra::crs(x@points),
                n_layers    = length(unique(rasters_classes_tab$rasterlayer)),
-               layer_names = x@layer_names,
+               rast_names  = x@rast_names,
                classes     = rasters_classes_tab,
                n_classes   = final_dets[[3]],
                points      = points,

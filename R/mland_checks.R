@@ -5,37 +5,37 @@
   what     <- NULL
 
   # Points
-  if(!class(points_vect) %in% c("character", "SpatVector", "SpatialPointsDataFrame", "SpatialPoints")){
+  if(!class(points_layer) %in% c("character", "SpatVector", "SpatialPointsDataFrame", "SpatialPoints")){
     messages <- append(messages,
-                            "- argument 'points_vect' must be a filename (string) or an object of class
+                            "- argument 'points_layer' must be a filename (string) or an object of class
                        'SpatVector', 'SpatialPointsDataFrame' or 'SpatialPoints'.")
     what     <- append(what, 2)
   } else {
-    if(!class(points_vect) %in% c("SpatVector", "SpatialPointsDataFrame", "SpatialPoints")){
-      if(!file.exists(points_vect)){
-        messages <- append(messages, paste("- could not find points layer file: ", points_vect, "."))
+    if(!class(points_layer) %in% c("SpatVector", "SpatialPointsDataFrame", "SpatialPoints")){
+      if(!file.exists(points_layer)){
+        messages <- append(messages, paste("- could not find points layer file: ", points_layer, "."))
         what     <- append(what, 2)
       }
     }
   }
 
   # Rasters
-  if(is.null(land_rast) & is.null(ext_rast)){
-    messages <- append(messages, "- at least one rasterlayer must be specified in 'land_raster'
-                       and/or 'ext_rast'.")
+  if(is.null(rast_layer) & is.null(ext_rast_layer)){
+    messages <- append(messages, "- at least one rasterlayer must be specified in 'rast_layer'
+                       and/or 'ext_rast_layer'.")
     what     <- append(what, 2)
   } else {
     # Raster
-    chk_raster  <- .chk_raster(messages, what, land_rast, arg_name = "land_rast")
+    chk_raster  <- .chk_raster(messages, what, rast_layer, arg_name = "rast_layer")
     messages    <- chk_raster[[1]]
     what        <- chk_raster[[2]]
-    land_raster <- chk_raster[[3]]
+    rast_layer  <- chk_raster[[3]]
 
     # Extra Raster
-    chk_ext_raster <- .chk_raster(messages, what, ext_rast, arg_name = "ext_rast")
+    chk_ext_raster <- .chk_raster(messages, what, ext_rast_layer, arg_name = "ext_rast_layer")
     messages       <- chk_ext_raster[[1]]
     what           <- chk_ext_raster[[2]]
-    ext_rast       <- chk_ext_raster[[3]]
+    ext_rast_layer <- chk_ext_raster[[3]]
    }
 
   # On the fly
@@ -85,21 +85,21 @@
   } else { classnames <- list() }
 
   # Raster names
-  if(!is.null(layer_names)){
-    if(!is.character(layer_names)){
-      messages   <- append("- argument 'layer_names' must be a character vector.
+  if(!is.null(rast_names)){
+    if(!is.character(rast_names)){
+      messages   <- append("- argument 'rast_names' must be a character vector.
                            Argument was discarded.")
       what       <- append(what, 1)
-      layer_names <- vector("character")
+      rast_names <- vector("character")
     } else {
-      if(any(duplicated(layer_names))){
-        messages   <- append("- argument 'layer_names' contains duplicated string. Rasterlayers
+      if(any(duplicated(rast_names))){
+        messages   <- append("- argument 'rast_names' contains duplicated string. Rasterlayers
         names should be unique to avoid ambiguites. Argument was discarded.")
         what       <- append(what, 1)
-        layer_names <- vector("character")
+        rast_names <- vector("character")
       }
     }
-  } else { layer_names <- vector("character") }
+  } else { rast_names <- vector("character") }
 
   # Site reference
   if(!is.null(site_ref)){
@@ -148,34 +148,34 @@
               site_ref = site_ref,
               bufftype = bufftype,
               segs = segs,
-              land_rast = land_rast,
-              ext_rast = ext_rast,
-              layer_names = layer_names,
+              rast_layer = rast_layer,
+              ext_rast_layer = ext_rast_layer,
+              rast_names = rast_names,
               progress = progress)
   return(out)
 }
 
-.check_pointsCRS <- function(points_vect){
+.check_pointsCRS <- function(points_layer){
   mess <- FALSE
-  if(terra::crs(points_vect) == ""){
+  if(terra::crs(points_layer) == ""){
     mess <- "- points layer must be projected in a crs with meters unit." }
   return(mess)
 }
 
-.check_classCRS <- function(points_vect, class){
-  mess <- if(!terra::same.crs(points_vect, class)) 1 else 0
+.check_classCRS <- function(points_layer, class){
+  mess <- if(!terra::same.crs(points_layer, class)) 1 else 0
   return(mess)
 }
 
-.check_pointsref <- function(points_vect, site_ref){
+.check_pointsref <- function(points_layer, site_ref){
   mess <- 0
-  if(!site_ref %in% names(points_vect)){
+  if(!site_ref %in% names(points_layer)){
     mess <- 1
   } else {
-    if(anyDuplicated(terra::as.list(points_vect)[[site_ref]]) != 0){
+    if(anyDuplicated(terra::as.list(points_layer)[[site_ref]]) != 0){
       mess <- 2 ; return(mess)
     }
-    if(any(is.na(terra::as.list(points_vect)[[site_ref]]))){
+    if(any(is.na(terra::as.list(points_layer)[[site_ref]]))){
       mess <- 3 ; return(mess)
     }
   }

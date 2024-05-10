@@ -52,7 +52,8 @@
 #' to Inf, and a minimum value is defined, landscapes whose values in the defined metric are equal
 #' or higher to the minimum value will be retained.
 #'
-#' See specific examples within the example sections of functions [generate_points()] and [metrics_filter()].
+#' See the example sections of functions [generate_points()] and
+#' [metrics_filter()] for more details.
 #'
 #' @return A list to be inputted within the argument `patch_conditions` in [generate_points()] or
 #' the argument `conditions` in [metrics_filter()].
@@ -151,7 +152,7 @@ conditions <- function(...){
 #'                                     output = "coords")
 #'
 #' # Filter landscapes that have between 20 and 30% of forest at a radius of 2000 m
-#' # and a maximum of 60$ of Crops.
+#' # and a maximum of 60% of Crops.
 #' conds <- conditions(list(NA, "Forest", 2000, "pland", 20, 30),
 #'                     list(NA, "Crops", 2000, "pland", -Inf, 60))
 #' otf_subset2 <- metrics_filter(otf_metrics,
@@ -255,7 +256,7 @@ metrics_filter <- function(x, conditions = list(rasterlayers = NULL,
       points_vec <- terra::vect(cbind(x = x@points$x, y = x@points$y),
                                 atts = x@points[3:ncol(x@points)],
                                 crs = terra::crs(x@crs_proj))
-      # output shapefile
+      # output vector
       if(output == "spatial"){
         out <- points_vec[unique(df_tmp$point_id), ]
       } else {

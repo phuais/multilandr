@@ -67,5 +67,6 @@ to Inf, and a minimum value is defined, landscapes whose values in the defined m
 or higher to the minimum value will be retained.
 }
 
-See specific examples within the example sections of functions \code{\link[=generate_points]{generate_points()}} and \code{\link[=metrics_filter]{metrics_filter()}}.
+See the example sections of functions \code{\link[=generate_points]{generate_points()}} and
+\code{\link[=metrics_filter]{metrics_filter()}} for more details.
 }

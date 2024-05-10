@@ -31,12 +31,12 @@
   # subset rasterlayers
   if(!is.null(raster)){
     if(is.character(raster)){
-      if(!all(raster %in% x@layer_names[[1]]$name)){
+      if(!all(raster %in% x@rast_names[[1]]$name)){
         stop(strwrap(
           paste0("- in raster: one or more rasterlayers could not be found in x. Mispelled?"),
           prefix = "\n", initial = "\n"), call. = FALSE)
       } else {
-        raster <- sort(x@layer_names[[1]][x@layer_names[[1]]$name %in% raster, "rasterlayer"])
+        raster <- sort(x@rast_names[[1]][x@rast_names[[1]]$name %in% raster, "rasterlayer"])
       }
     }
     subset_r <- .subset_fn(raster)
@@ -60,12 +60,12 @@
   # subset extra rasters
   if(!is.null(ext_raster)){
     if(is.character(ext_raster)){
-      if(!all(ext_raster %in% x@layer_names[[2]]$name)){
+      if(!all(ext_raster %in% x@rast_names[[2]]$name)){
         stop(strwrap(
           paste0("- in ext_raster: one or more rasterlayers could not be found in x. Mispelled?"),
           prefix = "\n", initial = "\n"), call. = FALSE)
       } else {
-        ext_raster <- sort(x@layer_names[[2]][x@layer_names[[2]]$name %in% ext_raster, "rasterlayer"])
+        ext_raster <- sort(x@rast_names[[2]][x@rast_names[[2]]$name %in% ext_raster, "rasterlayer"])
       }
     }
     subset_er <- .subset_fn(ext_raster)
@@ -477,9 +477,10 @@
 #' # Excluding the metric radii of 4000 and 5000 m
 #' metrics_corr(ed_metrics, radii = c(-4000, -5000), classnames = TRUE)
 #'
-#' # Correlations of metric "pland" between classes 1 to 3, an between radii 1000 and 5000 m
-#' # and disaggregating by rasterlayer.
-#' metrics_corr(ed_metrics, radii = c(1000, 5000), classes = 1:3, c_level = "pland", display = "rl")
+#' # Correlations of metric "pland" between classes 1 to 3, and between radii
+#' # 1000 and 5000 m, disaggregating by rasterlayer.
+#' metrics_corr(ed_metrics, radii = c(1000, 5000), classes = 1:3,
+#'              c_level = "pland", display = "rl")
 metrics_corr <- function(x, method = "pearson", fun = NULL,
                          raster = NULL, classes = NULL, radii = NULL,
                          c_level = NULL, l_level = NULL, ext_raster = NULL, classnames = FALSE,

@@ -13,7 +13,7 @@ or a list of raster objects (one of 'RasterLayer' or 'SpatRaster').}
 \item{verbose}{Print warning messages.}
 }
 \description{
-Checks the validity of rasterlayers to be inputted in \code{\link[=mland]{mland()}}. The function directly calls
+Checks the validity of raster layers to be inputted in \code{\link[=mland]{mland()}}, intended to represent land cover. The function directly calls
 \code{\link[landscapemetrics:check_landscape]{landscapemetrics::check_landscape()}}.
 }
 \details{

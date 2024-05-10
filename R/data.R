@@ -1,8 +1,9 @@
 #' 'MultiLandMetrics' object
 #'
 #' An object of class 'MultiLandMetrics' generated with [mland_metrics()], for the purposes of package
-#' examples of the following functions: [metrics_filter()], [metrics_gradient()], [metrics_corr()],
-#' [metrics_plots()] and [metrics_bind()]. See 'MultiLand-class' for general information about these objects.
+#' examples of the following functions: [metrics_filter()], [metrics_gradient()],
+#' [metrics_corr()], [metrics_plots()] and [metrics_bind()]. See 'MultiLand-class'
+#' for general information about these objects.
 #'
 #' The main internal object is a data.frame (accesible through `ed_metrics@data`) with information
 #' about the values of two landscape metrics: "pland" (percentage of landscape) and "np" (number of
@@ -27,8 +28,9 @@
 #' 'MultiLandMetrics' object
 #'
 #' An object of class 'MultiLandMetrics' generated with [mland_metrics()], for the purposes of package
-#' examples of the following functions: [metrics_filter()], [metrics_gradient()], [metrics_corr()],
-#' [metrics_plots()] and [metrics_bind()]. See 'MultiLand-class' for general information about these objects.
+#' examples of the following functions: [metrics_filter()], [metrics_gradient()],
+#' [metrics_corr()], [metrics_plots()] and [metrics_bind()]. See 'MultiLand-class' for general
+#' information about these objects.
 #'
 #' The main internal object is a data.frame (accesible through `otf_metrics@data`) with information about the values of two landscape metrics:
 #' "pland" (percentage of landscape) and "np" (number of patches).

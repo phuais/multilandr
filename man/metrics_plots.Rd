@@ -124,6 +124,11 @@ metrics_plots(ed_metrics, classes = 1:4, radii = c(1000, 5000),
 
 # An example with hundreds of points
 metrics_plots(otf_metrics, classes = c("Forest", "Crops"))
+
+# Plots can be combined with ggplot2::theme
+# library(ggplot2)
+metrics_plots(otf_metrics, classes = c("Forest", "Crops")) +
+  theme_bw()
 }
 }
 \seealso{

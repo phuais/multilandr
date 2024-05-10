@@ -7,16 +7,16 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of **multilandr** is to provide a clean platform for typical
+The goal of **multilandr** is to provide a clean platform for general
 landscape-scale analysis. The package builds on several spatial-oriented
-R packages to provide a useful tool to develop and inspect landscapes at
+R packages to provide useful tools to develop and inspect landscapes at
 multiple spatial scales. The main functionality allows to calculate
 landscape metrics within a multi-scale approach. Among other practical
 capabilities, the package provides several utility functions to: (i)
 plot landscapes at different spatial scales; (ii) visualize correlations
 between different metrics; (iii) filter landscapes that fulfill with
-certain pre-defined conditions regarding their metrics; and (iv)
-generate optimized gradients for a given landscape metric.
+certain pre-defined conditions regarding their metric values; and (iv)
+generate gradients for a given landscape metric.
 
 **multilandr** supports several spatial objects from widespread
 spatial-oriented R packages as main inputs in their functions, including
@@ -31,6 +31,9 @@ You can install the development version of multilandr from
 # install.packages("devtools")
 devtools::install_github("phuais/multilandr")
 ```
+
+You can access the manual with all available functions  
+[here](https://github.com/phuais/multilandr/manual.pdf)
 
 ## Using multilandr: basic usage
 
@@ -57,7 +60,7 @@ landscapes of different sizes will be generated (buffers).
 library(multilandr)
 
 # Loads points
-elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.shp", 
+elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.gpkg", 
                                          package = "multilandr"))
 ```
 
@@ -65,7 +68,7 @@ We also need at least one raster layer. This will typically represent
 different land covers within the extent of the vector layer of points.
 Other types of raster layers can be inputted. In this example, we also
 input a raster layer containing NDVI values within the extent of
-analysis.
+analysis. This could be a relevant co-variable to study.
 
 ``` r
 # Loads main raster of land covers
@@ -95,13 +98,13 @@ scales, from 1000 m until 5000 m, by 1000 m steps.
 
 ``` r
 # Creates 'MultiLand' object by loading points, the main raster and an extra raster.
-ernesdesign <- mland(points_vect = elchaco_sites,
-                     land_rast = elchaco,
+ernesdesign <- mland(points_layer = elchaco_sites,
+                     rast_layer = elchaco,
                      radii = seq(1000, 5000, 1000),
                      classnames = list(cl_names),
                      site_ref = "name",
-                     ext_rast = elchaco_ndvi,
-                     layer_names = c("landuse", "NDVI"))
+                     ext_rast_layer = elchaco_ndvi,
+                     rast_names = c("landuse", "NDVI"))
 #> Loading layers
 #> Generating buffers
 #> Generating intersections
@@ -110,7 +113,7 @@ ernesdesign <- mland(points_vect = elchaco_sites,
 The argument `site_ref` receives a string with the name of the attribute
 of the vector layer of points, that contains the information about the
 identity of each point (i.e. the name of each site). We can also specify
-a name for the raster layers in argument `layer_names`, which could be
+a name for the raster layers in argument `rast_names`, which could be
 useful in further analyses.
 
 Let’s see the output for the generated object:
@@ -210,7 +213,9 @@ must be performed for the first extra raster layer contained within the
 mean_sd <- function(x){ mean(x)/sd(x) }
 
 # Calculation of metrics
-ed_metrics <- mland_metrics(ernesdesign, level = "class", metric = c("pland", "np"),
+ed_metrics <- mland_metrics(ernesdesign, 
+                            level = "class", 
+                            metric = c("pland", "np"),
                             absence_values = list("pland" = 0, "np" = 0),
                             ext_calc = list(c(1, "mean"), c(1, "mean_sd")))
 ```
@@ -247,10 +252,10 @@ head(ed_metrics@data)
 #> 5           1    landuse        1 Algarrobo   1000 class     5     Water
 #> 6           1    landuse        1 Algarrobo   1000 class     6     Urban
 #>   patch_id metric value
-#> 1       NA     np    57
-#> 2       NA     np     4
-#> 3       NA     np    81
-#> 4       NA     np    14
+#> 1       NA     np     3
+#> 2       NA     np     2
+#> 3       NA     np     1
+#> 4       NA     np     1
 #> 5       NA     np     0
 #> 6       NA     np     0
 ```
@@ -275,7 +280,7 @@ predefined size for the values of a given metric, given the spectrum of
 landscapes with different metric values. This can be useful to select
 those landscapes that would be evaluated in a more bounded experimental
 design that could comprises, for instance, field sampling of sites.
-Explore these functions in the help pages.
+Explore these functions and examples in the help pages.
 
 ## Citation
 
