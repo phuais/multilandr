@@ -13,6 +13,7 @@ metrics_gradient(
   n,
   cutpoints = NULL,
   breaks = NULL,
+  random = FALSE,
   output = "MLM"
 )
 }
@@ -37,6 +38,8 @@ points that will comprise the gradient. See Details.}
 
 \item{breaks}{A unique number with the number of breaks that will generate the cutpoints for the
 specified metric values. Default is 10. See Details.}
+
+\item{random}{Logical. If TRUE, random points will be selected.}
 
 \item{output}{One of the following: "MLM" to return an updated version of the 'MultiLandMetrics' object provided in \code{x} (default),
 "spatial" to return a 'SpatVector' with the points

@@ -95,12 +95,24 @@
 #' metrics_plots(otf_metrics, classes = c("Forest", "Crops")) +
 #'   theme_bw()
 #' }
-metrics_plots <- function(x, raster = NULL, classes = NULL, radii = NULL, c_level = NULL, l_level = NULL,
-                       ext_raster = NULL, classnames = FALSE,
-                       upper = TRUE, diag = TRUE, smooth = TRUE, method = "loess", se = FALSE,
-                       st_points  = list(shape = 21, size = 2, col = "black", fill = "white",
-                                         alpha = 1),
-                       st_lines = list(lty = 1, lwd = 1, col = "black", alpha = 0.6), ...){
+metrics_plots <- function(x,
+                          raster = NULL,
+                          classes = NULL,
+                          radii = NULL,
+                          c_level = NULL,
+                          l_level = NULL,
+                          ext_raster = NULL,
+                          classnames = FALSE,
+                          upper = TRUE,
+                          diag = TRUE,
+                          smooth = TRUE,
+                          method = "loess",
+                          se = FALSE,
+                          st_points  = list(shape = 21, size = 2, col = "black",
+                                            fill = "white", alpha = 1),
+                          st_lines = list(lty = 1, lwd = 1, col = "black",
+                                          alpha = 0.6),
+                          ...){
 
   if(!is(x, "MultiLandMetrics")) stop("x must be an object of class 'MultiLandMetrics'.")
   environment(.metrics_plots_chk_args) <- environment()

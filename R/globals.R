@@ -6,4 +6,5 @@ utils::globalVariables(c("x", "class_metrics", "points", "total_rows_pp", "radii
                          "reshape", "y", "ext_calc_ref", "txtProgressBar", "runif", "res", "dist",
                          "setTxtProgressBar", "aggregate", "unzip", "new", "rasters_classes_tab",
                          "askYesNo", "arg_name", "classes", "value",  "progress", "update",
-                         "cutpoints", "breaks", "points_layer", "rast_layer", "ext_rast_layer"))
+                         "cutpoints", "breaks", "points_layer", "rast_layer", "ext_rast_layer",
+                         "padding", "random"))

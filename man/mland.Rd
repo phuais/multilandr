@@ -73,6 +73,12 @@ from which a mean value per landscape may be calculated. Raster layers should be
 system with meters as the unit, and all raster and vector layers must be in the same coordinate reference system.
 The user may check the validity of the raster layer with \code{\link[=check_raster]{check_raster()}}.
 
+The extent of the provided points layer should not exceed the limits of the extent of the provided rasterlayers. In addition,
+the difference between the outer borders of provided points layer and rasterlayers should not be less than the maximum
+provided radius in \code{radii}. The purpose is to avoid generating total or partially "empty landscapes" due to the existence of
+non-overlapping regions between the buffers (generated around each point given a provided radius) and the rasterlayers.
+If any of this happens, a warning will be returned.
+
 If \code{on_the_fly = FALSE} (default), intersections between buffers and rasterlayers
 defined in \code{rast_layer} and/or \code{ext_rast_layer} will be generated. Otherwise, if \code{on_the_fly = TRUE}, only buffers will be generated. The
 latter approach may be particularly useful for 'MultiLand' objects with numerous points

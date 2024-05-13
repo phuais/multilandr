@@ -8,6 +8,7 @@ generate_points(
   raster,
   approach = "grid",
   n = NULL,
+  padding = 0,
   try = NULL,
   values = NULL,
   patch_conditions = NULL,
@@ -29,6 +30,9 @@ generate points at random locations, or "patch" to generate points inside patche
 pre-defined conditions. See Details.}
 
 \item{n}{Number of point to generate.}
+
+\item{padding}{Numeric. Width (in meters) of the internal margin around the raster that will be
+discarded from the analysis. See Details.}
 
 \item{try}{Number of points to be generated in
 each turn. Only applies if \code{approach = "random"}. See Details.}
@@ -112,6 +116,9 @@ Retained patches will be those patches that meet all patch conditions at the sam
 point's coordinates will equal the centroid of each patch. If \code{closest_cell = TRUE}, the point's coordinates of the
 centroids that did not fall inside the patch will be moved to the closest cell belonging to that
 patch.
+
+To avoid generating points to close to the boundaries of the raster, the outer borders of the
+raster can be discarded from the analysis, by considering the width inputted in \code{padding}.
 
 If \code{parallel = TRUE} the function will parallelize part of the processes. Parallelization
 is done to obtain the coordinates of the patches if \code{approach = "patch"}. The number of

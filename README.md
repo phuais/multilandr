@@ -28,8 +28,8 @@ You can install the development version of multilandr from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("phuais/multilandr")
+# install.packages("remotes")
+remotes::install_github("phuais/multilandr")
 ```
 
 You can access the manual with all available functions  

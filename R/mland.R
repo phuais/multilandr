@@ -56,19 +56,31 @@
 }
 
 # Generates layers
-.generate_layers <- function(points_layer, site_ref, rast_layer, ext_rast_layer){
+.generate_layers <- function(points_layer, site_ref, rast_layer,
+                             ext_rast_layer, rad){
 
   pp       <- .gen_pointlayers(points_layer, site_ref)
   l_points <- pp[[1]]
   site_ref <- pp[[2]]
+  ex_p <- terra::ext(l_points)
+  chk_alr <- FALSE
 
   # Loads class layer values
   raster_values <- vector("list", length(rast_layer))
   if(length(rast_layer) > 0){
     for(i in 1:length(rast_layer)){
       cl <- rast_layer[[i]]
-      chk <- .check_classCRS(l_points, cl)
-      if(chk) stop("- rasters CRS must be equal to points layer CRS.",  call. = FALSE)
+      chk <- .check_classCRS(l_points, cl, ex_p, rad)
+      if(chk == 1)
+        stop("- rasters CRS must be equal to points layer CRS.",  call. = FALSE)
+      if(!chk_alr & chk == 2){
+        warning("- extent of the provided points layer exceeds the extent of one or more provided raster layers.",  call. = FALSE)
+        chk_alr <- TRUE
+      }
+      if(!chk_alr & chk == 3){
+        warning("- the distance between the outer border of the provided points layer and outer border of one or more provided raster layers is lower than the maximum provided radius.",  call. = FALSE)
+        chk_alr <- TRUE
+      }
       # Gets layer classes
       raster_values[[i]] <- sort(terra::unique(cl)[, 1])
     }
@@ -78,8 +90,17 @@
   if(length(ext_rast_layer) > 0){
     for(i in 1:length(ext_rast_layer)){
       cl <- ext_rast_layer[[i]]
-      chk <- .check_classCRS(l_points, cl)
-      if(chk) stop("- extra rasters CRS must be equal to points layer CRS.",  call. = FALSE)
+      chk <- .check_classCRS(l_points, cl, ex_p, rad)
+      if(chk == 1)
+        stop("- rasters CRS must be equal to points layer CRS.",  call. = FALSE)
+      if(!chk_alr & chk == 2){
+        warning("- extent of the provided points layer exceeds the extent of one or more provided raster layers.",  call. = FALSE)
+        chk_alr <- TRUE
+      }
+      if(!chk_alr & chk == 3){
+        warning("- the distance between the outer border of the provided points layer and outer border of one or more provided raster layers is lower than the maximum provided radius.",  call. = FALSE)
+        chk_alr <- TRUE
+      }
     }
   }
 
@@ -301,6 +322,12 @@ rast_tolist <- function(raster){
 #'   system with meters as the unit, and all raster and vector layers must be in the same coordinate reference system.
 #'   The user may check the validity of the raster layer with [check_raster()].
 #'
+#'   The extent of the provided points layer should not exceed the limits of the extent of the provided rasterlayers. In addition,
+#'   the difference between the outer borders of provided points layer and rasterlayers should not be less than the maximum
+#'   provided radius in `radii`. The purpose is to avoid generating total or partially "empty landscapes" due to the existence of
+#'   non-overlapping regions between the buffers (generated around each point given a provided radius) and the rasterlayers.
+#'   If any of this happens, a warning will be returned.
+#'
 #'   If `on_the_fly = FALSE` (default), intersections between buffers and rasterlayers
 #'   defined in `rast_layer` and/or `ext_rast_layer` will be generated. Otherwise, if `on_the_fly = TRUE`, only buffers will be generated. The
 #'   latter approach may be particularly useful for 'MultiLand' objects with numerous points
@@ -453,7 +480,8 @@ mland <- function(points_layer, rast_layer = NULL, radii, classnames = NULL, sit
 
   # Generate class layers and points
   if(progress) message("Loading layers")
-  list_layers <- tryCatch(.generate_layers(points_layer, site_ref, rast_layer, ext_rast_layer),
+  list_layers <- tryCatch(.generate_layers(points_layer, site_ref, rast_layer,
+                                           ext_rast_layer, max(radii)),
                          error = function(e){
                            message("")
                            stop(e)})

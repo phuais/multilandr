@@ -138,6 +138,12 @@
     }
   }
 
+  if(!is.logical(random)){
+    messages <- append(messages,
+                       paste0("- argument 'random' must be logical."))
+    what     <- append(what, 2)
+  }
+
   if(!output %in% c("MLM", "spatial", "data", "coords")){
     messages <- append(messages,
                        "- argument 'output' must be \"MLM\", \"spatial\", \"data\" or \"coords\". Default

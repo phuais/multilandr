@@ -162,8 +162,26 @@
   return(mess)
 }
 
-.check_classCRS <- function(points_layer, class){
+.check_classCRS <- function(points_layer, class, ex_p, rad){
   mess <- if(!terra::same.crs(points_layer, class)) 1 else 0
+
+  # Check extent non-overlapping
+  if(mess == 0){
+    ex_cl <- terra::ext(class)
+    if(ex_p[1] < ex_cl[1] |
+       ex_p[2] > ex_cl[2] |
+       ex_p[3] < ex_cl[3] |
+       ex_p[4] > ex_cl[4]){
+      mess <- 2
+    } else {
+      if((ex_p[1] - ex_cl[1]) < rad |
+         (ex_cl[2] - ex_p[2]) < rad |
+         (ex_p[3] - ex_cl[3]) < rad |
+         (ex_cl[4] - ex_p[4]) < rad){
+        mess <- 3
+      }
+    }
+  }
   return(mess)
 }
 

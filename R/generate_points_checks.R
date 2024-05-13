@@ -10,6 +10,13 @@
     what     <- append(what, 2)
   }
 
+  # Padding
+  if(any(!is.numeric(padding), padding < 0)){
+    messages <- append(messages,
+                       "- argument 'padding' must a positive number. See ?generate_coods")
+    what     <- append(what, 2)
+  }
+
   # approach
   if(!approach %in% c("grid", "random", "patch")){
     messages <- append(messages,

@@ -126,6 +126,8 @@ patch_select <- function(df_tmp, patch_rast, patch_conditions){
 #' generate points at random locations, or "patch" to generate points inside patches that meet
 #' pre-defined conditions. See Details.
 #' @param n Number of point to generate.
+#' @param padding Numeric. Width (in meters) of the internal margin around the raster that will be
+#' discarded from the analysis. See Details.
 #' @param try Number of points to be generated in
 #' each turn. Only applies if `approach = "random"`. See Details.
 #' @param values The values of the rasterlayer where points should be placed. Only applies if
@@ -191,6 +193,9 @@ patch_select <- function(df_tmp, patch_rast, patch_conditions){
 #' centroids that did not fall inside the patch will be moved to the closest cell belonging to that
 #' patch.
 #'
+#' To avoid generating points to close to the boundaries of the raster, the outer borders of the
+#' raster can be discarded from the analysis, by considering the width inputted in `padding`.
+#'
 #' If `parallel = TRUE` the function will parallelize part of the processes. Parallelization
 #' is done to obtain the coordinates of the patches if `approach = "patch"`. The number of
 #' cores must be declared in `cores` (parallelization requires at least two cores). To use this
@@ -221,10 +226,21 @@ patch_select <- function(df_tmp, patch_rast, patch_conditions){
 #' patch_sites <- generate_points(elchaco, approach = "patch",
 #'                            patch_conditions = conditions(list(1, "area", 8, 12)))
 #'}
-generate_points <- function(raster, approach = "grid", n = NULL, try = NULL, values = NULL,
-                        patch_conditions = NULL, trim = TRUE, attempts = 10, distance = NULL,
-                        offset = FALSE, closest_cell = FALSE, parallel = FALSE, cores = 1,
-                        progress = TRUE){
+generate_points <- function(raster,
+                            approach = "grid",
+                            n = NULL,
+                            padding = 0,
+                            try = NULL,
+                            values = NULL,
+                            patch_conditions = NULL,
+                            trim = TRUE,
+                            attempts = 10,
+                            distance = NULL,
+                            offset = FALSE,
+                            closest_cell = FALSE,
+                            parallel = FALSE,
+                            cores = 1,
+                            progress = TRUE){
 
   environment(.generate_points_chk_args) <- environment()
   chk <- .generate_points_chk_args()
@@ -243,6 +259,21 @@ generate_points <- function(raster, approach = "grid", n = NULL, try = NULL, val
   # Transform to SpatRaster, if required
   if(class(raster) %in% c("RasterLayer", "RasterStack", "RasterBrick"))
     raster <- terra::rast(raster)
+
+  # Crop raster if padding != 0
+  if(padding > 0){
+    e <- terra::ext(raster)
+    e_padd <- suppressWarnings(tryCatch(terra::ext(e[1] + padding,
+                                                   e[2] - padding,
+                                                   e[3] + padding,
+                                                   e[4] - padding),
+                                        error = c))
+    if(is.list(e_padd)){
+      stop("- could not get a valid extent given the provided padding. See ?generate_points.")
+    } else {
+      raster <- terra::crop(raster, e_padd)
+    }
+  }
 
   # Grid approach
   if(approach == "grid"){
@@ -305,7 +336,6 @@ generate_points <- function(raster, approach = "grid", n = NULL, try = NULL, val
       if(is.null(try)){
         try <- n
       }
-      #new_points <- as.data.frame(raster::sampleRandom(raster, try, xy = T, cells = T))
       new_points <- as.data.frame(terra::spatSample(raster, try, xy = T, cells = T))
       if(!is.null(values))
         new_points <- new_points[new_points[, 4] %in% values, ]

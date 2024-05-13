@@ -15,6 +15,7 @@
 #' points that will comprise the gradient. See Details.
 #' @param breaks A unique number with the number of breaks that will generate the cutpoints for the
 #' specified metric values. Default is 10. See Details.
+#' @param random Logical. If TRUE, random points will be selected.
 #' @param output One of the following: "MLM" to return an updated version of the 'MultiLandMetrics' object provided in `x` (default),
 #' "spatial" to return a 'SpatVector' with the points
 #' of the selected landscapes, "data" to return a data.frame with the metric values information or "coords"
@@ -76,9 +77,16 @@
 #' # 1.15  6.02  6.03 10.99 15.97 20.99 26.01 31.02 35.95 41.14 41.34 45.93 51.41 54.56 55.44
 #'
 #' # Both alternatives generated a well-ranged gradient of values for the forest metric "pland"
-metrics_gradient <- function(x, rasterlayer = NULL, class = NULL,
-                              radius = NULL, metric = NULL, n, cutpoints = NULL,
-                              breaks = NULL, output = "MLM"){
+metrics_gradient <- function(x,
+                             rasterlayer = NULL,
+                             class = NULL,
+                             radius = NULL,
+                             metric = NULL,
+                             n,
+                             cutpoints = NULL,
+                             breaks = NULL,
+                             random = FALSE,
+                             output = "MLM"){
 
   if(!is(x, "MultiLandMetrics")) stop("x must be an object of class 'MultiLandMetrics'.")
 
@@ -101,10 +109,13 @@ metrics_gradient <- function(x, rasterlayer = NULL, class = NULL,
                  x@data$radius == radius &
                  x@data$metric == metric, ]
 
-  if(is.null(cutpoints) & is.null(breaks)){
+  if(random){
     pp <- sample(1:nrow(dat), n)
-    message("No values were assigned to arguments \"cutpoints\" or \"breaks\". Random points were selected.")
+    message("As random = TRUE, arguments \"cutpoints\" or \"breaks\" were not considered. Random points were selected.")
   } else {
+    if(is.null(cutpoints) & is.null(breaks)){
+      breaks <- n
+    }
     if(!is.null(cutpoints) & !is.null(breaks)){
       message("Argument \"breaks\" was discarded.")
       breaks <- length(cutpoints)
