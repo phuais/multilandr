@@ -25,7 +25,8 @@
 #'
 #' mlm_obj <- system.file("extdata", "ed_metrics.rds", package = "multilandr")
 #' ed_metrics <- mland_load(mlm_obj)
-mland_load <- function(path, ...){
+mland_load <- function(path,
+                       ...){
   if(is.character(path)){
     if(substr(path, (nchar(path) + 1) - 4, nchar(path)) == ".zip"){
       if(!file.exists(path))

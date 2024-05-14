@@ -381,10 +381,25 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #'                            level = "patch", class = "Forest",
 #'                            radii = 1000)
 #' }
-mland_metrics <- function(x, raster = NULL, points = NULL, radii = NULL,
-                           classes = NULL, level = NULL, metric = NULL, name = NULL, type = NULL,
-                           what = NULL, report_absences = TRUE, absence_values = NULL, ext_calc = NULL,
-                           na.exclude = TRUE, coords = FALSE, update = NULL, output = "MLM", progress = TRUE, ...){
+mland_metrics <- function(x,
+                          raster = NULL,
+                          points = NULL,
+                          radii = NULL,
+                          classes = NULL,
+                          level = NULL,
+                          metric = NULL,
+                          name = NULL,
+                          type = NULL,
+                          what = NULL,
+                          report_absences = TRUE,
+                          absence_values = NULL,
+                          ext_calc = NULL,
+                          na.exclude = TRUE,
+                          coords = FALSE,
+                          update = NULL,
+                          output = "MLM",
+                          progress = TRUE,
+                          ...){
 
   # Check arguments
   if(!is(x, "MultiLand")) stop("- argument 'x' must be an object of class 'MultiLand'.")

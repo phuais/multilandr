@@ -13,6 +13,7 @@
 #' found in the raster.
 #'
 #' @export
-check_raster <- function(raster, verbose = T){
+check_raster <- function(raster,
+                         verbose = T){
   landscapemetrics::check_landscape(raster, verbose)
 }

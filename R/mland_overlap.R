@@ -39,7 +39,12 @@
 #' }
 #'
 #' @export
-mland_overlap <- function(x, points = NULL, radii = NULL, digits = 2, perc = TRUE, title = "id"){
+mland_overlap <- function(x,
+                          points = NULL,
+                          radii = NULL,
+                          digits = 2,
+                          perc = TRUE,
+                          title = "id"){
 
   # Check arguments
   if(!is(x, "MultiLand")) stop("- argument 'x' must be an object of class 'MultiLand'.")

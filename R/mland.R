@@ -452,9 +452,17 @@ rast_tolist <- function(raster){
 #'                                         6, "Urban")),
 #'                     on_the_fly = TRUE)
 #' }
-mland <- function(points_layer, rast_layer = NULL, radii, classnames = NULL, site_ref = NULL,
-                  bufftype = "round", segs = 20, ext_rast_layer = NULL, rast_names = NULL,
-                  on_the_fly = FALSE, progress = TRUE){
+mland <- function(points_layer,
+                  rast_layer = NULL,
+                  radii,
+                  classnames = NULL,
+                  site_ref = NULL,
+                  bufftype = "round",
+                  segs = 20,
+                  ext_rast_layer = NULL,
+                  rast_names = NULL,
+                  on_the_fly = FALSE,
+                  progress = TRUE){
 
   # Check arguments
   environment(.mland_chk_args) <- environment()

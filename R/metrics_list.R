@@ -26,7 +26,11 @@
 #' Categorical and Continuous Maps. Computer software program produced by the authors at the
 #' University of Massachusetts, Amherst. \cr
 #' Available at the following web site: https://www.umass.edu/landeco/
-metrics_list <- function(level = NULL, metric = NULL, name = NULL, type = NULL, what = NULL){
+metrics_list <- function(level = NULL,
+                         metric = NULL,
+                         name = NULL,
+                         type = NULL,
+                         what = NULL){
 
   tab <- tryCatch.W.E(landscapemetrics::list_lsm(level = level,
                                                  metric = metric,

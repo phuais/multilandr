@@ -120,8 +120,14 @@
 #' # Exports as GIS data
 #' mland_export_gis(ernesdesign, dir = "ernesdesign")
 #' }
-mland_export_gis <- function(x, raster = NULL, points = NULL, radii = NULL, ext_raster = NULL,
-                       name = NULL, gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"), ...){
+mland_export_gis <- function(x,
+                             raster = NULL,
+                             points = NULL,
+                             radii = NULL,
+                             ext_raster = NULL,
+                             name = NULL,
+                             gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
+                             ...){
 
   # Check arguments
   if(!is(x, "MultiLand")){

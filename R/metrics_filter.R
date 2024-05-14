@@ -158,12 +158,14 @@ conditions <- function(...){
 #' otf_subset2 <- metrics_filter(otf_metrics,
 #'                               conditions = conds,
 #'                               output = "data")
-metrics_filter <- function(x, conditions = list(rasterlayers = NULL,
-                                                  classes = NULL,
-                                                  radii = NULL,
-                                                  metric = NULL,
-                                                  min_value = NULL,
-                                                  max_value = NULL), output = "MLM"){
+metrics_filter <- function(x,
+                           conditions = list(rasterlayers = NULL,
+                                             classes = NULL,
+                                             radii = NULL,
+                                             metric = NULL,
+                                             min_value = NULL,
+                                             max_value = NULL),
+                           output = "MLM"){
 
   if(!is(x, "MultiLandMetrics")) stop("x must be an object of class 'MultiLandMetrics'.")
 

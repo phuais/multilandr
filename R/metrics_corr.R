@@ -481,10 +481,18 @@
 #' # 1000 and 5000 m, disaggregating by rasterlayer.
 #' metrics_corr(ed_metrics, radii = c(1000, 5000), classes = 1:3,
 #'              c_level = "pland", display = "rl")
-metrics_corr <- function(x, method = "pearson", fun = NULL,
-                         raster = NULL, classes = NULL, radii = NULL,
-                         c_level = NULL, l_level = NULL, ext_raster = NULL, classnames = FALSE,
-                         display = "radii", ...){
+metrics_corr <- function(x,
+                         method = "pearson",
+                         fun = NULL,
+                         raster = NULL,
+                         classes = NULL,
+                         radii = NULL,
+                         c_level = NULL,
+                         l_level = NULL,
+                         ext_raster = NULL,
+                         classnames = FALSE,
+                         display = "radii",
+                         ...){
 
   if(!is(x, "MultiLandMetrics")) stop("x must be an object of class 'MultiLandMetrics'.")
   environment(.metrics_corr_chk_args) <- environment()

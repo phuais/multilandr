@@ -80,8 +80,10 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #' # Save it again. In this case, mland_save() is the same as using saveRDS()
 #' mland_save(ed_metrics2)
 #' }
-mland_save <- function(x, name = NULL,
-                       gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"), ...){
+mland_save <- function(x,
+                       name = NULL,
+                       gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
+                       ...){
 
   if(!is(x, "MultiLand") & !is(x, "MultiLandMetrics"))
     stop("- argument 'x' must be an object of class 'MultiLand' or 'MultiLandMetrics'.")

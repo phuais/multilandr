@@ -125,8 +125,15 @@
 #'
 #' # In this format, the data.frame can be passed to a fitting model
 #' fit <- lm(richness ~ r1_Forest_pland_3000, data = new_data)
-metrics_bind <- function(x, data, raster = NULL, classes = NULL, radii = NULL,
-                         c_level = NULL, l_level = NULL, ext_raster = NULL, classnames = FALSE){
+metrics_bind <- function(x,
+                         data,
+                         raster = NULL,
+                         classes = NULL,
+                         radii = NULL,
+                         c_level = NULL,
+                         l_level = NULL,
+                         ext_raster = NULL,
+                         classnames = FALSE){
 
   if(!is(x, "MultiLandMetrics")) stop("x must be an object of class 'MultiLandMetrics'.")
   environment(.metrics_bind_chk_args) <- environment()
