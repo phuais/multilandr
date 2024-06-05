@@ -194,48 +194,48 @@
 }
 
 # Generates labels
-.labeling <- function(classnames, classes, n_classes){
+.labeling <- function(class_names, classes, n_classes){
 
-  if(length(classnames) > 0){
-    if(length(classnames) != length(n_classes)){
-      warning(strwrap("- number of elements of argument 'classnames' differ with the number of raster
-                      layers. Classnames were discarded.", prefix = "\n", initial = ""),
+  if(length(class_names) > 0){
+    if(length(class_names) != length(n_classes)){
+      warning(strwrap("- number of elements of argument 'class_names' differ with the number of raster
+                      layers. Class names were discarded.", prefix = "\n", initial = ""),
               call. = FALSE)
 
-      classnames <- vector("list")
+      class_names <- vector("list")
     } else {
       for(i in 1:length(classes)){
-        if(length(classnames[[i]])/2 != n_classes[i]){
-          warning(strwrap(paste0("- number of labels defined in argument 'classnames' differ with the number of
-                                 classes of rasterlayer ", i , ". Classnames were discarded."),
+        if(length(class_names[[i]])/2 != n_classes[i]){
+          warning(strwrap(paste0("- number of labels defined in argument 'class_names' differ with the number of
+                                 classes of rasterlayer ", i , ". Class names were discarded."),
                           prefix = "\n", initial = ""),
                   call. = FALSE)
-          classnames <- vector("list")
+          class_names <- vector("list")
           break
         }
-        if(!all(as.numeric(classnames[[i]][seq(1, length(classnames[[i]]), 2)]) %in% classes[[i]])){
+        if(!all(as.numeric(class_names[[i]][seq(1, length(class_names[[i]]), 2)]) %in% classes[[i]])){
           warning(paste0("- one or more classes were not found as classes in rasterlayer ", i ,
-                         ". Classnames were discarded."), call. = FALSE)
-          classnames <- vector("list")
+                         ". Class names were discarded."), call. = FALSE)
+          class_names <- vector("list")
           break
         }
       }
     }
   }
 
-  if(length(classnames) > 0){
-    # Change - for _ in classnames.
+  if(length(class_names) > 0){
+    # Change - for _ in class_names
     if(length(n_classes) > 0){
       for(i in 1:length(classes)){
-        pos <- seq(2, length(classnames[[i]]), 2)
-        if(any(grepl("-", classnames[[i]][pos]))){
-          classnames[[i]][pos] <- gsub("-", "_", classnames[[i]][pos])
-          warning("Pattern \"-\" in classnames was replaced by \"_\".", call. = FALSE)
+        pos <- seq(2, length(class_names[[i]]), 2)
+        if(any(grepl("-", class_names[[i]][pos]))){
+          class_names[[i]][pos] <- gsub("-", "_", class_names[[i]][pos])
+          warning("Pattern \"-\" in class names was replaced by \"_\".", call. = FALSE)
         }
       }
     }
   }
-  return(classnames)
+  return(class_names)
 }
 
 # Raster labeling
@@ -291,7 +291,7 @@ rast_tolist <- function(raster){
 #'
 #' @param points_layer An object of class 'SpatVector', 'SpatialPoints', 'SpatialPointsDataFrame' or 'sf', or a string with the
 #'   path to a vector file.
-#' @param classnames A list matching each raster value with a class name. See Details.
+#' @param class_names A list matching each raster value with a class name. See Details.
 #' @param site_ref A string with the name of the column containing the identity of the sites in
 #'   points layer data (argument `points_layer`). See Details.
 #' @param radii A numeric vector with the radii (in meters) from which buffers will be created.
@@ -350,7 +350,7 @@ rast_tolist <- function(raster){
 #'   vector built from concatenated pairs of values, with the value of the raster (the class) in the
 #'   first place and the associated class name in the second place. For example, in the case only
 #'   one rasterlayer is provided (with four unique values: 1, 2, 3 and 4), a plausible definition
-#'   for the argument `classnames` could be the following:
+#'   for the argument `class_names` could be the following:
 #'
 #' \preformatted{
 #'  list(c(1, "Forest", 2, "Crops", 3, "Urban", 4, "Grassland"))
@@ -398,10 +398,10 @@ rast_tolist <- function(raster){
 #' ernesdesign <- mland(points_layer = elchaco_sites,
 #'                      rast_layer = elchaco,
 #'                      radii = seq(1000, 5000, 1000),
-#'                      classnames = list(cl_names),
+#'                      class_names = list(cl_names),
 #'                      site_ref = "name",
 #'                      ext_rast_layer = elchaco_ndvi,
-#'                      rast_names = c("landuse", "NDVI"),
+#'                      rast_names = c("landcover", "NDVI"),
 #'                      segs = 20)
 #'
 #' # Returns basic information about the object
@@ -419,7 +419,7 @@ rast_tolist <- function(raster){
 #' ernesdesign2 <- mland(points_layer = elchaco_sites,
 #'                       rast_layer = list(elchaco, elchaco2),
 #'                       radii = seq(1000, 5000, 1000),
-#'                       classnames = list(cl_names, cl_names),
+#'                       class_names = list(cl_names, cl_names),
 #'                       site_ref = "name")
 #'
 #' # Creates the same object but with "on_the_fly = T". Intersections between
@@ -427,7 +427,7 @@ rast_tolist <- function(raster){
 #' ernesdesign3 <- mland(points_layer = elchaco_sites,
 #'                       rast_layer = list(elchaco, elchaco2),
 #'                       radii = seq(1000, 5000, 1000),
-#'                       classnames = list(cl_names, cl_names),
+#'                       class_names = list(cl_names, cl_names),
 #'                       site_ref = "name",
 #'                       on_the_fly = T)
 #'
@@ -444,18 +444,18 @@ rast_tolist <- function(raster){
 #' otf_design <- mland(points_layer = otf_sites,
 #'                     rast_layer = elchaco,
 #'                     radii = 2000,
-#'                     classnames = list(c(1, "Forest",
-#'                                         2, "Grassland",
-#'                                         3, "Crops",
-#'                                         4, "Pastures",
-#'                                         5, "Water",
-#'                                         6, "Urban")),
+#'                     class_names = list(c(1, "Forest",
+#'                                          2, "Grassland",
+#'                                          3, "Crops",
+#'                                          4, "Pastures",
+#'                                          5, "Water",
+#'                                          6, "Urban")),
 #'                     on_the_fly = TRUE)
 #' }
 mland <- function(points_layer,
                   rast_layer = NULL,
                   radii,
-                  classnames = NULL,
+                  class_names = NULL,
                   site_ref = NULL,
                   bufftype = "round",
                   segs = 20,
@@ -513,15 +513,15 @@ mland <- function(points_layer,
   landscapes <- list(ints[[1]], ints[[3]])
   names(landscapes) <- c("lsm_rasters", "ext_rasters")
 
-  # Classnames generation
-  classnames <- .labeling(classnames, classes, n_classes)
+  # Class names generation
+  class_names <- .labeling(class_names, classes, n_classes)
   if(length(n_classes) > 0){
-    if(length(classnames) == 0){
+    if(length(class_names) == 0){
       df_classes <- data.frame(rasterlayer = rep(1:length(l_rasters), times = n_classes),
                                class = unlist(classes),
                                classname = NA)
     } else {
-      unlisted_classes <- unlist(classnames)
+      unlisted_classes <- unlist(class_names)
       df <- data.frame(class = unlist(classes))
       df_classes <- data.frame(rasterlayer = rep(1:length(l_rasters), times = n_classes),
                                class = as.numeric(unlisted_classes[seq(1, length(unlisted_classes),

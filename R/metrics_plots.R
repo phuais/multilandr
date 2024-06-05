@@ -4,7 +4,7 @@
 #'
 #' @inheritParams mland_metrics
 #' @param raster,ext_raster,classes,radii,l_level,c_level Parameters to subset plots. See Details.
-#' @param classnames logical. Whether to show classes with its previously defined names (if defined)
+#' @param class_names logical. Whether to show classes with its previously defined names (if defined)
 #' when generating the 'MultiLand' object (TRUE), or not (FALSE, default).
 #' @param smooth logical. If TRUE (default) a pattern between the pair of metric values
 #' is plotted, with a smoothing method as defined in `method`.
@@ -70,21 +70,21 @@
 #' @examples
 #' \dontrun{
 #' # Pair plots between metrics "pland" of classes 1 to 4, for radius 3000 m
-#' metrics_plots(ed_metrics, classes = 1:4, radii = 3000, classnames = TRUE,
+#' metrics_plots(ed_metrics, classes = 1:4, radii = 3000, class_names = TRUE,
 #'               c_level = "pland")
 #'
 #' # Without smooth pattern
-#' metrics_plots(ed_metrics, classes = 1:4, radii = 3000, classnames = TRUE,
+#' metrics_plots(ed_metrics, classes = 1:4, radii = 3000, class_names = TRUE,
 #'               c_level = "pland", smooth = FALSE)
 #'
 #' # Changing aesthetics
-#' metrics_plots(ed_metrics, classes = 1:4, radii = 3000, classnames = TRUE,
+#' metrics_plots(ed_metrics, classes = 1:4, radii = 3000, class_names = TRUE,
 #'               c_level = "pland", smooth = FALSE, size = 1.5, shape = 21,
 #'               fill = "red", alpha = 0.4)
 #'
 #' # Assessing two radii values at the same time
 #' metrics_plots(ed_metrics, classes = 1:4, radii = c(1000, 5000),
-#'               classnames = TRUE, c_level = "pland", smooth = FALSE,
+#'               class_names = TRUE, c_level = "pland", smooth = FALSE,
 #'               size = 1.5, shape = 21, fill = "red", alpha = 0.4)
 #'
 #' # An example with hundreds of points
@@ -102,7 +102,7 @@ metrics_plots <- function(x,
                           c_level = NULL,
                           l_level = NULL,
                           ext_raster = NULL,
-                          classnames = FALSE,
+                          class_names = FALSE,
                           upper = TRUE,
                           diag = TRUE,
                           smooth = TRUE,

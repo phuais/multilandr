@@ -8,7 +8,7 @@ mland(
   points_layer,
   rast_layer = NULL,
   radii,
-  classnames = NULL,
+  class_names = NULL,
   site_ref = NULL,
   bufftype = "round",
   segs = 20,
@@ -27,7 +27,7 @@ or a list of raster objects (any of 'RasterLayer' or 'SpatRaster').}
 
 \item{radii}{A numeric vector with the radii (in meters) from which buffers will be created.}
 
-\item{classnames}{A list matching each raster value with a class name. See Details.}
+\item{class_names}{A list matching each raster value with a class name. See Details.}
 
 \item{site_ref}{A string with the name of the column containing the identity of the sites in
 points layer data (argument \code{points_layer}). See Details.}
@@ -101,7 +101,7 @@ number of rasterlayers are extracted from these objects. Each element of the lis
 vector built from concatenated pairs of values, with the value of the raster (the class) in the
 first place and the associated class name in the second place. For example, in the case only
 one rasterlayer is provided (with four unique values: 1, 2, 3 and 4), a plausible definition
-for the argument \code{classnames} could be the following:
+for the argument \code{class_names} could be the following:
 
 \preformatted{
  list(c(1, "Forest", 2, "Crops", 3, "Urban", 4, "Grassland"))
@@ -144,10 +144,10 @@ elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.gpkg",
 ernesdesign <- mland(points_layer = elchaco_sites,
                      rast_layer = elchaco,
                      radii = seq(1000, 5000, 1000),
-                     classnames = list(cl_names),
+                     class_names = list(cl_names),
                      site_ref = "name",
                      ext_rast_layer = elchaco_ndvi,
-                     rast_names = c("landuse", "NDVI"),
+                     rast_names = c("landcover", "NDVI"),
                      segs = 20)
 
 # Returns basic information about the object
@@ -165,7 +165,7 @@ elchaco2 <- terra::rast(system.file("extdata", "elchaco2.tif",
 ernesdesign2 <- mland(points_layer = elchaco_sites,
                       rast_layer = list(elchaco, elchaco2),
                       radii = seq(1000, 5000, 1000),
-                      classnames = list(cl_names, cl_names),
+                      class_names = list(cl_names, cl_names),
                       site_ref = "name")
 
 # Creates the same object but with "on_the_fly = T". Intersections between
@@ -173,7 +173,7 @@ ernesdesign2 <- mland(points_layer = elchaco_sites,
 ernesdesign3 <- mland(points_layer = elchaco_sites,
                       rast_layer = list(elchaco, elchaco2),
                       radii = seq(1000, 5000, 1000),
-                      classnames = list(cl_names, cl_names),
+                      class_names = list(cl_names, cl_names),
                       site_ref = "name",
                       on_the_fly = T)
 
@@ -190,12 +190,12 @@ otf_sites <- terra::vect(system.file("extdata", "otf_sites.gpkg",
 otf_design <- mland(points_layer = otf_sites,
                     rast_layer = elchaco,
                     radii = 2000,
-                    classnames = list(c(1, "Forest",
-                                        2, "Grassland",
-                                        3, "Crops",
-                                        4, "Pastures",
-                                        5, "Water",
-                                        6, "Urban")),
+                    class_names = list(c(1, "Forest",
+                                         2, "Grassland",
+                                         3, "Crops",
+                                         4, "Pastures",
+                                         5, "Water",
+                                         6, "Urban")),
                     on_the_fly = TRUE)
 }
 }

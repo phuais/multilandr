@@ -44,45 +44,45 @@
     what     <- append(what, 2)
   }
 
-  # Classnames
-  if(!is.null(classnames)){
-    if(is.list(classnames)){
-      if(length(classnames) > 0){
-        for(i in 1:length(classnames)){
-          if(is.character(classnames[[i]])){
-            cl <- seq(1, length(classnames[[i]]), 2)
-            if((length(classnames[[i]]) %% 2) != 0 |
-               !all(!is.na(suppressWarnings(as.numeric(classnames[[i]][cl]))))){
-              messages   <- append(messages, "- argument 'classnames' was not defined properly. The
+  # Class names
+  if(!is.null(class_names)){
+    if(is.list(class_names)){
+      if(length(class_names) > 0){
+        for(i in 1:length(class_names)){
+          if(is.character(class_names[[i]])){
+            cl <- seq(1, length(class_names[[i]]), 2)
+            if((length(class_names[[i]]) %% 2) != 0 |
+               !all(!is.na(suppressWarnings(as.numeric(class_names[[i]][cl]))))){
+              messages   <- append(messages, "- argument 'class_names' was not defined properly. The
                                argument was ignored. See ?mland.")
               what       <- append(what, 1)
-              classnames <- list()
+              class_names <- list()
               break
             } else {
-              if(!is.character(classnames[[i]])){
-                messages   <- append(messages, "- argument 'classnames' must be a list with vector of
+              if(!is.character(class_names[[i]])){
+                messages    <- append(messages, "- argument 'class_names' must be a list with vector of
                                  strings in even elements. The argument was ignored. See ?mland")
-                what       <- append(what, 1)
-                classnames <- list()
+                what        <- append(what, 1)
+                class_names <- list()
                 break
               }
             }
           } else {
-            messages   <- append(messages, "- argument 'classnames' was not defined properly. The
+            messages   <- append(messages, "- argument 'class_names' was not defined properly. The
                                argument was ignored. See ?mland.")
             what       <- append(what, 1)
-            classnames <- list()
+            class_names <- list()
             break
           }
         }
       }
     } else {
-      messages   <- append(messages, "- argument 'classnames' must be a list. The argument was
+      messages    <- append(messages, "- argument 'class_names' must be a list. The argument was
                          ignored.")
-      what       <- append(what, 1)
-      classnames <- list()
+      what        <- append(what, 1)
+      class_names <- list()
     }
-  } else { classnames <- list() }
+  } else { class_names <- list() }
 
   # Raster names
   if(!is.null(rast_names)){
@@ -144,7 +144,7 @@
 
   out <- list(warnings = warnings,
               errors = errors,
-              classnames = classnames,
+              class_names = class_names,
               site_ref = site_ref,
               bufftype = bufftype,
               segs = segs,

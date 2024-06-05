@@ -161,11 +161,11 @@ ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 ernesdesign <- mland_load(ernesdesign)
 
 # Creates a 'MultiLandMetrics' object. It will calculate the "percentage of landscape"
-# ("pland") and "number of patches" ("np") for all classes. Note that an absence value
+# ("pland") and "edge density" ("ed") for all classes. Note that an absence value
 # for each metric is declared, as the absence of a class for these metrics should be
 # acknowledged as a 0 (percentage of zero and zero patches).
-ed_metrics <- mland_metrics(ernesdesign, level = "class", metric = c("pland", "np"),
-                            absence_values = list("pland" = 0, "np" = 0))
+ed_metrics <- mland_metrics(ernesdesign, level = "class", metric = c("pland", "ed"),
+                            absence_values = list("pland" = 0))
 
 # Returns data.frame with the values of all metrics for each landscape
 head(ed_metrics@data)
@@ -187,8 +187,8 @@ data <- mland_metrics(ernesdesign, level = "class", metric = "pland",
 mean_sd <- function(x){ mean(x)/sd(x) }
 
 ed_metrics2 <- mland_metrics(ernesdesign, level = "class",
-                             metric = c("pland", "np"),
-                             absence_values = list("pland" = 0, "np" = 0),
+                             metric = c("pland", "ed"),
+                             absence_values = list("pland" = 0),
                              ext_calc = list(c(1, "mean"), c(1, "mean_sd")))
 
 # We can calculate metrics for extra rasterlayers only
@@ -200,7 +200,7 @@ ed_metrics3 <- mland_metrics(ernesdesign, ext_calc = list(c(1, "mean", "mean_sd"
 # A list of available metrics with its names, abbreviations and function names can
 # be seen in metrics_list() and in the documentation of the package landscapemetrics.
 ed_metrics4 <- mland_metrics(ernesdesign,
-                             what = c("lsm_c_area_mn", "lsm_l_np", "lsm_l_shdi"),
+                             what = c("lsm_c_area_mn", "lsm_l_ed", "lsm_l_shdi"),
                              radii = 5000)
 
 # Calculates patch-level metrics of a particular landscape

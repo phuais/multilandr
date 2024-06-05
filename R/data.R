@@ -6,8 +6,7 @@
 #' for general information about these objects.
 #'
 #' The main internal object is a data.frame (accesible through `ed_metrics@data`) with information
-#' about the values of two landscape metrics: "pland" (percentage of landscape) and "np" (number of
-#' patches).
+#' about the values of two landscape metrics: "pland" (percentage of landscape) and "ed" (edge density).
 #'
 #' The object was created from the MultiLand object named "ernesdesign", which
 #' received two raster layers from a small portion of the ecoregion "El Chaco" as main inputs. The main rasterlayer

@@ -146,16 +146,16 @@
   return(out)
 }
 
-.chk_classnames <- function(messages, what, classnames){
+.chk_classnames <- function(messages, what, class_names){
 
-  if(!is.logical(classnames)){
+  if(!is.logical(class_names)){
     messages <- append(messages,
-                       "- argument 'classnames' must be logical. Default FALSE was taken.")
+                       "- argument 'class_names' must be logical. Default FALSE was taken.")
     what     <- append(what, 1)
-    classnames <- FALSE
+    class_names <- FALSE
   }
 
-  out <- list(messages, what, classnames)
+  out <- list(messages, what, class_names)
   return(out)
 }
 

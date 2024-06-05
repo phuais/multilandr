@@ -8,7 +8,7 @@ test_that("loads MultiLand successfully", {
           rast_layer = elchaco,
           radii = seq(1000, 5000, 1000),
           site_ref = "name",
-          rast_names = "landuse",
+          rast_names = "landcover",
           segs = 20,
           progress = F)
   }, "MultiLand")
@@ -20,7 +20,7 @@ test_that("loads MultiLand successfully", {
           rast_layer = elchaco,
           radii = seq(1000, 5000, 1000),
           site_ref = "name",
-          rast_names = "landuse",
+          rast_names = "landcover",
           segs = 20,
           progress = F)
   })
@@ -32,7 +32,7 @@ test_that("loads MultiLand successfully", {
           rast_layer = elchaco,
           radii = c("a", "b", "c"),
           site_ref = "name",
-          rast_names = "landuse",
+          rast_names = "landcover",
           segs = 20,
           progress = F)
   }, "- argument 'radii' must be a vector of positive numbers.")
@@ -44,7 +44,7 @@ test_that("loads MultiLand successfully", {
           rast_layer = elchaco,
           radii = seq(1000, 5000, 1000),
           site_ref = "site",
-          rast_names = "landuse",
+          rast_names = "landcover",
           segs = 20,
           progress = F)
   })
@@ -56,13 +56,13 @@ test_that("loads MultiLand successfully", {
           rast_layer = elchaco,
           radii = seq(1000, 5000, 1000),
           site_ref = "name",
-          classnames = c(1, "Forest",
-                         2, "Grassland",
-                         3, "Crops",
-                         4, "Pastures",
-                         5, "Water",
-                         6, "Urban"),
-          rast_names = "landuse",
+          class_names = c(1, "Forest",
+                          2, "Grassland",
+                          3, "Crops",
+                          4, "Pastures",
+                          5, "Water",
+                          6, "Urban"),
+          rast_names = "landcover",
           segs = 20,
           progress = F)
   })
@@ -74,10 +74,10 @@ test_that("loads MultiLand successfully", {
           rast_layer = elchaco,
           radii = seq(1000, 5000, 1000),
           site_ref = "name",
-          classnames = list(c(1, "Forest",
-                              2, "Grassland",
-                              3, "Crops")),
-          rast_names = "landuse",
+          class_names = list(c(1, "Forest",
+                               2, "Grassland",
+                               3, "Crops")),
+          rast_names = "landcover",
           segs = 20,
           progress = F)
   })

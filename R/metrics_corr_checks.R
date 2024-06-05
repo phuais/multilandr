@@ -42,18 +42,18 @@
     }
   }
 
-  if(!is.logical(classnames)){
+  if(!is.logical(class_names)){
     messages <- append(messages,
-                       "- argument 'classnames' must be logical. Default FALSE was taken.")
+                       "- argument 'class_names' must be logical. Default FALSE was taken.")
     what     <- append(what, 1)
-    classnames <- FALSE
+    class_names <- FALSE
   }
 
-  # Classnames
-  chk_classnames <- .chk_classnames(messages, what, classnames)
+  # Class names
+  chk_classnames <- .chk_classnames(messages, what, class_names)
   messages   <- chk_classnames[[1]]
   what       <- chk_classnames[[2]]
-  classnames <- chk_classnames[[3]]
+  class_names <- chk_classnames[[3]]
 
   if(!display %in% c("radii", "rl", "both")){
     messages <- append(messages,
@@ -69,7 +69,7 @@
   out <- list(warnings = warnings,
               errors = errors,
               fun = fun,
-              classnames = classnames,
+              class_names = class_names,
               display = display)
 
   return(out)

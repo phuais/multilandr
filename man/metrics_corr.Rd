@@ -14,7 +14,7 @@ metrics_corr(
   c_level = NULL,
   l_level = NULL,
   ext_raster = NULL,
-  classnames = FALSE,
+  class_names = FALSE,
   display = "radii",
   ...
 )
@@ -30,7 +30,7 @@ metrics_corr(
 \item{raster, ext_raster, classes, radii, l_level, c_level}{Parameters to subset calculations of
 correlations. See Details.}
 
-\item{classnames}{Logical. If TRUE, row and column of returned matrices will be identified
+\item{class_names}{Logical. If TRUE, row and column of returned matrices will be identified
 with the names of the classes, if available in \code{x}. Default FALSE.}
 
 \item{display}{Defines how correlations are presented: "radii" (default), "rl" or "both".
@@ -113,16 +113,16 @@ Disaggregations by rasterlayers only make sense for 'MultiLandMetrics' objects w
 metrics_corr(ed_metrics)
 
 # Only for radius 5000 m and with classes names rather than classes values
-metrics_corr(ed_metrics, radii = 5000, classnames = TRUE)
+metrics_corr(ed_metrics, radii = 5000, class_names = TRUE)
 
 # Only selecting the metric "pland"
-metrics_corr(ed_metrics, radii = 5000, classnames = TRUE, c_level = "pland")
+metrics_corr(ed_metrics, radii = 5000, class_names = TRUE, c_level = "pland")
 
 # Excluding the metric "pland"
-metrics_corr(ed_metrics, radii = 5000, classnames = TRUE, c_level = "-pland")
+metrics_corr(ed_metrics, radii = 5000, class_names = TRUE, c_level = "-pland")
 
 # Excluding the metric radii of 4000 and 5000 m
-metrics_corr(ed_metrics, radii = c(-4000, -5000), classnames = TRUE)
+metrics_corr(ed_metrics, radii = c(-4000, -5000), class_names = TRUE)
 
 # Correlations of metric "pland" between classes 1 to 3, and between radii
 # 1000 and 5000 m, disaggregating by rasterlayer.

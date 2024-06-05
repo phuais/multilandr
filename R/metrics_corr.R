@@ -179,11 +179,11 @@
         df$metric_label[i] <- paste0("r", df$rasterlayer[i], "_", df$metric[i], "_", df$radius[i])
       } else {
         if(df$level[i] == "class"){
-          if(classnames){
+          if(class_names){
             if(all(is.na(x@classes$classname))){
               cl_ref <- "class"
               level <- "c"
-              message("No classnames definition was found in 'x'. Argument 'classnames' was taken as FALSE.")
+              message("No class names definition was found in 'x'. Argument 'class_names' was taken as FALSE.")
             } else {
               cl_ref <- "classname"
               level <- ""
@@ -388,7 +388,7 @@
 #' @param fun A user-defined function to calculate correlations. See Details.
 #' @param raster,ext_raster,classes,radii,l_level,c_level Parameters to subset calculations of
 #' correlations. See Details.
-#' @param classnames Logical. If TRUE, row and column of returned matrices will be identified
+#' @param class_names Logical. If TRUE, row and column of returned matrices will be identified
 #' with the names of the classes, if available in `x`. Default FALSE.
 #' @param display Defines how correlations are presented: "radii" (default), "rl" or "both".
 #' See Details.
@@ -466,16 +466,16 @@
 #' metrics_corr(ed_metrics)
 #'
 #' # Only for radius 5000 m and with classes names rather than classes values
-#' metrics_corr(ed_metrics, radii = 5000, classnames = TRUE)
+#' metrics_corr(ed_metrics, radii = 5000, class_names = TRUE)
 #'
 #' # Only selecting the metric "pland"
-#' metrics_corr(ed_metrics, radii = 5000, classnames = TRUE, c_level = "pland")
+#' metrics_corr(ed_metrics, radii = 5000, class_names = TRUE, c_level = "pland")
 #'
 #' # Excluding the metric "pland"
-#' metrics_corr(ed_metrics, radii = 5000, classnames = TRUE, c_level = "-pland")
+#' metrics_corr(ed_metrics, radii = 5000, class_names = TRUE, c_level = "-pland")
 #'
 #' # Excluding the metric radii of 4000 and 5000 m
-#' metrics_corr(ed_metrics, radii = c(-4000, -5000), classnames = TRUE)
+#' metrics_corr(ed_metrics, radii = c(-4000, -5000), class_names = TRUE)
 #'
 #' # Correlations of metric "pland" between classes 1 to 3, and between radii
 #' # 1000 and 5000 m, disaggregating by rasterlayer.
@@ -490,7 +490,7 @@ metrics_corr <- function(x,
                          c_level = NULL,
                          l_level = NULL,
                          ext_raster = NULL,
-                         classnames = FALSE,
+                         class_names = FALSE,
                          display = "radii",
                          ...){
 

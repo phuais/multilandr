@@ -66,9 +66,13 @@ elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.gpkg",
 
 We also need at least one raster layer. This will typically represent
 different land covers within the extent of the vector layer of points.
-Other types of raster layers can be inputted. In this example, we also
-input a raster layer containing NDVI values within the extent of
-analysis. This could be a relevant co-variable to study.
+In this example, the main raster layer comprises a land cover layer from
+a clipped area of the Southamerican Chaco ecoregion for the year 2000
+(Project MapBiomas Chaco, 2022). Other types of raster layers can be
+inputted, such as relevant covariates. In this example, we also input a
+raster layer containing the values of the Normalized Difference
+Vegetation Index (NDVI) for the year 2000 (Landsat-7 image courtesy of
+the U.S. Geological Survey) within the extent of analysis.
 
 ``` r
 # Loads main raster of land covers
@@ -101,10 +105,10 @@ scales, from 1000 m until 5000 m, by 1000 m steps.
 ernesdesign <- mland(points_layer = elchaco_sites,
                      rast_layer = elchaco,
                      radii = seq(1000, 5000, 1000),
-                     classnames = list(cl_names),
+                     class_names = list(cl_names),
                      site_ref = "name",
                      ext_rast_layer = elchaco_ndvi,
-                     rast_names = c("landuse", "NDVI"))
+                     rast_names = c("landcover", "NDVI"))
 #> Loading layers
 #> Generating buffers
 #> Generating intersections
@@ -193,20 +197,22 @@ of available metrics can be explored with `metrics_list()`, which simply
 outputs the metrics available by `landscapemetrics`.
 
 In this example, we are calculating the percentage of the landscape
-(`"pland"`) and the number of patches (`"np"`) for each one of the land
+(`"pland"`) and the edge density (`"ed"`) for each one of the land
 covers of the main raster (`level = "class"`). In the argument
 `absence_values`, one can define which value should have a given metric
 when the class (land cover) is not present in the landscape. Here, it
-makes sense that this value should be zero for each metric. Note that,
-if not defined, the value in the case of absence of the given land cover
-will be `NA`.
+makes sense that this value should be zero for the percentage of the
+landscape for a given land cover, in the absence of this class. Note
+that, if not defined, the value in the case of absence of the given land
+cover will be `NA`.
 
 Calculation of other non-typical landscape metrics can be calculated,
 specially for those raster layers with continuous values. Here, we
 calculate the mean value and a user-defined calculation for the NDVI
-values, inside argument `ext_calc`. The `1` indicates that calculations
-must be performed for the first extra raster layer contained within the
-‘MultiLand’ object (in this example, the unique one).
+values, inside argument `ext_calc`. The `NDVI` indicates that
+calculations must be performed for the first extra raster layer
+contained within the ‘MultiLand’ object (in this example, the unique
+one).
 
 ``` r
 # User-defined function: quotient between mean and standard deviation
@@ -215,9 +221,9 @@ mean_sd <- function(x){ mean(x)/sd(x) }
 # Calculation of metrics
 ed_metrics <- mland_metrics(ernesdesign, 
                             level = "class", 
-                            metric = c("pland", "np"),
-                            absence_values = list("pland" = 0, "np" = 0),
-                            ext_calc = list(c(1, "mean"), c(1, "mean_sd")))
+                            metric = c("pland", "ED"),
+                            absence_values = list("pland" = 0),
+                            ext_calc = list(c("NDVI", "mean"), c(1, "mean_sd")))
 ```
 
 Basic information about the object can be explored by printing the
@@ -233,9 +239,9 @@ ed_metrics
 #> Radii (m)        : 1000 2000 3000 4000 5000 
 #> Metrics
 #>   Landscape-level:  
-#>   Class-level    : np pland 
+#>   Class-level    : ed pland 
 #>   Patch-level    :  
-#> Extra calcs.     : mean sd
+#> Extra calcs.     : mean
 ```
 
 Function `mland_metrics` outputs an object of class ‘MultiLandMetrics’,
@@ -245,19 +251,19 @@ required metric at each landscape and spatial scale.
 ``` r
 head(ed_metrics@data)
 #>   rasterlayer layer_name point_id      site radius level class classname
-#> 1           1    landuse        1 Algarrobo   1000 class     1    Forest
-#> 2           1    landuse        1 Algarrobo   1000 class     2 Grassland
-#> 3           1    landuse        1 Algarrobo   1000 class     3     Crops
-#> 4           1    landuse        1 Algarrobo   1000 class     4  Pastures
-#> 5           1    landuse        1 Algarrobo   1000 class     5     Water
-#> 6           1    landuse        1 Algarrobo   1000 class     6     Urban
-#>   patch_id metric value
-#> 1       NA     np     3
-#> 2       NA     np     2
-#> 3       NA     np     1
-#> 4       NA     np     1
-#> 5       NA     np     0
-#> 6       NA     np     0
+#> 1           1  landcover        1 Algarrobo   1000 class     1    Forest
+#> 2           1  landcover        1 Algarrobo   1000 class     2 Grassland
+#> 3           1  landcover        1 Algarrobo   1000 class     3     Crops
+#> 4           1  landcover        1 Algarrobo   1000 class     4  Pastures
+#> 5           1  landcover        1 Algarrobo   1000 class     5     Water
+#> 6           1  landcover        1 Algarrobo   1000 class     6     Urban
+#>   patch_id metric     value
+#> 1       NA     ed 13.827023
+#> 2       NA     ed  5.939124
+#> 3       NA     ed 16.239792
+#> 4       NA     ed  3.711952
+#> 5       NA     ed        NA
+#> 6       NA     ed        NA
 ```
 
 Data frame with metric’s values can be binded with a data frame
@@ -302,6 +308,10 @@ metrics. Ecography, 42(10), 1648-1657.
 Melo, G. L., Sponchiado, J., Cáceres, N. C., & Fahrig, L. (2017).
 Testing the habitat amount hypothesis for South American small mammals.
 Biological Conservation, 209, 304-314.
+
+Project MapBiomas Chaco – Collection 4.0 of annual land cover and land
+use maps, accessed during July 2022 through the following link:
+<https://chaco.mapbiomas.org/>
 
 Verga, E. G., Huais, P. Y., & Herrero, M. L. (2021). Population
 responses of pest birds across a forest cover gradient in the Chaco

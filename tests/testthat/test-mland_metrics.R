@@ -2,8 +2,8 @@
 
 ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 ernesdesign <- suppressMessages(mland_load(ernesdesign))
-ed_metrics_test <- mland_metrics(ernesdesign, level = "class", metric = c("pland", "np"),
-                                 absence_values = list("pland" = 0, "np" = 0),
+ed_metrics_test <- mland_metrics(ernesdesign, level = "class", metric = c("pland", "ed"),
+                                 absence_values = list("pland" = 0),
                                  points = 1, radii = 1000, progress = F)
 mean_sd <- function(x){ mean(x)/sd(x) }
 
@@ -16,16 +16,15 @@ test_that("colnames of metric dataframe have not changed", {
 
 test_that("metrics calculation are ok", {
   expect_equal({
-    ed_metrics_test@data$value
-  }, c(3, 2, 1, 1, 0, 0, 26.55902, 1.0857461, 71.4643653, 0.8908686, 0, 0))
+    round(ed_metrics_test@data$value, digits = 2)
+  }, c(13.83, 5.94, 16.24, 3.71, NA, NA, 26.56, 1.09, 71.46, 0.89, 0.00, 0.00))
   expect_equal({
-    ed_metrics2 <- mland_metrics(ernesdesign, level = "class", metric = c("pland", "np"),
-                                 absence_values = list("pland" = 0, "np" = 0),
+    ed_metrics2 <- mland_metrics(ernesdesign, level = "class", metric = c("pland", "ed"),
+                                 absence_values = list("pland" = 0),
                                  ext_calc = list(c(1, "mean")),
                                  points = 1, radii = 1000, progress = F)
-    ed_metrics2@data$value
-  }, c(3, 2, 1, 1, 0, 0, 26.55902, 1.0857461, 71.4643653, 0.8908686, 0,
-       0, 0.4910521))
+    round(ed_metrics2@data$value, digits = 2)
+  }, c(13.83, 5.94, 16.24, 3.71, NA, NA, 26.56, 1.09, 71.46, 0.89, 0.00, 0.00, 0.40))
 })
 
 # Test: metrics_filter()
@@ -50,9 +49,9 @@ test_that("metric filtering is ok", {
 # Test: metrics_corr and metrics_plots
 test_that("metrics correlations and plots going silently", {
 expect_silent({
-  metrics_corr(ed_metrics, radii = 5000, classnames = TRUE)})
+  metrics_corr(ed_metrics, radii = 5000, class_names = TRUE)})
 expect_silent({
-  metrics_plots(ed_metrics, classes = 1:4, radii = 3000, classnames = TRUE, c_level = "pland")})
+  metrics_plots(ed_metrics, classes = 1:4, radii = 3000, class_names = TRUE, c_level = "pland")})
 })
 
 # Test: metrics_bind

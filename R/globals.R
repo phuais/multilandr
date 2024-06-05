@@ -2,7 +2,7 @@ utils::globalVariables(c("x", "class_metrics", "points", "total_rows_pp", "radii
                          "classes_tmp", "df_reference", "absence_values", "values", "raster",
                          "approach", "n", "patch_conditions", "lay", "row_id", "r", "data",
                          "na.exclude", "level", "name", "type", "metric", "ext_calc", "on_the_fly",
-                         "ext_raster", "hcl.colors", "method", "classnames", "c_level", "l_level",
+                         "ext_raster", "hcl.colors", "method", "class_names", "c_level", "l_level",
                          "reshape", "y", "ext_calc_ref", "txtProgressBar", "runif", "res", "dist",
                          "setTxtProgressBar", "aggregate", "unzip", "new", "rasters_classes_tab",
                          "askYesNo", "arg_name", "classes", "value",  "progress", "update",
