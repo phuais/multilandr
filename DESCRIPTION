@@ -19,7 +19,7 @@ Imports:
     sf (>= 1.0-16),
     methods (>= 4.4.0)
 Depends: 
-    R (>= 4.4.0)
+    R (>= 4.3.0)
 LazyData: true
 Suggests: 
     parallel (>= 4.1.0),
