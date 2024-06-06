@@ -34,7 +34,7 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #' [mland_save()] uses the following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"). Only relevant
 #' if `x` is an object of class 'MultiLand'.
 #' @param ... If `x` is an object of class 'MultiLand', `...` should depict other arguments passed to
-#' [terra::writeRaster], the function to write rasterlayers (from intersections and plain rasterlayers).
+#' [terra::writeRaster], the function to write raster layers (from intersections and plain raster layers).
 #' Otherwise, if `x` is an object of class 'MultiLandMetrics', `...` should depict other arguments passed
 #' to [save()]. See Details.
 #' @details 'MultiLand' objects should be exported with this function rather than exporting as an
@@ -44,9 +44,9 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #' and can be loaded again into an R session with [mland_load()].
 #'
 #' Relevant arguments can be passed to the function [terra::writeRaster], which is used to write
-#' rasterlayers from a 'MultiLand' object. Particularly, in the argument `gdal` one can specify
+#' raster layers from a 'MultiLand' object. Particularly, in the argument `gdal` one can specify
 #' relevant options regarding raster compression. This may reduce raster sizes significantly. Definition
-#' of some other arguments inside [terra::writeRaster] may affect exportation of rasterlayer
+#' of some other arguments inside [terra::writeRaster] may affect exportation of raster layer
 #' objects, in the context of a 'MultiLand' object.
 #'
 #' Objects of class 'MultiLandMetrics', instead, do not contain 'SpatVector' or 'SpatRaster' objects
@@ -70,7 +70,7 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #' # Save it again
 #' mland_save(ernesdesign2)
 #'
-#' # Save it again but defining a higher compression for rasterlayers
+#' # Save it again but defining a higher compression for raster layers
 #' mland_save(ernesdesign2, gdal = "COMPRESS=DEFLATE")
 #'
 #' # Loads a MultiLandMetrics object previously generated with mland_metrics()

@@ -13,12 +13,12 @@
     raster      <- 1:x@n_layers
     ext_raster  <- 1:length(x@landscapes$ext_rasters)
   } else {
-    # Rasterlayers
+    # Raster layers
     if(!is.null(raster)){
       if(is.character(raster)){
         if(!all(raster %in% x@rast_names[[1]]$name)){
           messages <- append(messages,
-                             "- in argument 'raster': required rasterlayers were not found in
+                             "- in argument 'raster': required raster layers were not found in
                            'x'. Mispelled?")
           what     <- append(what, 2)
         } else {
@@ -31,7 +31,7 @@
           what     <- append(what, 2)
         } else {
           if(!all(raster %in% 1:x@n_layers)){
-            messages <- append(messages,"- in argument 'raster': one or more required rasterlayer
+            messages <- append(messages,"- in argument 'raster': one or more required raster layer
             were not found in x. Mispelled?")
             what     <- append(what, 2)
           }
@@ -43,7 +43,7 @@
       if(is.character(ext_raster)){
         if(!all(ext_raster %in% x@rast_names[[2]]$name)){
           messages <- append(messages,
-                             "- in argument 'ext_raster': required rasterlayers were not found in
+                             "- in argument 'ext_raster': required raster layers were not found in
                            'x'. Mispelled?")
           what     <- append(what, 2)
         } else {
@@ -84,14 +84,14 @@
 
 #' Exports a 'MultiLand' object as GIS data
 #'
-#' Exports points, buffers and intersections between buffers and rasterlayers, as vector and raster
+#' Exports points, buffers and intersections between buffers and raster layers, as vector and raster
 #' files.
 #'
 #' @param x  An object of class 'MultiLand' generated with [mland()].
 #' @param points Numeric or character vector of points to be processed. See Details.
 #' @param radii Numeric vector of radii to be processed.
 #' @param name Character. Name of the zip file where files will be exported.
-#' @param raster,ext_raster Numeric. The rasterlayers to be exported.
+#' @param raster,ext_raster Numeric. The raster layers to be exported.
 #' @param gdal GeoTiff creation options for rasters (\href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}).
 #' [mland_export_gis()] uses the following compression options:
 #' c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9").

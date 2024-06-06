@@ -39,7 +39,7 @@
                 }
               } else {
                 conditions[[i]][[1]] <- unique(x@data$rasterlayer)
-                message(paste0("- condition ", i, ": rasterlayers included in the filtering process: ",
+                message(paste0("- condition ", i, ": raster layers included in the filtering process: ",
                                paste0(conditions[[i]][[1]], collapse = " ")))
               }
 
@@ -81,7 +81,7 @@
                   } else {
                     conditions[[i]][[2]] <- na.exclude(unique(x@data$class))
                     message(paste0("- condition ", i,
-                                   ": all classes from all requested rasterlayers were included in the filtering process."))
+                                   ": all classes from all requested raster layers were included in the filtering process."))
                     # message(paste0("- condition ", i, ": classes included in the filtering process: ",
                     #                paste0(conditions[[i]][[2]], collapse = " ")))
                   }

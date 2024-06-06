@@ -35,7 +35,7 @@ test_that("metric filtering is ok", {
                                  conditions = conditions(list(NA, "Forest", 2000, "pland", 20, 30)),
                                  output = "MLM")
     otf_subset@n_points
-  }, 145)
+  }, 140)
 
   expect_equal({
     otf_subset2 <- metrics_filter(otf_metrics,
@@ -63,6 +63,6 @@ expect_silent({
 expect_equal({
   new_data <- metrics_bind(ed_metrics, sampling_data)
   dim(new_data)}
-, c(150, 73))
+, c(150, 68))
 })
 

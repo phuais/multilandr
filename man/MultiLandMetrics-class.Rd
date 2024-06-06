@@ -19,15 +19,15 @@ class can be passed to functions \code{\link[=metrics_corr]{metrics_corr()}}, \c
 
 \item{\code{crs_proj}}{A string depicting the CRS of points layer.}
 
-\item{\code{n_layers}}{Number of rasterlayers from which metrics were calculated.}
+\item{\code{n_layers}}{Number of raster layers from which metrics were calculated.}
 
-\item{\code{rast_names}}{A list with dataframes containing the names of the rasterlayers of the
+\item{\code{rast_names}}{A list with dataframes containing the names of the raster layers of the
 'MultiLand' object the function \code{\link[=mland_metrics]{mland_metrics()}} worked with.}
 
-\item{\code{classes}}{A data.frame depicting the rasterlayers, classes and classes names from which
+\item{\code{classes}}{A data.frame depicting the raster layers, classes and classes names from which
 metrics were calculated.}
 
-\item{\code{n_classes}}{Numeric vector depicting the number of distinct classes per rasterlayer
+\item{\code{n_classes}}{Numeric vector depicting the number of distinct classes per raster layer
 from which metrics were calculated.}
 
 \item{\code{points}}{A data.frame containing points coordinates and other attributes.}
@@ -39,10 +39,10 @@ from which metrics were calculated.}
 \item{\code{metrics}}{A data.frame depicting the metrics that were calculated, classified by level.}
 
 \item{\code{data}}{Main data.frame with the values of the metrics that were calculated for each
-point, radius, rasterlayers and other parameters pre-defined by the user.}
+point, radius, raster layers and other parameters pre-defined by the user.}
 
 \item{\code{ext_calcs}}{A data.frame depicting the extra calculations that were made in given extra
-rasterlayers.}
+raster layers.}
 }}
 
 \examples{

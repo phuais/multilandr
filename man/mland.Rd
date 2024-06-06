@@ -37,10 +37,10 @@ points layer data (argument \code{points_layer}). See Details.}
 \item{segs}{Number of line segments to use to approximate a quarter circle during buffer generation. Only valid when
 \code{bufftype = "round"}. Default is 20.}
 
-\item{rast_names}{A character vector with the names of the rasterlayers provided in \code{rast_layer}
+\item{rast_names}{A character vector with the names of the raster layers provided in \code{rast_layer}
 and \code{ext_rast_layer}. See Details.}
 
-\item{on_the_fly}{Logical. If FALSE (default) intersections between buffers and rasterlayers will
+\item{on_the_fly}{Logical. If FALSE (default) intersections between buffers and raster layers will
 be calculated. If TRUE, only buffers will be generated. See Details.}
 
 \item{progress}{Logical. If TRUE (default), progress of the analysis will be printed.}
@@ -59,45 +59,45 @@ analyses.
 \details{
 \code{mland()} is the primary function of the package. It creates an object of class
 'MultiLand' that holds relevant objects and information about points, buffers and intersections
-between the latters and rasterlayers.
+between buffers and raster layers.
 
 The function firstly creates buffers with center in the sites defined in \code{points_layer}, and size defined by
 the values of \code{radii}. If each point defined in \code{points_layer} has an associated name or id for
 ulterior identification, the user should provide the name of the attribute inside \code{points_layer}
 containing this information, by passing this string through the argument \code{site_ref}.
 
-Argument \code{rast_layer} must be provided with rasterlayers with discrete values from which different landscape metrics (provided by package \link{landscapemetrics})
-could be calculated. Extra rasterlayers can be provided in \code{ext_rast_layer}, from which other metrics can be
-calculated. For instance, an extra rasterlayer could be one depicting continuous values of slope,
+Argument \code{rast_layer} must be provided with raster layers with discrete values from which different landscape metrics (provided by package \link{landscapemetrics})
+could be calculated. Extra raster layers can be provided in \code{ext_rast_layer}, from which other metrics can be
+calculated. For instance, an extra raster layer could be one depicting continuous values of slope,
 from which a mean value per landscape may be calculated. Raster layers should be in a coordinate reference
 system with meters as the unit, and all raster and vector layers must be in the same coordinate reference system.
 The user may check the validity of the raster layer with \code{\link[=check_raster]{check_raster()}}.
 
-The extent of the provided points layer should not exceed the limits of the extent of the provided rasterlayers. In addition,
-the difference between the outer borders of provided points layer and rasterlayers should not be less than the maximum
+The extent of the provided points layer should not exceed the limits of the extent of the provided raster layers. In addition,
+the difference between the outer borders of provided points layer and raster layers should not be less than the maximum
 provided radius in \code{radii}. The purpose is to avoid generating total or partially "empty landscapes" due to the existence of
-non-overlapping regions between the buffers (generated around each point given a provided radius) and the rasterlayers.
+non-overlapping regions between the buffers (generated around each point given a provided radius) and the raster layers.
 If any of this happens, a warning will be returned.
 
-If \code{on_the_fly = FALSE} (default), intersections between buffers and rasterlayers
+If \code{on_the_fly = FALSE} (default), intersections between buffers and raster layers
 defined in \code{rast_layer} and/or \code{ext_rast_layer} will be generated. Otherwise, if \code{on_the_fly = TRUE}, only buffers will be generated. The
 latter approach may be particularly useful for 'MultiLand' objects with numerous points
 (hundreds or thousands), in order to avoid returning an object excessively heavy for memory. If
-this is the case, intersections between buffers and rasterlayers will be generated when
+this is the case, intersections between buffers and raster layers will be generated when
 required ("on the fly"). For instance, to calculate metrics with \code{\link[=mland_metrics]{mland_metrics()}}.
 
-The names of the provided rasterlayers can be defined in \code{rast_names}. If so, this must be
-a character vector with as many names (strings) as provided rasterlayers in arguments \code{rast_layer} and
-\code{ext_rast_layer}, in the mentioned order. If there is no need of a name for a particular rasterlayer, the given element in the vector
+The names of the provided raster layers can be defined in \code{rast_names}. If so, this must be
+a character vector with as many names (strings) as provided raster layers in arguments \code{rast_layer} and
+\code{ext_rast_layer}, in the mentioned order. If there is no need of a name for a particular raster layer, the given element in the vector
 should be \code{NA}. Definition of these names could be useful when applying other functions of
-the package to the object generated here. For instance, to get the name of the rasterlayer
+the package to the object generated here. For instance, to get the name of the raster layer
 of a particular row of the data.frame with landscape metrics exported by \code{\link[=mland_metrics]{mland_metrics()}}.
 
-Classes names can be associated with each value of the rasterlayers defined in \code{rast_layer}, for a
+Classes names can be associated with each value of the raster layers defined in \code{rast_layer}, for a
 easier future identification. If so, the user must provide a list with as many elements as
-rasterlayers defined in \code{rast_layer}. If a 'SpatRaster' with multiple layers, a 'RasterStack' or a
+raster layers defined in \code{rast_layer}. If a 'SpatRaster' with multiple layers, a 'RasterStack' or a
 'RasterBrick' is provided, the
-number of rasterlayers are extracted from these objects. Each element of the list must be a
+number of raster layers are extracted from these objects. Each element of the list must be a
 vector built from concatenated pairs of values, with the value of the raster (the class) in the
 first place and the associated class name in the second place. For example, in the case only
 one rasterlayer is provided (with four unique values: 1, 2, 3 and 4), a plausible definition
@@ -107,7 +107,7 @@ for the argument \code{class_names} could be the following:
  list(c(1, "Forest", 2, "Crops", 3, "Urban", 4, "Grassland"))
 }
 
-If, for instance, two rasterlayers are provided (with four unique values for the first layer,
+If, for instance, two raster layers are provided (with four unique values for the first layer,
 and two unique values for the second one), a plausible definition would be:
 
 \preformatted{
@@ -161,7 +161,7 @@ ernesdesign@classes
 elchaco2 <- terra::rast(system.file("extdata", "elchaco2.tif",
                                     package = "multilandr"))
 
-# Creates 'MultiLand' with two rasterlayers.
+# Creates 'MultiLand' with two raster layers.
 ernesdesign2 <- mland(points_layer = elchaco_sites,
                       rast_layer = list(elchaco, elchaco2),
                       radii = seq(1000, 5000, 1000),

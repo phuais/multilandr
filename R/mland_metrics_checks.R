@@ -16,7 +16,7 @@
     if(is.character(raster)){
       if(!all(raster %in% x@rast_names[[1]]$name)){
         messages <- append(messages,
-                           "- in argument 'raster': required rasterlayers were not found in
+                           "- in argument 'raster': required raster layers were not found in
                            'x'. Mispelled?")
         what     <- append(what, 2)
       } else {
@@ -26,12 +26,12 @@
       if(!is.positive.wholenumber(raster)){
         messages <- append(messages,
                            "- in argument 'raster': if not NULL, it must be a character vector with
-                           rasterlayer names or a vector of positive wholenumbesr.")
+                           rasterlayer names or a vector of positive wholenumbers.")
         what     <- append(what, 2)
       } else {
         if(!all(raster %in% 1:x@n_layers)){
           messages <- append(messages,
-                             "- in argument 'raster': required rasterlayers were not found in
+                             "- in argument 'raster': required raster layers were not found in
                            'x'. Mispelled?")
           what     <- append(what, 2)
         }
@@ -90,7 +90,7 @@
       }
     } else {
       messages <- append(messages, "- if argument 'ext_calc' is defined, 'x' must contain extra
-      rasterlayers. Details in ?mland_metrics.")
+      raster layers. Details in ?mland_metrics.")
       what     <- append(what, 2)
     }
   }
@@ -100,7 +100,7 @@
   messages <- chk_radii[[1]]
   what     <- chk_radii[[2]]
 
-  # If no extra calculations, take all main rasterlayers
+  # If no extra calculations, take all main raster layers
   if(is.null(raster)){
     if(nrow(ext_calc_ref) == 0){
       raster <- 1:x@n_layers
@@ -118,7 +118,7 @@
       if(!is.list(classes)) classes <- list(classes)
       if(length(classes) != length(raster)){
         messages <- append(messages, "- inconsistencies were found between the number of required
-                         rasterlayers and the definition of argument 'classes'. More details in
+                         raster layers and the definition of argument 'classes'. More details in
                          ?mland_metrics.")
         what     <- append(what, 2)
       } else {

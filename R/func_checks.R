@@ -39,7 +39,7 @@
   if(!is.null(raster)){
     if(!class(raster) %in% c("RasterLayer", "RasterStack", "RasterBrick", "SpatRaster", "list")){
       messages <- append(messages, paste0("- argument '", arg_name, "' must be a rasterlayer or a
-                                          list of rasterlayers. See ?mland"))
+                                          list of raster layers. See ?mland"))
       what     <- append(what, 2)
     }
     if(is(raster, "list")){
@@ -47,7 +47,7 @@
       for(i in 1:length(raster)){ cl[i] <- class(raster[[i]]) %in% c("RasterLayer", "SpatRaster") }
       if(!all(cl)){
         messages <- append(messages, paste0("- if provided a list in argument '", arg_name, "', this must be a
-                         list of objects of rasterlayers. See ?mland"))
+                         list of objects of raster layers. See ?mland"))
         what     <- append(what, 2)
       }
     }

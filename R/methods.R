@@ -12,25 +12,25 @@ if(!isGeneric("show"))
 methods::setMethod(f = "show", signature = "MultiLand",
           definition =
           function(object){
-            cat("class            : MultiLand\n")
-            cat("On the fly       :", object@on_the_fly, "\n")
-            cat("Rasterlayers     :", object@n_layers, "\n")
+            cat("class             : MultiLand\n")
+            cat("On the fly        :", object@on_the_fly, "\n")
+            cat("Raster layers     :", object@n_layers, "\n")
             if(length(object@n_classes) > 0){
-              cat("  n classes      :", object@n_classes, "\n")
+              cat("  n classes       :", object@n_classes, "\n")
             } else {
-              cat("  n classes      : -\n")
+              cat("  n classes       : -\n")
             }
-            cat("Ext. rasterlayers:", length(object@landscapes[[2]]), "\n")
-            cat("n points         :", nrow(object@points), "\n")
+            cat("Ext. raster layers:", length(object@landscapes[[2]]), "\n")
+            cat("n points          :", nrow(object@points), "\n")
             if(!is.null(object@site_ref)){
-              cat("Site reference   : \"", object@site_ref, "\"\n", sep = "")
+              cat("Site reference    : \"", object@site_ref, "\"\n", sep = "")
             } else {
-              cat("Site reference   : -\n")
+              cat("Site reference    : -\n")
             }
             if(length(object@radii) > 6){
-              cat("Radii (m)        :", object@radii[1:5], "...", object@radii[length(object@radii)], "\n")
+              cat("Radii (m)         :", object@radii[1:5], "...", object@radii[length(object@radii)], "\n")
             } else {
-              cat("Radii (m)        :", object@radii, "\n")
+              cat("Radii (m)         :", object@radii, "\n")
             }
           }
 )

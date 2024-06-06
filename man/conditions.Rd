@@ -49,15 +49,15 @@ metric conditions, as follows:
  list(rasterlayers, class, radii, metric, minimum value, maximum value)
 }
 \itemize{
-\item rasterlayers: the rasterlayers to be considered. If NA, all rasterlayers will be considered. If
-an extra rasterlayer must be specified, the string "ext" must precede the rasterlayer number
+\item rasterlayers: the raster layers to be considered. If NA, all raster layers will be considered. If
+an extra raster layer must be specified, the string "ext" must precede the raster layer number
 (e.g. "ext1", "ext2").
-\item class: the classes to be considered, as numbers or strings with the names of the classes. If NA, all classes of required rasterlayers will be
+\item class: the classes to be considered, as numbers or strings with the names of the classes. If NA, all classes of required raster layers will be
 considered. If NULL, the function will assume that the metric to be considered is a landscape-level metric.
 Take into account that metrics from extra calculations are considered as landscape-level metrics.
 \item radii: the radii to be considered. If NA, all radii will be considered.
 \item metrics: the name of the metric to be considered (as defined with its abbreviation by column "metric" in \code{\link[=metrics_list]{metrics_list()}}).
-Only one metric per condition can be defined. Metrics as extra calculations for extra rasterlayers must be
+Only one metric per condition can be defined. Metrics as extra calculations for extra raster layers must be
 provided as "fun_" + the name of the function (e.g. "fun_mean").
 \item minimum value: the minimum value that the metric must have in the filtered landscapes. If equal
 to -Inf, and a maximum value is defined, landscapes whose values in the defined metric are equal

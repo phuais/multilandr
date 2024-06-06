@@ -41,15 +41,15 @@ for which the helper function \code{\link[=conditions]{conditions()}} is availab
             ...)
 }
 \itemize{
-\item rasterlayers: the rasterlayers to be considered. If NA, all rasterlayers will be considered. If
-an extra rasterlayer must be specified, the string "ext" must precede the rasterlayer number
+\item rasterlayers: the raster layers to be considered. If NA, all raster layers will be considered. If
+an extra raster layer must be specified, the string "ext" must precede the raster layer number
 (e.g. "ext1", "ext2").
-\item class: the classes to be considered, as numbers or strings with the names of the classes. If NA, all classes of required rasterlayers will be
+\item class: the classes to be considered, as numbers or strings with the names of the classes. If NA, all classes of required raster layers will be
 considered. If NULL, the function will assume that the metric to be considered is a landscape-level metric.
 Take into account that metrics from extra calculations are considered as landscape-level metrics.
 \item radii: the radii to be considered. If NA, all radii will be considered.
 \item metrics: the name of the metric to be considered (as defined with its abbreviation by column "metric" in \code{\link[=metrics_list]{metrics_list()}}).
-Only one metric per condition can be defined. Metrics as extra calculations for extra rasterlayers must be
+Only one metric per condition can be defined. Metrics as extra calculations for extra raster layers must be
 provided as "fun_" + the name of the function (e.g. "fun_mean").
 \item minimum value: the minimum value that the metric must have in the filtered landscapes. If equal
 to -Inf, and a maximum value is defined, landscapes whose values in the defined metric are equal
@@ -68,11 +68,11 @@ A plausible list of conditions could be the following:
 }
 
 And it would indicate that landscapes of radius equal to 1000 m should present values of "pland"
-(percentage of the landscape) for class 2 from rasterlayer 1, between 20 and 30\%. At the same time, landscapes of radius
+(percentage of the landscape) for class 2 from raster layer 1, between 20 and 30\%. At the same time, landscapes of radius
 equal to 1000 m should present values of "np" (number of patches) for class 4 from rasterlayer 1,
 between 1 and 15 patches. Finally, all selected landscapes of radius equal to 1000 m should
-present values for "fun_mean" (applied to extra rasterlayer "ext1") between 70 and 80. Note that the
-slot for "class" is NULL, as extra rasterlayers do not hold classes.
+present values for "fun_mean" (applied to extra raster layer "ext1") between 70 and 80. Note that the
+slot for "class" is NULL, as extra raster layers do not hold classes.
 }
 \examples{
 # Filter landscapes that have between 20 and 30\% of forest at a radius of 2000 m

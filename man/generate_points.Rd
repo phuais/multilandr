@@ -142,7 +142,8 @@ chaco_coords2 <- generate_points(elchaco, approach = "random", values = 1, n = 5
 # Returns as many points as patches that meet the defined condition. This is
 # all patches of value equal to 1 of area between 9 and 11 hectares.
 patch_sites <- generate_points(elchaco, approach = "patch",
-                           patch_conditions = conditions(list(1, "area", 8, 12)))
+                           patch_conditions = conditions(list(1, "area", 8, 12)),
+                           padding = 2000)
 }
 }
 \seealso{

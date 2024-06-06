@@ -50,18 +50,18 @@ subset the data.frame contained in \code{x}. In each one of these, an all-positi
 all-negative vector can be passed, whether to include (all-postive) or exclude (all-negative)
 the elements to be taken into account for the subsetting:
 \itemize{
-\item rasterlayers: a numeric vector with the number of the rasterlayers to be included/excluded.
-For example: \code{c(1, 2, 4)} to include rasterlayers 1, 2 and 4; \code{c(-2, -3)} to exclude rasterlayers 2
+\item rasterlayers: a numeric vector with the number of the raster layers to be included/excluded.
+For example: \code{c(1, 2, 4)} to include raster layers 1, 2 and 4; \code{c(-2, -3)} to exclude raster layers 2
 and 3.
-\item classes: must be a list with as many elements as defined rasterlayers in argument
+\item classes: must be a list with as many elements as defined raster layers in argument
 \code{rasterlayers}. Each element of the list must be a numeric vector (classes identities) with the
 classes to be included/excluded. If provided a character vector, \code{\link[=metrics_bind]{metrics_bind()}} assumes that
-classes names are provided. For example, for the case with 2 rasterlayers:
-\code{list(c(3, 20, 35), c("Forest", "Crops"))} would include classes 3, 20 and 35 from rasterlayer 1
-and classes "Forest" and "Crops" for rasterlayer 2. For the case of a unique rasterlayer, there
-is no need to input a list. For example, for the case of a unique rasterlayer and the
+classes names are provided. For example, for the case with 2 raster layers:
+\code{list(c(3, 20, 35), c("Forest", "Crops"))} would include classes 3, 20 and 35 from rasterl ayer 1
+and classes "Forest" and "Crops" for raster layer 2. For the case of a unique rasterlayer, there
+is no need to input a list. For example, for the case of a unique raster layer and the
 exclusion of some classes: \code{c(-5, -10, -15)} to exclude classes 5, 10 and 15 of
-the unique rasterlayer; \code{c("-Forest", "-Grassland")} to exclude classes "Forest" and "Grassland".
+the unique raster layer; \code{c("-Forest", "-Grassland")} to exclude classes "Forest" and "Grassland".
 Note the "-" before each class name to indicate the exclusion of the classes.
 \item radii: a numeric vector to include/exclude particular radii. For example: \code{c(1000, 2000)} to
 include only radii of 1000 and 2000 m; \code{c(-500, -1500)} to exclude radii of 500 and 1500 m.
@@ -71,7 +71,7 @@ the analysis. For example: \code{c("np", "pland")} will include only the metrics
 will exclude them. Note the "-" before each metric name to indicate the exclusion of the
 metrics.
 \item l_level: character vector with the landscape-level metrics to be included/excluded from
-the analysis. Extra calculations for extra rasterlayers are considered as landscape-level metrics,
+the analysis. Extra calculations for extra raster layers are considered as landscape-level metrics,
 and must be provided as "fun_" + the name of the function.
 }
 }

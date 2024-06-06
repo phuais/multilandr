@@ -28,12 +28,12 @@
     message("Patch-level metrics were dropped.")
   }
 
-  # subset rasterlayers
+  # subset raster layers
   if(!is.null(raster)){
     if(is.character(raster)){
       if(!all(raster %in% x@rast_names[[1]]$name)){
         stop(strwrap(
-          paste0("- in raster: one or more rasterlayers could not be found in x. Mispelled?"),
+          paste0("- in raster: one or more raster layers could not be found in x. Mispelled?"),
           prefix = "\n", initial = "\n"), call. = FALSE)
       } else {
         raster <- sort(x@rast_names[[1]][x@rast_names[[1]]$name %in% raster, "rasterlayer"])
@@ -41,12 +41,12 @@
     }
     subset_r <- .subset_fn(raster)
     if(subset_r[[1]] == "error"){
-      stop(strwrap("Inconsistencies were found in the definition of rasterlayers.
+      stop(strwrap("Inconsistencies were found in the definition of raster layers.
            This should be an all positive or an all negative numeric vector.", prefix = "\n",
                    initial = "\n"), call. = FALSE)
     } else {
       if(!all(subset_r[[2]] %in% 1:x@n_layers)){
-        stop(strwrap("Inconsistencies were found between the required rasterlayers and the raster
+        stop(strwrap("Inconsistencies were found between the required raster layers and the raster
                    layers associated with 'x'. Mispelled?", prefix = "\n", initial = "\n"), call. = FALSE)
       }
     }
@@ -62,7 +62,7 @@
     if(is.character(ext_raster)){
       if(!all(ext_raster %in% x@rast_names[[2]]$name)){
         stop(strwrap(
-          paste0("- in ext_raster: one or more rasterlayers could not be found in x. Mispelled?"),
+          paste0("- in ext_raster: one or more raster layers could not be found in x. Mispelled?"),
           prefix = "\n", initial = "\n"), call. = FALSE)
       } else {
         ext_raster <- sort(x@rast_names[[2]][x@rast_names[[2]]$name %in% ext_raster, "rasterlayer"])
@@ -75,7 +75,7 @@
                    initial = "\n"), call. = FALSE)
     } else {
       if(!all(subset_er[[2]] %in% unique(as.numeric(x@ext_calcs$layer)))){
-        stop(strwrap("Inconsistencies were found between the required extra rasterlayers and the
+        stop(strwrap("Inconsistencies were found between the required extra raster layers and the
                    extra layers associated with 'x'. Mispelled?", prefix = "\n", initial = "\n"),
              call. = FALSE)
       }
@@ -135,13 +135,13 @@
     if(subset[[1]] == "stay"){
       df <- df[df$rasterlayer %in% subset[[2]], ]
       if(subset[[4]]){
-        message(paste0("The following rasterlayers were included in the analysis: ",
+        message(paste0("The following raster layers were included in the analysis: ",
                        paste(subset[[2]], collapse = " ")))
       }
     } else {
       df <- df[!df$rasterlayer %in% subset[[2]], ]
       if(subset[[4]]){
-        message(paste0("The following rasterlayers were excluded from the analysis: ",
+        message(paste0("The following raster layers were excluded from the analysis: ",
                        paste(subset[[2]], collapse = " ")))
       }
     }
@@ -287,7 +287,7 @@
   if(!is.null(classes) & !is.null(raster)){
     if(!is.list(classes)) classes <- list(classes)
     if(length(classes) > length(raster)){
-      stop("The number of elements of classes must be equal to the required rasterlayers.")
+      stop("The number of elements of classes must be equal to the required raster layers.")
     } else {
       if(length(classes) != length(raster)){
         for(i in (length(classes)+1):length(raster)){
@@ -302,7 +302,7 @@
         if(subset[[1]] == "error"){
           stop(strwrap("Inconsistencies were found in the definition of 'classes'. This should be a
                        list, with as many elements (each one an all negative or all positive numeric
-                       vector) as available rasterlayers in 'x'.",
+                       vector) as available raster layers in 'x'.",
                        prefix = "\n", initial = "\n"), call. = FALSE)
         } else {
           for(r in 1:length(subset[[2]])){
@@ -407,20 +407,20 @@
 #' subset the calculations of pair correlations. In each one of these, an all-positive or an
 #' all-negative vector can be passed, whether to include (all-postive) or exclude (all-negative)
 #' the elements to be taken into account for the subsetting:
-#' * raster: a numeric vector with the number of the rasterlayers to be included/excluded.
-#' For example: `c(1, 2, 4)` to include rasterlayers 1, 2 and 4; `c(-2, -3)` to exclude rasterlayers 2
+#' * raster: a numeric vector with the number of the raster layers to be included/excluded.
+#' For example: `c(1, 2, 4)` to include raster layers 1, 2 and 4; `c(-2, -3)` to exclude raster layers 2
 #' and 3.
-#' * ext_raster: a numeric vector with the number of the extra rasterlayers to be included/excluded,
+#' * ext_raster: a numeric vector with the number of the extra raster layers to be included/excluded,
 #' as in the raster slot.
-#' * classes: must be a list with as many elements as defined rasterlayers in argument
+#' * classes: must be a list with as many elements as defined raster layers in argument
 #' `raster`. Each element of the list must be a numeric vector (classes identities) with the
 #' classes to be included/excluded. If provided a character vector, [metrics_corr()] assumes that
-#' classes names are provided. For example, for the case with 2 rasterlayers:
-#' `list(c(3, 20, 35), c("Forest", "Crops"))` would include classes 3, 20 and 35 from rasterlayer 1
-#' and classes "Forest" and "Crops" for rasterlayer 2. For the case of a unique rasterlayer, there
-#' is no need to input a list. For example, for the case of a unique rasterlayer and the
+#' classes names are provided. For example, for the case with 2 raster layers:
+#' `list(c(3, 20, 35), c("Forest", "Crops"))` would include classes 3, 20 and 35 from raster layer 1
+#' and classes "Forest" and "Crops" for raster layer 2. For the case of a unique raster layer, there
+#' is no need to input a list. For example, for the case of a unique raster layer and the
 #' exclusion of some classes: `c(-5, -10, -15)` to exclude classes 5, 10 and 15 of
-#' the unique rasterlayer; `c("-Forest", "-Grassland")` to exclude classes "Forest" and "Grassland".
+#' the unique raster layer; `c("-Forest", "-Grassland")` to exclude classes "Forest" and "Grassland".
 #' Note the "-" before each class name to indicate the exclusion of the classes.
 #' * radii: a numeric vector to include/exclude particular radii. For example: `c(1000, 2000)` to
 #' include only radii of 1000 and 2000 m; `c(-500, -1500)` to exclude radii of 500 and 1500 m.
@@ -430,7 +430,7 @@
 #' will exclude them. Note the "-" before each metric name to indicate the exclusion of the
 #' metrics.
 #' * l_level: character vector with the landscape-level metrics to be included/excluded from
-#' the analysis. Extra calculations for extra rasterlayers are considered as landscape-level metrics,
+#' the analysis. Extra calculations for extra raster layers are considered as landscape-level metrics,
 #' and must be provided as "fun_" + the name of the function (e.g. "fun_mean").
 #'
 #' Names of the available metrics of the 'MultiLandMetrics' object provided in `x` can
@@ -443,7 +443,7 @@
 #' (default), correlation values are disaggregated by radii. If "rl", correlation values are
 #' disaggregated by rasterlayer: correlations between different radii will be presented.
 #' If "both", correlation values are firstly disaggregated by rasterlayer, and by radii secondly.
-#' Disaggregations by rasterlayers only make sense for 'MultiLandMetrics' objects with more than one rasterlayer.
+#' Disaggregations by raster layers only make sense for 'MultiLandMetrics' objects with more than one raster layer.
 #'
 #' @return A list with matrices containing correlation values between pair of metrics. Matrices
 #' are disaggregated by radius if `display = "radii"`, by rasterlayer if `display = "rl"` or by
@@ -453,8 +453,8 @@
 #' "l_np_1500" indicating a landscape-level metric, which is "np" ("number of patches") at a scale
 #' (radius) of 1500 m. For a class-level metric a plausible metric name could be "c4_pland_1000",
 #' indicating a class-level metric of class 4 (the value of the raster), which is "pland"
-#' ("percentage of landscape") at a scale (radius) of 1000 m. If more that one rasterlayer is
-#' being analyzed, the prefix "r1", "r2", "r3", ..., "rn" (referring to rasterlayer 1, 2, 3, ..., n) is
+#' ("percentage of landscape") at a scale (radius) of 1000 m. If more that one raster layer is
+#' being analyzed, the prefix "r1", "r2", "r3", ..., "rn" (referring to raster layer 1, 2, 3, ..., n) is
 #' added to the metric name.
 #'
 #' @seealso [mland_metrics()], [metrics_plots()]

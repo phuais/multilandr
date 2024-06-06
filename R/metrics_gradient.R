@@ -3,12 +3,12 @@
 #' Selects a set of points whose associated landscapes comprise an optimized gradient for a given landscape metric.
 #'
 #' @param x An object of class 'MultiLandMetrics' generated with [mland_metrics()].
-#' @param rasterlayer The rasterlayer to be considered. If
-#' an extra rasterlayer must be specified, the string "ext" must precede the rasterlayer number
+#' @param rasterlayer The raster layer to be considered. If
+#' an extra raster layer must be specified, the string "ext" must precede the raster layer number
 #' (e.g. "ext1", "ext2")
 #' @param class The class to be considered, as a number or as a string with the name of the class.
 #' @param radius The radius to be considered.
-#' @param metric The metric to be considered. Metrics as extra calculations for extra rasterlayers must be
+#' @param metric The metric to be considered. Metrics as extra calculations for extra raster layers must be
 #' provided as "fun_" + the name of the function.
 #' @param n The number of points that will comprise the gradient. See Details.
 #' @param cutpoints A sequence of numbers that will serve as numeric approximations to select the
@@ -22,7 +22,7 @@
 #' to return a data.frame with geographical information of the selected points.
 #'
 #' @details Selects a subset of landscapes that overall will
-#' generate an optimized gradient of values for a given landscape metric of a specified rasterlayer,
+#' generate an optimized gradient of values for a given landscape metric of a specified raster layer,
 #' class and radius. One can define a gradient as optimized if
 #' its values fulfill to cover a good range of values between a minimum and a maximum value. The
 #' final gradient will comprise the number of points specified in argument `n`. Note that

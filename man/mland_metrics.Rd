@@ -29,9 +29,9 @@ mland_metrics(
 \arguments{
 \item{x}{An object of class 'Multiland' generated with \code{\link[=mland]{mland()}}.}
 
-\item{raster}{Vector depicting the rasterlayers of \code{x} from which metrics will be
+\item{raster}{Vector depicting the raster layers of \code{x} from which metrics will be
 calculated. It can be a numeric vector, for rasterlayer numbers, or a character vector, for
-rasterlayer names (if provided during the generation of \code{x}). If NULL, all rasterlayers will be
+raster layer names (if provided during the generation of \code{x}). If NULL, all raster layers will be
 considered.}
 
 \item{points}{Numeric or character vector with the points from which metrics will be calculated.
@@ -53,11 +53,11 @@ classes will be returned in the final data.frame. See Details.}
 if \code{report_absences = TRUE}. See Details.}
 
 \item{ext_calc}{A list containing vectors, each one of length equal to 2 or more: the first element of the vector
-with the identification number of the extra rasterlayer defined in \code{x}, and next elements with a string with
+with the identification number of the extra raster layer defined in \code{x}, and next elements with a string with
 the name of the function to be applied to the defined raster. See Details.}
 
 \item{na.exclude}{Logical. Whether to exclude (default) or not the NA values when performing
-extra calculations to extra rasterlayers. Only applies if \code{ext_calc} is not NULL. See Details.}
+extra calculations to extra raster layers. Only applies if \code{ext_calc} is not NULL. See Details.}
 
 \item{coords}{Logical. If TRUE, the coordinates of the points will be returned in the data.frame
 containing the values of the required metrics. Default FALSE.}
@@ -101,7 +101,7 @@ Available metrics can be seen in \code{\link[=metrics_list]{metrics_list()}} and
 \code{landscapemetrics}.
 
 \code{\link[=mland_metrics]{mland_metrics()}} also allows to define some other parameters that filter how metrics are calculated,
-by defining the rasterlayers, points, radii and classes to be taken into account.
+by defining the raster layers, points, radii and classes to be taken into account.
 
 If \code{report_absences = TRUE} (default), the function will print values of class-level metrics
 from classes that are not present in particular landscapes, as a distinct row in the final
@@ -126,7 +126,7 @@ will be taken as the automatically generated point ids (created when running \co
 
 The user may specify which classes will be considered when calculating the metrics, by
 passing this information in the argument \code{classes}. Of course, this information only applies for
-class-level metrics. The argument must be a list with as many elements as rasterlayers to be
+class-level metrics. The argument must be a list with as many elements as raster layers to be
 considered (defined in argument \code{raster}, in ascending order: 1, 2, 3, ...). Each element must be a numeric vector
 with the classes values (raster values) to be considered, or a character vector with
 the names of the classes (if provided when generating \code{x}).
@@ -136,20 +136,20 @@ Other arguments can be passed to function \code{\link[landscapemetrics:calculate
 metrics. See the documentation of this function for more information.
 
 Extra calculations can be performed through \code{ext_calc}. The functions defined here will take
-the values of the extra rasterlayers defined in \code{x} as input. For instance, a plausible definition
-could be \code{ext_calc = list(1, "mean")}, which will take the values from the extra rasterlayer 1,
+the values of the extra raster layers defined in \code{x} as input. For instance, a plausible definition
+could be \code{ext_calc = list(1, "mean")}, which will take the values from the extra raster layer 1,
 and calculate its mean for each landscape. If \code{na.exclude = TRUE} (default), NA values will be excluded
 from this task.
 
 A previously generated 'MultiLandMetrics' object can be updated with new information regarding
-other metrics, probably from other points, radii, rasterlayers, etc, that haven´t been
+other metrics, probably from other points, radii, raster layers, etc, that haven´t been
 calculated in the previous time (or not). In this way, the returned object will be
 the object provided in this argument, plus the additions of information about new metrics, and
 changes to previously metric calculations. Note that if a particular metric is calculated for a
-given rasterlayer, points, radii and or class, that were previously generated in the object
+given raster layer, points, radii and or class, that were previously generated in the object
 provided in \code{update}, the information of these metrics from the latter will be overwritten. Also
 note that if in the previous 'MultiLandMetrics' object \code{report_absences} was \code{TRUE} for a given
-set of metrics and other parameters (e.g. points, radii, rasterlayers, etc.), and in the new call
+set of metrics and other parameters (e.g. points, radii, raster layers, etc.), and in the new call
 \code{report_absences} is \code{FALSE} (for the same set of other parameters), the rows depicting landscapes
 with empty classes from the previous call will be mantained. If the intention is the removal of these rows,
 the user should create a fresh new 'MultiLandMetrics' from scratch.
@@ -191,7 +191,7 @@ ed_metrics2 <- mland_metrics(ernesdesign, level = "class",
                              absence_values = list("pland" = 0),
                              ext_calc = list(c(1, "mean"), c(1, "mean_sd")))
 
-# We can calculate metrics for extra rasterlayers only
+# We can calculate metrics for extra raster layers only
 ed_metrics3 <- mland_metrics(ernesdesign, ext_calc = list(c(1, "mean", "mean_sd")))
 
 # If metrics of different levels must be calculated, a better approach is to declare

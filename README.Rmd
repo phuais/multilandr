@@ -225,7 +225,7 @@ mean_sd <- function(x){ mean(x)/sd(x) }
 # Calculation of metrics
 ed_metrics <- mland_metrics(ernesdesign, 
                             level = "class", 
-                            metric = c("pland", "ED"),
+                            metric = c("pland", "ed"),
                             absence_values = list("pland" = 0),
                             ext_calc = list(c("NDVI", "mean"), c(1, "mean_sd")))
 ```

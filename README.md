@@ -125,14 +125,14 @@ Let’s see the output for the generated object:
 ``` r
 # Returns basic information about the object
 ernesdesign
-#> class            : MultiLand
-#> On the fly       : FALSE 
-#> Rasterlayers     : 1 
-#>   n classes      : 6 
-#> Ext. rasterlayers: 1 
-#> n points         : 15 
-#> Site reference   : "name"
-#> Radii (m)        : 1000 2000 3000 4000 5000
+#> class             : MultiLand
+#> On the fly        : FALSE 
+#> Raster layers     : 1 
+#>   n classes       : 6 
+#> Ext. raster layers: 1 
+#> n points          : 15 
+#> Site reference    : "name"
+#> Radii (m)         : 1000 2000 3000 4000 5000
 ```
 
 Basic information about the object is provided, including the number of
@@ -221,7 +221,7 @@ mean_sd <- function(x){ mean(x)/sd(x) }
 # Calculation of metrics
 ed_metrics <- mland_metrics(ernesdesign, 
                             level = "class", 
-                            metric = c("pland", "ED"),
+                            metric = c("pland", "ed"),
                             absence_values = list("pland" = 0),
                             ext_calc = list(c("NDVI", "mean"), c(1, "mean_sd")))
 ```

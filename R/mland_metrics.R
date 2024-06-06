@@ -190,7 +190,7 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
   # Update rownames
   rownames(df) <- 1:nrow(df)
 
-  # Names for used rasterlayers
+  # Names for used raster layers
   if(nrow(x@rast_names[[1]]) > 0){
     x@rast_names[[1]] <- x@rast_names[[1]][x@rast_names[[1]]$rasterlayer %in%
                                                unique(rasters_classes_tab$rasterlayer), ]
@@ -219,9 +219,9 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #'
 #' @param x An object of class 'Multiland' generated with [mland()].
 #' @param ... Other arguments passed to [landscapemetrics::calculate_lsm()]. See Details.
-#' @param raster Vector depicting the rasterlayers of `x` from which metrics will be
+#' @param raster Vector depicting the raster layers of `x` from which metrics will be
 #' calculated. It can be a numeric vector, for rasterlayer numbers, or a character vector, for
-#' rasterlayer names (if provided during the generation of `x`). If NULL, all rasterlayers will be
+#' raster layer names (if provided during the generation of `x`). If NULL, all raster layers will be
 #' considered.
 #' @param points Numeric or character vector with the points from which metrics will be calculated.
 #' If NULL, all points will be considered. See Details.
@@ -236,10 +236,10 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #' @param absence_values A list depicting which value for each class-level metric should be printed
 #' if `report_absences = TRUE`. See Details.
 #' @param ext_calc A list containing vectors, each one of length equal to 2 or more: the first element of the vector
-#' with the identification number of the extra rasterlayer defined in `x`, and next elements with a string with
+#' with the identification number of the extra raster layer defined in `x`, and next elements with a string with
 #' the name of the function to be applied to the defined raster. See Details.
 #' @param na.exclude Logical. Whether to exclude (default) or not the NA values when performing
-#' extra calculations to extra rasterlayers. Only applies if `ext_calc` is not NULL. See Details.
+#' extra calculations to extra raster layers. Only applies if `ext_calc` is not NULL. See Details.
 #' @param coords Logical. If TRUE, the coordinates of the points will be returned in the data.frame
 #' containing the values of the required metrics. Default FALSE.
 #' @param update An object of class 'MultiLandMetrics', if it is intended to be updated with
@@ -264,7 +264,7 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #' `landscapemetrics`.
 #'
 #' [mland_metrics()] also allows to define some other parameters that filter how metrics are calculated,
-#' by defining the rasterlayers, points, radii and classes to be taken into account.
+#' by defining the raster layers, points, radii and classes to be taken into account.
 #'
 #' If `report_absences = TRUE` (default), the function will print values of class-level metrics
 #' from classes that are not present in particular landscapes, as a distinct row in the final
@@ -289,7 +289,7 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #'
 #' The user may specify which classes will be considered when calculating the metrics, by
 #' passing this information in the argument `classes`. Of course, this information only applies for
-#' class-level metrics. The argument must be a list with as many elements as rasterlayers to be
+#' class-level metrics. The argument must be a list with as many elements as raster layers to be
 #' considered (defined in argument `raster`, in ascending order: 1, 2, 3, ...). Each element must be a numeric vector
 #' with the classes values (raster values) to be considered, or a character vector with
 #' the names of the classes (if provided when generating `x`).
@@ -299,20 +299,20 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #' metrics. See the documentation of this function for more information.
 #'
 #' Extra calculations can be performed through `ext_calc`. The functions defined here will take
-#' the values of the extra rasterlayers defined in `x` as input. For instance, a plausible definition
-#' could be `ext_calc = list(1, "mean")`, which will take the values from the extra rasterlayer 1,
+#' the values of the extra raster layers defined in `x` as input. For instance, a plausible definition
+#' could be `ext_calc = list(1, "mean")`, which will take the values from the extra raster layer 1,
 #' and calculate its mean for each landscape. If `na.exclude = TRUE` (default), NA values will be excluded
 #' from this task.
 #'
 #' A previously generated 'MultiLandMetrics' object can be updated with new information regarding
-#' other metrics, probably from other points, radii, rasterlayers, etc, that haven´t been
+#' other metrics, probably from other points, radii, raster layers, etc, that haven´t been
 #' calculated in the previous time (or not). In this way, the returned object will be
 #' the object provided in this argument, plus the additions of information about new metrics, and
 #' changes to previously metric calculations. Note that if a particular metric is calculated for a
-#' given rasterlayer, points, radii and or class, that were previously generated in the object
+#' given raster layer, points, radii and or class, that were previously generated in the object
 #' provided in `update`, the information of these metrics from the latter will be overwritten. Also
 #' note that if in the previous 'MultiLandMetrics' object `report_absences` was `TRUE` for a given
-#' set of metrics and other parameters (e.g. points, radii, rasterlayers, etc.), and in the new call
+#' set of metrics and other parameters (e.g. points, radii, raster layers, etc.), and in the new call
 #' `report_absences` is `FALSE` (for the same set of other parameters), the rows depicting landscapes
 #' with empty classes from the previous call will be mantained. If the intention is the removal of these rows,
 #' the user should create a fresh new 'MultiLandMetrics' from scratch.
@@ -364,7 +364,7 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #'                              absence_values = list("pland" = 0),
 #'                              ext_calc = list(c(1, "mean"), c(1, "mean_sd")))
 #'
-#' # We can calculate metrics for extra rasterlayers only
+#' # We can calculate metrics for extra raster layers only
 #' ed_metrics3 <- mland_metrics(ernesdesign, ext_calc = list(c(1, "mean", "mean_sd")))
 #'
 #' # If metrics of different levels must be calculated, a better approach is to declare
@@ -432,7 +432,7 @@ mland_metrics <- function(x,
   n_radii  <- length(radii)
   n_points <- length(points)
 
-  # number of rasterlayers to be evaluated
+  # number of raster layers to be evaluated
   n_layers <- length(raster)
 
   # metrics calculation
@@ -568,7 +568,7 @@ mland_metrics <- function(x,
         cl <- rbind(cl, data.frame(class = NA, classname = NA))
         tab2 <- merge(tab2, cl, "class")
 
-        # addition of rasterlayers names
+        # addition of raster layers names
         if(nrow(x@rast_names[[1]] > 0)){
           colnames(x@rast_names[[1]])[2] <- "layer_name"
           tab2 <- merge(tab2, x@rast_names[[1]], "rasterlayer")
@@ -578,14 +578,14 @@ mland_metrics <- function(x,
 
         tab_list[[r]] <- tab2
       }
-      # rbind dataframes from different rasterlayers
+      # rbind dataframes from different raster layers
       df <- do.call("rbind", tab_list)
     }
   }
 
   # Perform calculations of extra rasters
   if(!is.null(ext_calc)){
-    if(progress) message("Performing calculations for extra rasterlayers")
+    if(progress) message("Performing calculations for extra raster layers")
     environment(ext_calc_func) <- environment()
     ext_tab_list <- ext_calc_func()
     ext_df <- do.call("rbind", ext_tab_list)

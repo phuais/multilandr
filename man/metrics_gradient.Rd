@@ -20,15 +20,15 @@ metrics_gradient(
 \arguments{
 \item{x}{An object of class 'MultiLandMetrics' generated with \code{\link[=mland_metrics]{mland_metrics()}}.}
 
-\item{rasterlayer}{The rasterlayer to be considered. If
-an extra rasterlayer must be specified, the string "ext" must precede the rasterlayer number
+\item{rasterlayer}{The raster layer to be considered. If
+an extra raster layer must be specified, the string "ext" must precede the raster layer number
 (e.g. "ext1", "ext2")}
 
 \item{class}{The class to be considered, as a number or as a string with the name of the class.}
 
 \item{radius}{The radius to be considered.}
 
-\item{metric}{The metric to be considered. Metrics as extra calculations for extra rasterlayers must be
+\item{metric}{The metric to be considered. Metrics as extra calculations for extra raster layers must be
 provided as "fun_" + the name of the function.}
 
 \item{n}{The number of points that will comprise the gradient. See Details.}
@@ -55,7 +55,7 @@ Selects a set of points whose associated landscapes comprise an optimized gradie
 }
 \details{
 Selects a subset of landscapes that overall will
-generate an optimized gradient of values for a given landscape metric of a specified rasterlayer,
+generate an optimized gradient of values for a given landscape metric of a specified raster layer,
 class and radius. One can define a gradient as optimized if
 its values fulfill to cover a good range of values between a minimum and a maximum value. The
 final gradient will comprise the number of points specified in argument \code{n}. Note that

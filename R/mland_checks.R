@@ -93,7 +93,7 @@
       rast_names <- vector("character")
     } else {
       if(any(duplicated(rast_names))){
-        messages   <- append("- argument 'rast_names' contains duplicated string. Rasterlayers
+        messages   <- append("- argument 'rast_names' contains duplicated string. Raster layer
         names should be unique to avoid ambiguites. Argument was discarded.")
         what       <- append(what, 1)
         rast_names <- vector("character")

@@ -18,7 +18,7 @@ mland_export_gis(
 \arguments{
 \item{x}{An object of class 'MultiLand' generated with \code{\link[=mland]{mland()}}.}
 
-\item{raster, ext_raster}{Numeric. The rasterlayers to be exported.}
+\item{raster, ext_raster}{Numeric. The raster layers to be exported.}
 
 \item{points}{Numeric or character vector of points to be processed. See Details.}
 
@@ -36,7 +36,7 @@ c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9").}
 GIS data from a 'MultiLand' object is exported through a zip file.
 }
 \description{
-Exports points, buffers and intersections between buffers and rasterlayers, as vector and raster
+Exports points, buffers and intersections between buffers and raster layers, as vector and raster
 files.
 }
 \details{

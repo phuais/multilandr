@@ -48,8 +48,8 @@ names are presented as row and column names of the matrices, with the following 
 "l_np_1500" indicating a landscape-level metric, which is "np" ("number of patches") at a scale
 (radius) of 1500 m. For a class-level metric a plausible metric name could be "c4_pland_1000",
 indicating a class-level metric of class 4 (the value of the raster), which is "pland"
-("percentage of landscape") at a scale (radius) of 1000 m. If more that one rasterlayer is
-being analyzed, the prefix "r1", "r2", "r3", ..., "rn" (referring to rasterlayer 1, 2, 3, ..., n) is
+("percentage of landscape") at a scale (radius) of 1000 m. If more that one raster layer is
+being analyzed, the prefix "r1", "r2", "r3", ..., "rn" (referring to raster layer 1, 2, 3, ..., n) is
 added to the metric name.
 }
 \description{
@@ -69,20 +69,20 @@ subset the calculations of pair correlations. In each one of these, an all-posit
 all-negative vector can be passed, whether to include (all-postive) or exclude (all-negative)
 the elements to be taken into account for the subsetting:
 \itemize{
-\item raster: a numeric vector with the number of the rasterlayers to be included/excluded.
-For example: \code{c(1, 2, 4)} to include rasterlayers 1, 2 and 4; \code{c(-2, -3)} to exclude rasterlayers 2
+\item raster: a numeric vector with the number of the raster layers to be included/excluded.
+For example: \code{c(1, 2, 4)} to include raster layers 1, 2 and 4; \code{c(-2, -3)} to exclude raster layers 2
 and 3.
-\item ext_raster: a numeric vector with the number of the extra rasterlayers to be included/excluded,
+\item ext_raster: a numeric vector with the number of the extra raster layers to be included/excluded,
 as in the raster slot.
-\item classes: must be a list with as many elements as defined rasterlayers in argument
+\item classes: must be a list with as many elements as defined raster layers in argument
 \code{raster}. Each element of the list must be a numeric vector (classes identities) with the
 classes to be included/excluded. If provided a character vector, \code{\link[=metrics_corr]{metrics_corr()}} assumes that
-classes names are provided. For example, for the case with 2 rasterlayers:
-\code{list(c(3, 20, 35), c("Forest", "Crops"))} would include classes 3, 20 and 35 from rasterlayer 1
-and classes "Forest" and "Crops" for rasterlayer 2. For the case of a unique rasterlayer, there
-is no need to input a list. For example, for the case of a unique rasterlayer and the
+classes names are provided. For example, for the case with 2 raster layers:
+\code{list(c(3, 20, 35), c("Forest", "Crops"))} would include classes 3, 20 and 35 from raster layer 1
+and classes "Forest" and "Crops" for raster layer 2. For the case of a unique raster layer, there
+is no need to input a list. For example, for the case of a unique raster layer and the
 exclusion of some classes: \code{c(-5, -10, -15)} to exclude classes 5, 10 and 15 of
-the unique rasterlayer; \code{c("-Forest", "-Grassland")} to exclude classes "Forest" and "Grassland".
+the unique raster layer; \code{c("-Forest", "-Grassland")} to exclude classes "Forest" and "Grassland".
 Note the "-" before each class name to indicate the exclusion of the classes.
 \item radii: a numeric vector to include/exclude particular radii. For example: \code{c(1000, 2000)} to
 include only radii of 1000 and 2000 m; \code{c(-500, -1500)} to exclude radii of 500 and 1500 m.
@@ -92,7 +92,7 @@ the analysis. For example: \code{c("np", "pland")} will include only the metrics
 will exclude them. Note the "-" before each metric name to indicate the exclusion of the
 metrics.
 \item l_level: character vector with the landscape-level metrics to be included/excluded from
-the analysis. Extra calculations for extra rasterlayers are considered as landscape-level metrics,
+the analysis. Extra calculations for extra raster layers are considered as landscape-level metrics,
 and must be provided as "fun_" + the name of the function (e.g. "fun_mean").
 }
 
@@ -106,7 +106,7 @@ Argument \code{display} defines how correlation values will be presented. If equ
 (default), correlation values are disaggregated by radii. If "rl", correlation values are
 disaggregated by rasterlayer: correlations between different radii will be presented.
 If "both", correlation values are firstly disaggregated by rasterlayer, and by radii secondly.
-Disaggregations by rasterlayers only make sense for 'MultiLandMetrics' objects with more than one rasterlayer.
+Disaggregations by raster layers only make sense for 'MultiLandMetrics' objects with more than one raster layer.
 }
 \examples{
 # Calculates pearson correlations between metrics of a MultiLandMetrics object

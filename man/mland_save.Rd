@@ -23,7 +23,7 @@ the name will be 'mland_' or 'mlandmetrics_' + a large random number.}
 if \code{x} is an object of class 'MultiLand'.}
 
 \item{...}{If \code{x} is an object of class 'MultiLand', \code{...} should depict other arguments passed to
-\link[terra:writeRaster]{terra::writeRaster}, the function to write rasterlayers (from intersections and plain rasterlayers).
+\link[terra:writeRaster]{terra::writeRaster}, the function to write raster layers (from intersections and plain raster layers).
 Otherwise, if \code{x} is an object of class 'MultiLandMetrics', \code{...} should depict other arguments passed
 to \code{\link[=save]{save()}}. See Details.}
 }
@@ -45,9 +45,9 @@ object cannot be exported as regular R objects. The exported object will be a zi
 and can be loaded again into an R session with \code{\link[=mland_load]{mland_load()}}.
 
 Relevant arguments can be passed to the function \link[terra:writeRaster]{terra::writeRaster}, which is used to write
-rasterlayers from a 'MultiLand' object. Particularly, in the argument \code{gdal} one can specify
+raster layers from a 'MultiLand' object. Particularly, in the argument \code{gdal} one can specify
 relevant options regarding raster compression. This may reduce raster sizes significantly. Definition
-of some other arguments inside \link[terra:writeRaster]{terra::writeRaster} may affect exportation of rasterlayer
+of some other arguments inside \link[terra:writeRaster]{terra::writeRaster} may affect exportation of raster layer
 objects, in the context of a 'MultiLand' object.
 
 Objects of class 'MultiLandMetrics', instead, do not contain 'SpatVector' or 'SpatRaster' objects
@@ -63,7 +63,7 @@ ernesdesign2 <- mland_load(mland_obj)
 # Save it again
 mland_save(ernesdesign2)
 
-# Save it again but defining a higher compression for rasterlayers
+# Save it again but defining a higher compression for raster layers
 mland_save(ernesdesign2, gdal = "COMPRESS=DEFLATE")
 
 # Loads a MultiLandMetrics object previously generated with mland_metrics()
