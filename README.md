@@ -32,8 +32,8 @@ You can install the development version of multilandr from
 remotes::install_github("phuais/multilandr")
 ```
 
-You can access the manual with all available functions  
-[here](https://github.com/phuais/multilandr/manual.pdf)
+You can access the manual with all available functions
+[here](https://github.com/phuais/multilandr/manual.pdf).
 
 ## Using multilandr: basic usage
 
