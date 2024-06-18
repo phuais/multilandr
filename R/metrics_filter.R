@@ -159,12 +159,7 @@ conditions <- function(...){
 #'                               conditions = conds,
 #'                               output = "data")
 metrics_filter <- function(x,
-                           conditions = list(rasterlayers = NULL,
-                                             classes = NULL,
-                                             radii = NULL,
-                                             metric = NULL,
-                                             min_value = NULL,
-                                             max_value = NULL),
+                           conditions,
                            output = "MLM"){
 
   if(!is(x, "MultiLandMetrics")) stop("x must be an object of class 'MultiLandMetrics'.")

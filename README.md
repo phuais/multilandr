@@ -279,14 +279,16 @@ function.
 analyzing multi-scale landscapes comprising a hundreds or thousands of
 points. Correlations between metrics can be calculated with
 `metrics_corr()`, and pairwise plots can be visualized with
-`metrics_plots()`. Landscapes can be filtered according to predefined
-values for given metrics with `metrics_filter()`. In addition, the
-function `metrics_gradient()` generates an optimized gradient of
-predefined size for the values of a given metric, given the spectrum of
-landscapes with different metric values. This can be useful to select
-those landscapes that would be evaluated in a more bounded experimental
-design that could comprises, for instance, field sampling of sites.
-Explore these functions and examples in the help pages.
+`metrics_plots()`. The value of a given landscape metric can be plotted
+against increasing spatial scales (i.e. scalograms) with
+`metrics_scalogram()`. Landscapes can be filtered according to
+predefined values for given metrics with `metrics_filter()`. In
+addition, the function `metrics_gradient()` generates an optimized
+gradient of predefined size for the values of a given metric, given the
+spectrum of landscapes with different metric values. This can be useful
+to select those landscapes that would be evaluated in a more bounded
+experimental design that could comprises, for instance, field sampling
+of sites. Explore these functions and examples in the help pages.
 
 ## Citation
 

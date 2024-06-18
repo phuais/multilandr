@@ -29,7 +29,7 @@
         }
         if(bad){
           messages <- append(messages,
-                             "- function defined in argument 'fun' was not defined properly.
+                             "- function provided in argument 'fun' was not defined properly.
                            See ?metrics_corr")
           what     <- append(what, 2)
           fun <- NULL
@@ -42,18 +42,18 @@
     }
   }
 
-  if(!is.logical(class_names)){
+  if(!is.logical(show_class_names)){
     messages <- append(messages,
-                       "- argument 'class_names' must be logical. Default FALSE was taken.")
+                       "- argument 'show_class_names' must be logical. Default FALSE was taken.")
     what     <- append(what, 1)
-    class_names <- FALSE
+    show_class_names <- FALSE
   }
 
   # Class names
-  chk_classnames <- .chk_classnames(messages, what, class_names)
+  chk_classnames <- .chk_classnames(messages, what, show_class_names)
   messages   <- chk_classnames[[1]]
   what       <- chk_classnames[[2]]
-  class_names <- chk_classnames[[3]]
+  show_class_names <- chk_classnames[[3]]
 
   if(!display %in% c("radii", "rl", "both")){
     messages <- append(messages,
@@ -69,7 +69,7 @@
   out <- list(warnings = warnings,
               errors = errors,
               fun = fun,
-              class_names = class_names,
+              show_class_names = show_class_names,
               display = display)
 
   return(out)

@@ -30,11 +30,26 @@
             } else {
               # Rasterlayer
               if(!is.na(conditions[[i]][[1]][1])){
-                if(!conditions[[i]][[1]] %in% unique(x@data$rasterlayer)){
+                foo <- rbind(x@rast_names$lsm, x@rast_names$ext)
+                if(nrow(x@rast_names$ext) > 0){
+                foo[(nrow(x@rast_names$lsm)+1):nrow(foo), "rasterlayer"] <-
+                  paste0("ext", foo[(nrow(x@rast_names$lsm)+1):nrow(foo), "rasterlayer"])
+                }
+                for(r in 1:length(conditions[[i]][[1]])){
+                  if(!is.numberinchar(conditions[[i]][[1]][r])){
+                    if(substr(conditions[[i]][[1]][r], 1, 3) != "ext"){
+                      if(conditions[[i]][[1]][r] %in% foo$name){
+                        conditions[[i]][[1]][r] <- foo[foo$name == conditions[[i]][[1]][r], "rasterlayer"]
+                      } else {
+                        conditions[[i]][[1]][r] <- NA
+                      }
+                    }
+                  }
+                }
+                if(!any(conditions[[i]][[1]] %in% unique(x@data$rasterlayer))){
                   messages <- append(messages,
-                                     paste0("- rasterlayer (1st element) ", conditions[[i]][[1]],
-                                            " from condition ", i, " was not found as a defined layer in
-                                        'x'. Mispelled?"))
+                                     paste0("- rasterlayers (1st element) from condition ", i, "
+                                     were not found as defined layers in 'x'. Mispelled?"))
                   what     <- append(what, 2)
                 }
               } else {
@@ -82,8 +97,6 @@
                     conditions[[i]][[2]] <- na.exclude(unique(x@data$class))
                     message(paste0("- condition ", i,
                                    ": all classes from all requested raster layers were included in the filtering process."))
-                    # message(paste0("- condition ", i, ": classes included in the filtering process: ",
-                    #                paste0(conditions[[i]][[2]], collapse = " ")))
                   }
                 }
               }

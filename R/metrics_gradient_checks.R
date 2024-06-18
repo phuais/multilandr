@@ -7,6 +7,20 @@
   if(is.null(rasterlayer)){
     rasterlayer <- unique(x@data$rasterlayer)
   }
+  if(!is.numberinchar(rasterlayer)){
+    if(substr(rasterlayer, 1, 3) != "ext"){
+      foo <- rbind(x@rast_names$lsm, x@rast_names$ext)
+      if(nrow(x@rast_names$ext) > 0){
+        foo[(nrow(x@rast_names$lsm)+1):nrow(foo), "rasterlayer"] <-
+          paste0("ext", foo[(nrow(x@rast_names$lsm)+1):nrow(foo), "rasterlayer"])
+      }
+      if(rasterlayer %in% foo$name){
+        rasterlayer <- foo[foo$name == rasterlayer, "rasterlayer"]
+      } else {
+        rasterlayer <- NA
+      }
+    }
+  }
   if(!rasterlayer %in% unique(x@data$rasterlayer)){
     messages <- append(messages,
                        paste0("- specified rasterlayer was not found as a defined layer in
@@ -79,8 +93,8 @@
   } else {
     if(nrow(unique(foo[, c("rasterlayer", "class", "radius", "metric")])) != 1){
       messages <- append(messages,
-                         paste0("- only one gradient of a unique metric of a particular rasterlayer,
-                         class and radius can be optimized at a time."))
+                         paste0("- only one gradient for a unique metric of a given rasterlayer,
+                         class and radius can be generated at a time."))
       what     <- append(what, 2)
     }
   }
@@ -96,7 +110,7 @@
           messages <- append(messages,
                              paste0("- The number of required points (", n, ") is higher than the total number
                                   of points where to pick from (", nrow(foo), "), given the specified parameters.
-                                  All points were selected, nothing have changed."))
+                                  All points were selected, nothing has changed."))
           what     <- append(what, 2)
           n <- nrow(foo)
         }

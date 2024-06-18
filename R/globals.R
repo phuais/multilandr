@@ -7,4 +7,5 @@ utils::globalVariables(c("x", "class_metrics", "points", "total_rows_pp", "radii
                          "setTxtProgressBar", "aggregate", "unzip", "new", "rasters_classes_tab",
                          "askYesNo", "arg_name", "classes", "value",  "progress", "update",
                          "cutpoints", "breaks", "points_layer", "rast_layer", "ext_rast_layer",
-                         "padding", "random"))
+                         "padding", "random", "show_class_names", "radius", "rasterlayer",
+                         "site", "towide"))

@@ -49,9 +49,9 @@ test_that("metric filtering is ok", {
 # Test: metrics_corr and metrics_plots
 test_that("metrics correlations and plots going silently", {
 expect_silent({
-  metrics_corr(ed_metrics, radii = 5000, class_names = TRUE)})
+  metrics_corr(ed_metrics, radii = 5000, show_class_names = TRUE)})
 expect_silent({
-  metrics_plots(ed_metrics, classes = 1:4, radii = 3000, class_names = TRUE, c_level = "pland")})
+  metrics_plots(ed_metrics, classes = 1:4, radii = 3000, show_class_names = TRUE, c_level = "pland")})
 })
 
 # Test: metrics_bind

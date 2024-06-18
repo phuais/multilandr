@@ -101,7 +101,7 @@ round(sort(foo$value), digits = 2)
 
 # 1.15  6.02  6.03 10.99 15.97 20.99 26.01 31.02 35.95 41.14 41.34 45.93 51.41 54.56 55.44
 
-# Both alternatives generated a well-ranged gradient of values for the forest metric "pland"
+# Both alternatives generated a wide-ranged gradient of values for the forest metric "pland"
 }
 \seealso{
 \code{\link[=metrics_filter]{metrics_filter()}}

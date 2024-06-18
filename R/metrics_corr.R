@@ -25,11 +25,14 @@
   # drop patch-level metrics
   if("patch" %in% x@metrics$level){
     df <- df[df$level != "patch", ]
-    message("Patch-level metrics were dropped.")
+    message("Patch-level metrics were ignored.")
   }
 
   # subset raster layers
   if(!is.null(raster)){
+    if(is.numberinchar(raster)){
+      raster <- as.numeric(raster)
+    }
     if(is.character(raster)){
       if(!all(raster %in% x@rast_names[[1]]$name)){
         stop(strwrap(
@@ -74,7 +77,7 @@
            This should be an all positive or an all negative numeric or character vector.", prefix = "\n",
                    initial = "\n"), call. = FALSE)
     } else {
-      if(!all(subset_er[[2]] %in% unique(as.numeric(x@ext_calcs$layer)))){
+      if(!all(subset_er[[2]] %in% unique(as.numeric(x@ext_calcs$rasterlayer)))){
         stop(strwrap("Inconsistencies were found between the required extra raster layers and the
                    extra layers associated with 'x'. Mispelled?", prefix = "\n", initial = "\n"),
              call. = FALSE)
@@ -179,11 +182,11 @@
         df$metric_label[i] <- paste0("r", df$rasterlayer[i], "_", df$metric[i], "_", df$radius[i])
       } else {
         if(df$level[i] == "class"){
-          if(class_names){
+          if(show_class_names){
             if(all(is.na(x@classes$classname))){
               cl_ref <- "class"
               level <- "c"
-              message("No class names definition was found in 'x'. Argument 'class_names' was taken as FALSE.")
+              message("No class names definition was found in 'x'. Argument 'show_class_names' was taken as FALSE.")
             } else {
               cl_ref <- "classname"
               level <- ""
@@ -342,24 +345,28 @@
                  rows. Nothing to do.", prefix = "\n", initial = "\n"), call. = FALSE)
   }
 
-  # transform data.frame from long to wide
-  new_df_wide <- reshape(new_df, idvar = c("point_id", "site"),
-                         timevar = c("metric_label"), drop = c("rasterlayer", "layer_name",
-                                                               "patch_id", "class", "radius",
-                                                               "classname", "metric", "level", "x",
-                                                               "y"),
-                         direction = "wide")
+  if(towide){
+    # transform data.frame from long to wide
+    new_df_wide <- reshape(new_df, idvar = c("point_id", "site"),
+                           timevar = c("metric_label"), drop = c("rasterlayer", "layer_name",
+                                                                 "patch_id", "class", "radius",
+                                                                 "classname", "metric", "level", "x",
+                                                                 "y"),
+                           direction = "wide")
 
-  colnames(new_df_wide)[3:ncol(new_df_wide)] <- gsub("value.", "",
-                                                     colnames(new_df_wide)[3:ncol(new_df_wide)])
+    colnames(new_df_wide)[3:ncol(new_df_wide)] <- gsub("value.", "",
+                                                       colnames(new_df_wide)[3:ncol(new_df_wide)])
 
-  # sort columns by rasterlayer
-  new_df_wide_pp <- new_df_wide[, 1:2]
-  new_df_wide_mm <- new_df_wide[3:ncol(new_df_wide)]
-  if(ncol(new_df_wide_mm) > 1) new_df_wide_mm <- new_df_wide_mm[, order(names(new_df_wide_mm))]
-  new_df_wide <- cbind(new_df_wide_pp, new_df_wide_mm)
+    # sort columns by rasterlayer
+    new_df_wide_pp <- new_df_wide[, 1:2]
+    new_df_wide_mm <- new_df_wide[3:ncol(new_df_wide)]
+    if(ncol(new_df_wide_mm) > 1) new_df_wide_mm <- new_df_wide_mm[, order(names(new_df_wide_mm))]
+    new_df_wide <- cbind(new_df_wide_pp, new_df_wide_mm)
 
-  out <- list(new_df_wide, radii)
+    out <- list(new_df_wide, radii)
+  } else {
+    out <- new_df
+  }
 
   return(out)
 }
@@ -388,7 +395,7 @@
 #' @param fun A user-defined function to calculate correlations. See Details.
 #' @param raster,ext_raster,classes,radii,l_level,c_level Parameters to subset calculations of
 #' correlations. See Details.
-#' @param class_names Logical. If TRUE, row and column of returned matrices will be identified
+#' @param show_class_names Logical. If TRUE, row and column of returned matrices will be identified
 #' with the names of the classes, if available in `x`. Default FALSE.
 #' @param display Defines how correlations are presented: "radii" (default), "rl" or "both".
 #' See Details.
@@ -405,7 +412,7 @@
 #'
 #' Arguments `raster`, `ext_raster`, `classes`, `radii`, `c_level` and `l_level` can be defined to
 #' subset the calculations of pair correlations. In each one of these, an all-positive or an
-#' all-negative vector can be passed, whether to include (all-postive) or exclude (all-negative)
+#' all-negative vector can be passed, whether to include (all-positive) or exclude (all-negative)
 #' the elements to be taken into account for the subsetting:
 #' * raster: a numeric vector with the number of the raster layers to be included/excluded.
 #' For example: `c(1, 2, 4)` to include raster layers 1, 2 and 4; `c(-2, -3)` to exclude raster layers 2
@@ -430,14 +437,14 @@
 #' will exclude them. Note the "-" before each metric name to indicate the exclusion of the
 #' metrics.
 #' * l_level: character vector with the landscape-level metrics to be included/excluded from
-#' the analysis. Extra calculations for extra raster layers are considered as landscape-level metrics,
+#' the analysis. Other calculations for extra raster layers are considered as landscape-level metrics,
 #' and must be provided as "fun_" + the name of the function (e.g. "fun_mean").
 #'
 #' Names of the available metrics of the 'MultiLandMetrics' object provided in `x` can
 #' be accessed with `x@metrics` and `x@ext_calc`.
 #'
 #' Note that patch-level metrics, if exists in `x` metric's data.frame, are excluded from
-#' calculations, as this function works at a landscape-scale analysis.
+#' calculations, as this function works at a landscape scale.
 #'
 #' Argument `display` defines how correlation values will be presented. If equals to "radii"
 #' (default), correlation values are disaggregated by radii. If "rl", correlation values are
@@ -466,16 +473,16 @@
 #' metrics_corr(ed_metrics)
 #'
 #' # Only for radius 5000 m and with classes names rather than classes values
-#' metrics_corr(ed_metrics, radii = 5000, class_names = TRUE)
+#' metrics_corr(ed_metrics, radii = 5000, show_class_names = TRUE)
 #'
 #' # Only selecting the metric "pland"
-#' metrics_corr(ed_metrics, radii = 5000, class_names = TRUE, c_level = "pland")
+#' metrics_corr(ed_metrics, radii = 5000, show_class_names = TRUE, c_level = "pland")
 #'
 #' # Excluding the metric "pland"
-#' metrics_corr(ed_metrics, radii = 5000, class_names = TRUE, c_level = "-pland")
+#' metrics_corr(ed_metrics, radii = 5000, show_class_names = TRUE, c_level = "-pland")
 #'
 #' # Excluding the metric radii of 4000 and 5000 m
-#' metrics_corr(ed_metrics, radii = c(-4000, -5000), class_names = TRUE)
+#' metrics_corr(ed_metrics, radii = c(-4000, -5000), show_class_names = TRUE)
 #'
 #' # Correlations of metric "pland" between classes 1 to 3, and between radii
 #' # 1000 and 5000 m, disaggregating by rasterlayer.
@@ -490,7 +497,7 @@ metrics_corr <- function(x,
                          c_level = NULL,
                          l_level = NULL,
                          ext_raster = NULL,
-                         class_names = FALSE,
+                         show_class_names = FALSE,
                          display = "radii",
                          ...){
 
@@ -509,6 +516,7 @@ metrics_corr <- function(x,
     for(i in 3:length(chk)){ assign(objs[i], chk[[i]]) }
   }
 
+  towide <- T
   environment(.pair_subsets) <- environment()
   df <- tryCatch(.pair_subsets(),
                  error = function(e){

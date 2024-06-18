@@ -53,24 +53,29 @@
             cl <- seq(1, length(class_names[[i]]), 2)
             if((length(class_names[[i]]) %% 2) != 0 |
                !all(!is.na(suppressWarnings(as.numeric(class_names[[i]][cl]))))){
-              messages   <- append(messages, "- argument 'class_names' was not defined properly. The
-                               argument was ignored. See ?mland.")
-              what       <- append(what, 1)
+              messages   <- append(messages, "- argument 'class_names' was not defined properly. See ?mland.")
+              what       <- append(what, 2)
               class_names <- list()
               break
             } else {
               if(!is.character(class_names[[i]])){
                 messages    <- append(messages, "- argument 'class_names' must be a list with vector of
-                                 strings in even elements. The argument was ignored. See ?mland")
-                what        <- append(what, 1)
+                                 strings in even elements. See ?mland")
+                what        <- append(what, 2)
                 class_names <- list()
                 break
               }
             }
+            if("landscape" %in% class_names[[i]]){
+              messages    <- append(messages, "- the string \"landscape\" must be
+              avoided to name a raster class. Please use another one.")
+              what        <- append(what, 2)
+              class_names <- list()
+              break
+            }
           } else {
-            messages   <- append(messages, "- argument 'class_names' was not defined properly. The
-                               argument was ignored. See ?mland.")
-            what       <- append(what, 1)
+            messages   <- append(messages, "- argument 'class_names' was not defined properly. See ?mland.")
+            what       <- append(what, 2)
             class_names <- list()
             break
           }
@@ -97,6 +102,13 @@
         names should be unique to avoid ambiguites. Argument was discarded.")
         what       <- append(what, 1)
         rast_names <- vector("character")
+      } else {
+        if(any(substr(rast_names, 1, 3) == "ext")){
+          messages   <- append("- The names for the raster layers cannot start with the
+          substring \"ext\".")
+          what       <- append(what, 2)
+          rast_names <- vector("character")
+        }
       }
     }
   } else { rast_names <- vector("character") }

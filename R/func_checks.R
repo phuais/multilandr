@@ -109,7 +109,7 @@
           }
         } else {
           messages <- append(messages,
-                             "- argument 'points' must be NULL, or either a numeric or a character
+                             "- If not NULL, argument 'points' must be a numeric or a character
                              vector.")
           what     <- append(what, 2)
           break
@@ -119,6 +119,47 @@
   }
 
   out <- list(messages, what, points, force_sitename)
+  return(out)
+}
+
+.chk_points2 <- function(messages, what, x, points){
+  if(!is.null(points)){
+    for(i in 1:length(points)){
+      if(is.numeric(points[i])){
+        if(!points[i] %in% x@points$id){
+          messages <- append(messages,
+                             paste0("- could not found point ", points[i], " in x. Mispelled?"))
+          what     <- append(what, 2)
+        }
+      } else {
+        if(is.character(points[i])){
+          if(x@site_names){
+            if(!points[i] %in% x@points$name){
+              messages <- append(messages,
+                                 paste0("- could not found site \"", points[i], "\" in x. Mispelled?"))
+              what     <- append(what, 2)
+            } else {
+              points[i] <- x@points[x@points$name == points[i], ]$id
+            }
+          } else {
+            messages <- append(messages,
+                               "- site names were declared in argument 'points' but no names were
+                               found in 'x'.")
+            what     <- append(what, 2)
+            break
+          }
+        } else {
+          messages <- append(messages,
+                             "- if not NULL, argument 'points' must be a numeric or a character
+                             vector.")
+          what     <- append(what, 2)
+          break
+        }
+      }
+    }
+  }
+
+  out <- list(messages, what, points)
   return(out)
 }
 
@@ -146,16 +187,16 @@
   return(out)
 }
 
-.chk_classnames <- function(messages, what, class_names){
+.chk_classnames <- function(messages, what, show_class_names){
 
-  if(!is.logical(class_names)){
+  if(!is.logical(show_class_names)){
     messages <- append(messages,
-                       "- argument 'class_names' must be logical. Default FALSE was taken.")
+                       "- argument 'show_class_names' must be logical. Default FALSE was taken.")
     what     <- append(what, 1)
-    class_names <- FALSE
+    show_class_names <- FALSE
   }
 
-  out <- list(messages, what, class_names)
+  out <- list(messages, what, show_class_names)
   return(out)
 }
 

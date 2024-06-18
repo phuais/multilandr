@@ -37,17 +37,17 @@
   }
 
   # Class names
-  chk_classnames <- .chk_classnames(messages, what, class_names)
+  chk_classnames <- .chk_classnames(messages, what, show_class_names)
   messages    <- chk_classnames[[1]]
   what        <- chk_classnames[[2]]
-  class_names <- chk_classnames[[3]]
+  show_class_names <- chk_classnames[[3]]
 
   warnings <- messages[which(what == 1)]
   errors   <- messages[which(what == 2)]
 
   out <- list(warnings = warnings,
               errors = errors,
-              class_names = class_names)
+              show_class_names = show_class_names)
 
   return(out)
 }
@@ -60,7 +60,7 @@
 #' @param data A data.frame with data from each sampling point/site. See Details.
 #' @param raster,ext_raster,classes,radii,l_level,c_level Parameters to subset data.frame containing the
 #' metrics values. See Details.
-#' @param class_names Logical. If TRUE, classes names will be returned as the names of the classes
+#' @param show_class_names Logical. If TRUE, classes names will be returned as the names of the classes
 #' previously provided (if so) when `x` was generated. Default FALSE.
 #'
 #' @details Merges data.frame with metrics values, contained in an object of
@@ -120,7 +120,7 @@
 #' new_data <- metrics_bind(ed_metrics, sampling_data)
 #'
 #' # Subset for metrics of class "Forest", radius 5000 and metric "pland"
-#' new_data <- metrics_bind(ed_metrics, sampling_data, class_names = TRUE,
+#' new_data <- metrics_bind(ed_metrics, sampling_data, show_class_names = TRUE,
 #'                          classes = "Forest", radii = 3000, c_level = "pland")
 #'
 #' # In this format, the data.frame can be passed to a fitting model
@@ -133,7 +133,7 @@ metrics_bind <- function(x,
                          c_level = NULL,
                          l_level = NULL,
                          ext_raster = NULL,
-                         class_names = FALSE){
+                         show_class_names = FALSE){
 
   if(!is(x, "MultiLandMetrics")) stop("x must be an object of class 'MultiLandMetrics'.")
   environment(.metrics_bind_chk_args) <- environment()
@@ -150,6 +150,7 @@ metrics_bind <- function(x,
     for(i in 3:length(chk)){ assign(objs[i], chk[[i]]) }
   }
 
+  towide <- T
   environment(.pair_subsets) <- environment()
   df <- .pair_subsets()
   new_df_wide <- df[[1]]

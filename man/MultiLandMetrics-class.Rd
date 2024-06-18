@@ -34,6 +34,8 @@ from which metrics were calculated.}
 
 \item{\code{n_points}}{Number of points from which metrics were calculated.}
 
+\item{\code{site_names}}{Logical. Whether points have associated site names or not.}
+
 \item{\code{radii}}{Distinct radii from which metrics were calculated.}
 
 \item{\code{metrics}}{A data.frame depicting the metrics that were calculated, classified by level.}

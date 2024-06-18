@@ -50,7 +50,7 @@ remotes::install_github("phuais/multilandr")
 ```
 
 You can access the manual with all available functions  
-[here](https://github.com/phuais/multilandr/manual.pdf)
+[here](https://github.com/phuais/multilandr/manual.pdf).
 
 ## Using multilandr: basic usage
 
@@ -259,7 +259,9 @@ function.
 analyzing multi-scale landscapes comprising a hundreds or thousands of
 points. Correlations between metrics can be calculated with
 `metrics_corr()`, and pairwise plots can be visualized with
-`metrics_plots()`. Landscapes can be filtered according to predefined
+`metrics_plots()`. The value of a given landscape metric can be plotted against
+increasing spatial scales (i.e. scalograms) with `metrics_scalogram()`. 
+Landscapes can be filtered according to predefined
 values for given metrics with `metrics_filter()`. In addition, the
 function `metrics_gradient()` generates an optimized gradient of
 predefined size for the values of a given metric, given the spectrum of

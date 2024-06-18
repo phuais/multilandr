@@ -12,7 +12,7 @@ metrics_plots(
   c_level = NULL,
   l_level = NULL,
   ext_raster = NULL,
-  class_names = FALSE,
+  show_class_names = FALSE,
   upper = TRUE,
   diag = TRUE,
   smooth = TRUE,
@@ -28,7 +28,7 @@ metrics_plots(
 
 \item{raster, ext_raster, classes, radii, l_level, c_level}{Parameters to subset plots. See Details.}
 
-\item{class_names}{logical. Whether to show classes with its previously defined names (if defined)
+\item{show_class_names}{logical. Whether to show classes with its previously defined names (if defined)
 when generating the 'MultiLand' object (TRUE), or not (FALSE, default).}
 
 \item{upper}{logical. Whether to plot upper-diagonal plots or not. Default TRUE}
@@ -75,7 +75,7 @@ between metrics values. Arguments \code{upper} and \code{diag} are specific argu
 
 Argument \code{raster}, \code{classes}, \code{radii}, \code{l_level} and \code{c_level} can be defined to
 subset the plots. In each one of these, an all-positive or an
-all-negative vector can be passed, whether to include (all-postive) or exclude (all-negative)
+all-negative vector can be passed, whether to include (all-positive) or exclude (all-negative)
 the elements to be taken into account for the subsetting:
 \itemize{
 \item rasterlayers: a numeric vector with the number of the raster layers to be included/excluded.
@@ -93,33 +93,40 @@ the unique raster layer; \code{c("-Forest", "-Grassland")} to exclude classes "F
 Note the "-" before each class name to indicate the exclusion of the classes.
 \item radii: a numeric vector to include/exclude particular radii. For example: c(1000, 2000) to
 include only radii of 1000 and 2000 m; c(-500, -1500) to exclude radii of 500 and 1500 m.
-\item metrics: character vector with the metrics to be included/excluded from
-the plots For example: \code{c("np", "pland")} will include only the metrics "number of patches"
+\item c_level: character vector with the class-level metrics to be included/excluded from
+the analysis. For example: \code{c("np", "pland")} will include only the metrics "number of patches"
 ("np") and "percentage of the landscape" ("pland") in the analysis, whereas \code{c("-np", "-pland")}
 will exclude them. Note the "-" before each metric name to indicate the exclusion of the
-metrics. Extra calculations for extra rasters must be provided as "fun_" + the name of the
-function. Names of the available metrics of the 'MultiLandMetrics' object provided in \code{x} can
-be accessed with \code{x@metrics} and \code{x@ext_calc}.
+metrics.
+\item l_level: character vector with the landscape-level metrics to be included/excluded from
+the analysis. Other calculations for extra raster layers are considered as landscape-level metrics,
+and must be provided as "fun_" + the name of the function (e.g. "fun_mean").
 }
+
+Names of the available metrics of the 'MultiLandMetrics' object provided in \code{x} can
+be accessed with \code{x@metrics} and \code{x@ext_calc}.
+
+Note that patch-level metrics, if exists in \code{x} metric's data.frame, are excluded from
+calculations, as this function works at a landscape scale.
 }
 \examples{
 \dontrun{
 # Pair plots between metrics "pland" of classes 1 to 4, for radius 3000 m
-metrics_plots(ed_metrics, classes = 1:4, radii = 3000, class_names = TRUE,
+metrics_plots(ed_metrics, classes = 1:4, radii = 3000, show_class_names = TRUE,
               c_level = "pland")
 
 # Without smooth pattern
-metrics_plots(ed_metrics, classes = 1:4, radii = 3000, class_names = TRUE,
+metrics_plots(ed_metrics, classes = 1:4, radii = 3000, show_class_names = TRUE,
               c_level = "pland", smooth = FALSE)
 
 # Changing aesthetics
-metrics_plots(ed_metrics, classes = 1:4, radii = 3000, class_names = TRUE,
+metrics_plots(ed_metrics, classes = 1:4, radii = 3000, show_class_names = TRUE,
               c_level = "pland", smooth = FALSE, size = 1.5, shape = 21,
               fill = "red", alpha = 0.4)
 
 # Assessing two radii values at the same time
 metrics_plots(ed_metrics, classes = 1:4, radii = c(1000, 5000),
-              class_names = TRUE, c_level = "pland", smooth = FALSE,
+              show_class_names = TRUE, c_level = "pland", smooth = FALSE,
               size = 1.5, shape = 21, fill = "red", alpha = 0.4)
 
 # An example with hundreds of points

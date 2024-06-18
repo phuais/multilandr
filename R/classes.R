@@ -131,6 +131,7 @@ setClass("MultiLand",
 #' from which metrics were calculated.
 #' @slot points A data.frame containing points coordinates and other attributes.
 #' @slot n_points Number of points from which metrics were calculated.
+#' @slot site_names Logical. Whether points have associated site names or not.
 #' @slot radii Distinct radii from which metrics were calculated.
 #' @slot metrics A data.frame depicting the metrics that were calculated, classified by level.
 #' @slot data Main data.frame with the values of the metrics that were calculated for each
@@ -175,6 +176,9 @@ setClass("MultiLandMetrics",
 
            # number of points
            n_points = "numeric",
+
+           # site names
+           site_names = "logical",
 
            # radii
            radii = "numeric",

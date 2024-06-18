@@ -13,7 +13,7 @@ metrics_bind(
   c_level = NULL,
   l_level = NULL,
   ext_raster = NULL,
-  class_names = FALSE
+  show_class_names = FALSE
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ metrics_bind(
 \item{raster, ext_raster, classes, radii, l_level, c_level}{Parameters to subset data.frame containing the
 metrics values. See Details.}
 
-\item{class_names}{Logical. If TRUE, classes names will be returned as the names of the classes
+\item{show_class_names}{Logical. If TRUE, classes names will be returned as the names of the classes
 previously provided (if so) when \code{x} was generated. Default FALSE.}
 }
 \value{
@@ -87,7 +87,7 @@ sampling_data <- data.frame(site = rep(sites, each = 10),
 new_data <- metrics_bind(ed_metrics, sampling_data)
 
 # Subset for metrics of class "Forest", radius 5000 and metric "pland"
-new_data <- metrics_bind(ed_metrics, sampling_data, class_names = TRUE,
+new_data <- metrics_bind(ed_metrics, sampling_data, show_class_names = TRUE,
                          classes = "Forest", radii = 3000, c_level = "pland")
 
 # In this format, the data.frame can be passed to a fitting model

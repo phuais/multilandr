@@ -42,6 +42,8 @@ Collate:
     'metrics_gradient_checks.R'
     'metrics_list.R'
     'metrics_plots.R'
+    'metrics_scalogram.R'
+    'metrics_scalogram_checks.R'
     'mland.R'
     'mland_checks.R'
     'mland_export_gis.R'

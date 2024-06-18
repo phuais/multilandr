@@ -14,7 +14,7 @@ metrics_corr(
   c_level = NULL,
   l_level = NULL,
   ext_raster = NULL,
-  class_names = FALSE,
+  show_class_names = FALSE,
   display = "radii",
   ...
 )
@@ -30,7 +30,7 @@ metrics_corr(
 \item{raster, ext_raster, classes, radii, l_level, c_level}{Parameters to subset calculations of
 correlations. See Details.}
 
-\item{class_names}{Logical. If TRUE, row and column of returned matrices will be identified
+\item{show_class_names}{Logical. If TRUE, row and column of returned matrices will be identified
 with the names of the classes, if available in \code{x}. Default FALSE.}
 
 \item{display}{Defines how correlations are presented: "radii" (default), "rl" or "both".
@@ -66,7 +66,7 @@ value (i.e. the supposed correlation).
 
 Arguments \code{raster}, \code{ext_raster}, \code{classes}, \code{radii}, \code{c_level} and \code{l_level} can be defined to
 subset the calculations of pair correlations. In each one of these, an all-positive or an
-all-negative vector can be passed, whether to include (all-postive) or exclude (all-negative)
+all-negative vector can be passed, whether to include (all-positive) or exclude (all-negative)
 the elements to be taken into account for the subsetting:
 \itemize{
 \item raster: a numeric vector with the number of the raster layers to be included/excluded.
@@ -92,7 +92,7 @@ the analysis. For example: \code{c("np", "pland")} will include only the metrics
 will exclude them. Note the "-" before each metric name to indicate the exclusion of the
 metrics.
 \item l_level: character vector with the landscape-level metrics to be included/excluded from
-the analysis. Extra calculations for extra raster layers are considered as landscape-level metrics,
+the analysis. Other calculations for extra raster layers are considered as landscape-level metrics,
 and must be provided as "fun_" + the name of the function (e.g. "fun_mean").
 }
 
@@ -100,7 +100,7 @@ Names of the available metrics of the 'MultiLandMetrics' object provided in \cod
 be accessed with \code{x@metrics} and \code{x@ext_calc}.
 
 Note that patch-level metrics, if exists in \code{x} metric's data.frame, are excluded from
-calculations, as this function works at a landscape-scale analysis.
+calculations, as this function works at a landscape scale.
 
 Argument \code{display} defines how correlation values will be presented. If equals to "radii"
 (default), correlation values are disaggregated by radii. If "rl", correlation values are
@@ -113,16 +113,16 @@ Disaggregations by raster layers only make sense for 'MultiLandMetrics' objects 
 metrics_corr(ed_metrics)
 
 # Only for radius 5000 m and with classes names rather than classes values
-metrics_corr(ed_metrics, radii = 5000, class_names = TRUE)
+metrics_corr(ed_metrics, radii = 5000, show_class_names = TRUE)
 
 # Only selecting the metric "pland"
-metrics_corr(ed_metrics, radii = 5000, class_names = TRUE, c_level = "pland")
+metrics_corr(ed_metrics, radii = 5000, show_class_names = TRUE, c_level = "pland")
 
 # Excluding the metric "pland"
-metrics_corr(ed_metrics, radii = 5000, class_names = TRUE, c_level = "-pland")
+metrics_corr(ed_metrics, radii = 5000, show_class_names = TRUE, c_level = "-pland")
 
 # Excluding the metric radii of 4000 and 5000 m
-metrics_corr(ed_metrics, radii = c(-4000, -5000), class_names = TRUE)
+metrics_corr(ed_metrics, radii = c(-4000, -5000), show_class_names = TRUE)
 
 # Correlations of metric "pland" between classes 1 to 3, and between radii
 # 1000 and 5000 m, disaggregating by rasterlayer.

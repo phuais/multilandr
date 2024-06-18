@@ -4,12 +4,7 @@
 \alias{metrics_filter}
 \title{Filters metrics}
 \usage{
-metrics_filter(
-  x,
-  conditions = list(rasterlayers = NULL, classes = NULL, radii = NULL, metric = NULL,
-    min_value = NULL, max_value = NULL),
-  output = "MLM"
-)
+metrics_filter(x, conditions, output = "MLM")
 }
 \arguments{
 \item{x}{An object of class 'MultiLandMetrics' generated with \code{\link[=mland_metrics]{mland_metrics()}}.}
