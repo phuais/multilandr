@@ -22,7 +22,9 @@ Depends:
     R (>= 4.3.0)
 LazyData: true
 Suggests: 
+    knitr,
     parallel (>= 4.1.0),
+    rmarkdown,
     testthat (>= 3.0.0)
 Collate: 
     'check_raster.R'
@@ -57,3 +59,4 @@ Collate:
     'mland_save.R'
     'utils.R'
 Config/testthat/edition: 3
+VignetteBuilder: knitr

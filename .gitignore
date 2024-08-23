@@ -6,3 +6,4 @@
 .DS_Store
 dev_files/
 R/rsconnect/
+inst/doc
