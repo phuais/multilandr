@@ -250,7 +250,7 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #'
 #' @details Calculates landscape metrics from an object of class `MultiLand`
 #' created with [mland()]. The function allows to define which metrics will be calculated in the
-#' form defined by the function [calculate_lsm()] from package `landscapemetrics`, by
+#' form defined by the function [landscapemetrics::calculate_lsm()] from package `landscapemetrics`, by
 #' specifying one or more of the following arguments:
 #'
 #' * level: level of metrics. Either "patch", "class" or "landscape" (or vector with combination).

@@ -86,7 +86,7 @@ Calculates landscape metrics of patch, class and/or landscape level via the pack
 \details{
 Calculates landscape metrics from an object of class \code{MultiLand}
 created with \code{\link[=mland]{mland()}}. The function allows to define which metrics will be calculated in the
-form defined by the function \code{\link[=calculate_lsm]{calculate_lsm()}} from package \code{landscapemetrics}, by
+form defined by the function \code{\link[landscapemetrics:calculate_lsm]{landscapemetrics::calculate_lsm()}} from package \code{landscapemetrics}, by
 specifying one or more of the following arguments:
 \itemize{
 \item level: level of metrics. Either "patch", "class" or "landscape" (or vector with combination).
