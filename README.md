@@ -64,10 +64,11 @@ landscapes of different sizes will be generated (buffers).
 
 ``` r
 library(multilandr)
+```
 
+``` r
 # Loads points
-elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.gpkg", 
-                                         package = "multilandr"))
+elchaco_sites <- terra::vect(multilandr_data[4])
 ```
 
 We also need at least one raster layer. This will typically represent
@@ -82,11 +83,9 @@ the U.S. Geological Survey) within the extent of analysis.
 
 ``` r
 # Loads main raster of land covers
-elchaco <- terra::rast(system.file("extdata", "elchaco.tif", 
-                                   package = "multilandr"))
+elchaco <- terra::rast(multilandr_data[1])
 # Loads extra raster of NDVI values
-elchaco_ndvi <- terra::rast(system.file("extdata", "elchaco_ndvi.tif", 
-                                        package = "multilandr"))
+elchaco_ndvi <- terra::rast(multilandr_data[3])
 ```
 
 We can define representative names for the land covers of the main
@@ -115,9 +114,6 @@ ernesdesign <- mland(points_layer = elchaco_sites,
                      site_ref = "name",
                      ext_rast_layer = elchaco_ndvi,
                      rast_names = c("landcover", "NDVI"))
-#> Loading layers
-#> Generating buffers
-#> Generating intersections
 ```
 
 The argument `site_ref` receives a string with the name of the attribute
@@ -131,14 +127,17 @@ Let’s see the output for the generated object:
 ``` r
 # Returns basic information about the object
 ernesdesign
-#> class            : MultiLand
-#> On the fly       : FALSE 
-#> Rasterlayers     : 1 
-#>   n classes      : 6 
-#> Ext. rasterlayers: 1 
-#> n points         : 15 
-#> Site reference   : "name"
-#> Radii (m)        : 1000 2000 3000 4000 5000
+```
+
+``` r
+class             : MultiLand
+On the fly        : FALSE 
+Raster layers     : 1 
+  n classes       : 6 
+Ext. raster layers: 1 
+n points          : 15 
+Site reference    : "name"
+Radii (m)         : 1000 2000 3000 4000 5000 
 ```
 
 Basic information about the object is provided, including the number of

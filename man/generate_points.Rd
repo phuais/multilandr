@@ -127,8 +127,9 @@ functionality, package \code{parallel} must be installed. So far, parallelizatio
 in LINUX and MAC, but not in Windows.
 }
 \examples{
+\dontrun{
 # Loads raster
-elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
+elchaco <- terra::rast(multilandr_data[1])
 
 # Returns points at "random" locations, but inside cells of value equals to 1.
 chaco_coords <- generate_points(elchaco, approach = "random", values = 1, n = 500)
@@ -138,7 +139,6 @@ chaco_coords <- generate_points(elchaco, approach = "random", values = 1, n = 50
 chaco_coords2 <- generate_points(elchaco, approach = "random", values = 1, n = 500,
                              try = 100, distance = 300, offset = TRUE)
 
-\dontrun{
 # Returns as many points as patches that meet the defined condition. This is
 # all patches of value equal to 1 of area between 9 and 11 hectares.
 patch_sites <- generate_points(elchaco, approach = "patch",

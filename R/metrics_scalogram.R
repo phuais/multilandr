@@ -78,11 +78,10 @@
 #' # evaluate metrics across a wide range of spatial scales
 #'
 #' # Loads main raster with land covers
-#' elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
+#' elchaco <- terra::rast(multilandr_data[1])
 #'
 #' # Loads extra raster with NDVI values
-#' elchaco_ndvi <- terra::rast(system.file("extdata", "elchaco_ndvi.tif",
-#'                                         package = "multilandr"))
+#' elchaco_ndvi <- terra::rast(multilandr_data[3])
 #'
 #' # Classes names
 #' cl_names <- c(1, "Forest",
@@ -93,8 +92,7 @@
 #'               6, "Urban")
 #'
 #' # Loads points
-#' elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.gpkg",
-#'                                          package = "multilandr"))
+#' elchaco_sites <- terra::vect(multilandr_data[4])
 #'
 #' # Creates 'MultiLand' object by loading main raster, an extra raster and points.
 #' ernesdesign1 <- mland(points_layer = elchaco_sites,

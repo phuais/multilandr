@@ -116,8 +116,9 @@ and two unique values for the second one), a plausible definition would be:
 }
 }
 \examples{
+\dontrun{
 # Loads main raster with land covers
-elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
+elchaco <- terra::rast(multilandr_data[1])
 
 # Main raster should have discrete values (e.g. land covers). This can be
 # checked with the function check_raster():
@@ -125,8 +126,7 @@ elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilan
 check_raster(elchaco)
 
 # Loads extra raster with NDVI values
-elchaco_ndvi <- terra::rast(system.file("extdata", "elchaco_ndvi.tif",
-                                        package = "multilandr"))
+elchaco_ndvi <- terra::rast(multilandr_data[3])
 
 # Classes names
 cl_names <- c(1, "Forest",
@@ -137,8 +137,7 @@ cl_names <- c(1, "Forest",
               6, "Urban")
 
 # Loads points
-elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.gpkg",
-                                         package = "multilandr"))
+elchaco_sites <- terra::vect(multilandr_data[4])
 
 # Creates 'MultiLand' object by loading main raster, an extra raster and points.
 ernesdesign <- mland(points_layer = elchaco_sites,
@@ -156,10 +155,8 @@ ernesdesign
 # Returns the classes of each rasterlayer and its names, if initially provided
 ernesdesign@classes
 
-\dontrun{
 # Loads another main raster. Same classes as "elchaco", but a different year.
-elchaco2 <- terra::rast(system.file("extdata", "elchaco2.tif",
-                                    package = "multilandr"))
+elchaco2 <- terra::rast(multilandr_data[2])
 
 # Creates 'MultiLand' with two raster layers.
 ernesdesign2 <- mland(points_layer = elchaco_sites,
@@ -183,8 +180,7 @@ ernesdesign3 <- mland(points_layer = elchaco_sites,
 # and the raster are created in this step.
 
 # Loads points
-otf_sites <- terra::vect(system.file("extdata", "otf_sites.gpkg",
-                                     package = "multilandr"))
+otf_sites <- terra::vect(multilandr_data[5])
 
 # Creates MultiLand object
 otf_design <- mland(points_layer = otf_sites,

@@ -54,8 +54,7 @@ landscapes of different sizes will be generated (buffers).
 library(multilandr)
 
 # Loads points
-elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.gpkg", 
-                                         package = "multilandr"))
+elchaco_sites <- terra::vect(multilandr_data[4])
 ```
 
 We also need at least one raster layer. This will typically represent
@@ -68,13 +67,11 @@ raster layer containing the values of the Normalized Difference
 Vegetation Index (NDVI) for the year 2000 (Landsat-7 image courtesy of
 the U.S. Geological Survey) within the extent of analysis.
 
-```{r}
+```{r eval=FALSE}
 # Loads main raster of land covers
-elchaco <- terra::rast(system.file("extdata", "elchaco.tif", 
-                                   package = "multilandr"))
+elchaco <- terra::rast(multilandr_data[1])
 # Loads extra raster of NDVI values
-elchaco_ndvi <- terra::rast(system.file("extdata", "elchaco_ndvi.tif", 
-                                        package = "multilandr"))
+elchaco_ndvi <- terra::rast(multilandr_data[3])
 ```
 
 We can define representative names for the land covers of the main
@@ -94,7 +91,7 @@ function `mland()`. We also need to specify the spatial scales to be
 evaluated, through the argument `radii`. Here we define five increasing
 scales, from 1000 m until 5000 m, by 1000 m steps.
 
-```{r, message=FALSE}
+```{r, message=FALSE, eval=FALSE}
 # Creates 'MultiLand' object by loading points, the main raster and an extra raster.
 ernesdesign <- mland(points_layer = elchaco_sites,
                      rast_layer = elchaco,
@@ -113,9 +110,20 @@ useful in further analyses.
 
 Let’s see the output for the generated object:
 
-```{r}
+```{r eval=FALSE}
 # Returns basic information about the object
 ernesdesign
+```
+
+```{r eval=FALSE}
+class             : MultiLand
+On the fly        : FALSE 
+Raster layers     : 1 
+  n classes       : 6 
+Ext. raster layers: 1 
+n points          : 15 
+Site reference    : "name"
+Radii (m)         : 1000 2000 3000 4000 5000 
 ```
 
 Basic information about the object is provided, including the number of
@@ -153,9 +161,11 @@ plotted at one time. Here, we plot all the multi-scale landscapes around
 the site `"Peje"` and, by default, the main raster layer containing the
 land covers is plotted.
 
-```{r}
-mland_plot(ernesdesign, points = "Peje", title = "sitename", ncol = 2)
+```{r eval=FALSE}
+mland_plot(ernesdesign, points = "Peje", title = "sitename")
 ```
+
+<img src="./man/figures/plot_peje.png" align="center" width="500"/>
 
 Visualizing spatial data in the R environment can be uncomfortable.
 Multi-scale landscapes can be exported for further exploration in a GIS
@@ -191,7 +201,7 @@ calculations must be performed for the first extra raster layer
 contained within the ‘MultiLand’ object (in this example, the unique
 one).
 
-```{r, results = FALSE, message = FALSE}
+```{r, results = FALSE, message = FALSE, eval=FALSE}
 # User-defined function: quotient between mean and standard deviation
 mean_sd <- function(x){ mean(x)/sd(x) }
 
