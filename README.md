@@ -26,8 +26,15 @@ objects from packages **terra**, **raster**, and **sf**.
 
 ## Installation
 
-You can install the development version of multilandr from
+You can install the stable version of multilandr from CRAN
 [GitHub](https://github.com/) with:
+
+``` r
+install.packages("multilandr")
+```
+
+Alternatively, you can install the development version of multilandr
+from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
