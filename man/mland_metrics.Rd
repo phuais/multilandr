@@ -81,12 +81,12 @@ if \code{output = "data"}, only a data.frame with the calculated metrics will be
 }
 \description{
 Calculates landscape metrics of patch, class and/or landscape level via the package
-\link{landscapemetrics} and user-defined functions from an object of class 'MultiLand'.
+\code{landscapemetrics} and user-defined functions from an object of class 'MultiLand'.
 }
 \details{
 Calculates landscape metrics from an object of class \code{MultiLand}
 created with \code{\link[=mland]{mland()}}. The function allows to define which metrics will be calculated in the
-form defined by the function \code{\link[=calculate_lsm]{calculate_lsm()}} from package \link{landscapemetrics}, by
+form defined by the function \code{\link[=calculate_lsm]{calculate_lsm()}} from package \code{landscapemetrics}, by
 specifying one or more of the following arguments:
 \itemize{
 \item level: level of metrics. Either "patch", "class" or "landscape" (or vector with combination).

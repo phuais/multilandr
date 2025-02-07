@@ -32,7 +32,7 @@ that the patch must meet in relation to the value of certain patch-level metric,
 be specified.
 \item metric: the patch-level metric whose values must meet the defined conditions. Only one metric
 per condition can be defined. Available patch-level metrics can be found in \code{\link[=metrics_list]{metrics_list()}} and in
-documentation of the package \code{\link[=landscapemetrics]{landscapemetrics()}}.
+documentation of the package \code{landscapemetrics}.
 \item minimum value: the minimum value that the metric must have for the retained patches. If equal
 to -Inf, and a maximum value is defined, patches whose values in the defined metric are equal
 or lower to the maximum value will be retained.

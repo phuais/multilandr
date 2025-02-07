@@ -1,8 +1,8 @@
 #' Metrics list
 #'
-#' List of available landscape metrics provided by package [landscapemetrics] to be calculated with
+#' List of available landscape metrics provided by package `landscapemetrics` to be calculated with
 #' [mland_metrics()]. It simply calls [landscapemetrics::list_lsm()]. For more information regarding the
-#' definition and equations of metrics, please check the user manual of [landscapemetrics].
+#' definition and equations of metrics, please check the user manual of `landscapemetrics`.
 #'
 #' @param type Character vector. Type according to FRAGSTATS grouping. One or more of the following:
 #' "area and edge", "core area", "shape", "aggregation", "complexity", and or "diversity". Default
@@ -15,7 +15,7 @@
 #' possible to specify functions as a vector of strings, e.g. what = c("lsm_c_ca", "lsm_l_ta").
 #'
 #' @return A data.frame with the list of available landscape metrics, including information
-#' regarding the level, type, metric, name and function name provided by package [landscapemetrics].
+#' regarding the level, type, metric, name and function name provided by package `landscapemetrics`.
 #' @export
 #'
 #' @references

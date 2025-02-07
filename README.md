@@ -5,6 +5,8 @@
 # multilandr
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/phuais/multilandr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/phuais/multilandr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of **multilandr** is to provide a clean platform for general
@@ -31,9 +33,6 @@ You can install the development version of multilandr from
 # install.packages("remotes")
 remotes::install_github("phuais/multilandr")
 ```
-
-You can access the manual with all available functions
-[here](https://github.com/phuais/multilandr/manual.pdf).
 
 ## Using multilandr: basic usage
 
@@ -125,14 +124,14 @@ Let’s see the output for the generated object:
 ``` r
 # Returns basic information about the object
 ernesdesign
-#> class             : MultiLand
-#> On the fly        : FALSE 
-#> Raster layers     : 1 
-#>   n classes       : 6 
-#> Ext. raster layers: 1 
-#> n points          : 15 
-#> Site reference    : "name"
-#> Radii (m)         : 1000 2000 3000 4000 5000
+#> class            : MultiLand
+#> On the fly       : FALSE 
+#> Rasterlayers     : 1 
+#>   n classes      : 6 
+#> Ext. rasterlayers: 1 
+#> n points         : 15 
+#> Site reference   : "name"
+#> Radii (m)        : 1000 2000 3000 4000 5000
 ```
 
 Basic information about the object is provided, including the number of
@@ -294,8 +293,8 @@ of sites. Explore these functions and examples in the help pages.
 
 If you use **multilandr** for your research, use the following citation:
 
-Huais, PY. (under review). multilandr: an R package for multi-scale
-landscape analysis. Landscape Ecology.
+Huais, P. Y. (2024). Multilandr: An r package for multi-scale landscape
+analysis. Landscape Ecology, 39(8), 140.
 
 ## References
 

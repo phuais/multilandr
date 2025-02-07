@@ -66,7 +66,7 @@ the values of \code{radii}. If each point defined in \code{points_layer} has an 
 ulterior identification, the user should provide the name of the attribute inside \code{points_layer}
 containing this information, by passing this string through the argument \code{site_ref}.
 
-Argument \code{rast_layer} must be provided with raster layers with discrete values from which different landscape metrics (provided by package \link{landscapemetrics})
+Argument \code{rast_layer} must be provided with raster layers with discrete values from which different landscape metrics (provided by package \code{landscapemetrics})
 could be calculated. Extra raster layers can be provided in \code{ext_rast_layer}, from which other metrics can be
 calculated. For instance, an extra raster layer could be one depicting continuous values of slope,
 from which a mean value per landscape may be calculated. Raster layers should be in a coordinate reference

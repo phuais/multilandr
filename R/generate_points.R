@@ -180,7 +180,7 @@ patch_select <- function(df_tmp, patch_rast, patch_conditions){
 #' be specified.
 #' * metric: the patch-level metric whose values must meet the defined conditions. Only one metric
 #' per condition can be defined. Available patch-level metrics can be found in [metrics_list()] and in
-#' documentation of the package [landscapemetrics()].
+#' documentation of the package `landscapemetrics`.
 #' * minimum value: the minimum value that the metric must have for the retained patches. If equal
 #' to -Inf, and a maximum value is defined, patches whose values in the defined metric are equal
 #' or lower to the maximum value will be retained.

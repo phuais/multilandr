@@ -26,7 +26,7 @@ mland_export_gis(
 
 \item{name}{Character. Name of the zip file where files will be exported.}
 
-\item{gdal}{GeoTiff creation options for rasters (\href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}).
+\item{gdal}{GeoTiff creation options for rasters (\href{https://gdal.org/en/stable/drivers/raster/gtiff.html}{GeoTiff file format}).
 \code{\link[=mland_export_gis]{mland_export_gis()}} uses the following compression options:
 c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9").}
 

@@ -92,7 +92,7 @@
 #' @param radii Numeric vector of radii to be processed.
 #' @param name Character. Name of the zip file where files will be exported.
 #' @param raster,ext_raster Numeric. The raster layers to be exported.
-#' @param gdal GeoTiff creation options for rasters (\href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}).
+#' @param gdal GeoTiff creation options for rasters (\href{https://gdal.org/en/stable/drivers/raster/gtiff.html}{GeoTiff file format}).
 #' [mland_export_gis()] uses the following compression options:
 #' c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9").
 #' @param ... Other arguments passed to [terra::writeRaster].

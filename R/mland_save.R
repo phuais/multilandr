@@ -30,7 +30,7 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #' @param name If `x` is an object of class 'MultiLand', the name of the zip file where
 #' files will be saved (without the '.zip'). If `x` is an object of class 'MultiLandMetrics',  the name of the R file (.rds). If NULL (default),
 #' the name will be 'mland_' or 'mlandmetrics_' + a large random number.
-#' @param gdal GeoTiff creation options for rasters (\href{https://gdal.org/drivers/raster/gtiff.html}{GeoTiff file format}).
+#' @param gdal GeoTiff creation options for rasters (\href{https://gdal.org/en/stable/drivers/raster/gtiff.html}{GeoTiff file format}).
 #' [mland_save()] uses the following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"). Only relevant
 #' if `x` is an object of class 'MultiLand'.
 #' @param ... If `x` is an object of class 'MultiLand', `...` should depict other arguments passed to

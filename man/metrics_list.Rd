@@ -29,12 +29,12 @@ possible to specify functions as a vector of strings, e.g. what = c("lsm_c_ca", 
 }
 \value{
 A data.frame with the list of available landscape metrics, including information
-regarding the level, type, metric, name and function name provided by package \link{landscapemetrics}.
+regarding the level, type, metric, name and function name provided by package \code{landscapemetrics}.
 }
 \description{
-List of available landscape metrics provided by package \link{landscapemetrics} to be calculated with
+List of available landscape metrics provided by package \code{landscapemetrics} to be calculated with
 \code{\link[=mland_metrics]{mland_metrics()}}. It simply calls \code{\link[landscapemetrics:list_lsm]{landscapemetrics::list_lsm()}}. For more information regarding the
-definition and equations of metrics, please check the user manual of \link{landscapemetrics}.
+definition and equations of metrics, please check the user manual of \code{landscapemetrics}.
 }
 \references{
 Hesselbarth, M.H.K., Sciaini, M., With, K.A., Wiegand, K., Nowosad, J. 2019. landscapemetrics:
