@@ -61,3 +61,5 @@ Collate:
     'utils.R'
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+URL: https://github.com/phuais/multilandr
+BugReports: https://github.com/phuais/multilandr/issues
