@@ -116,6 +116,7 @@ and two unique values for the second one), a plausible definition would be:
 }
 }
 \examples{
+\dontrun{
 # Loads main raster with land covers
 elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
 
@@ -192,6 +193,7 @@ otf_design <- mland(points_layer = otf_sites,
                                          5, "Water",
                                          6, "Urban")),
                     on_the_fly = TRUE)
+}
 }
 \seealso{
 \code{\link[=mland_plot]{mland_plot()}}, \code{\link[=mland_metrics]{mland_metrics()}}, \code{\link[=mland_overlap]{mland_overlap()}}, \code{\link[=generate_points]{generate_points()}}

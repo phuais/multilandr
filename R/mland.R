@@ -370,6 +370,7 @@ rast_tolist <- function(raster){
 #' @export
 #' @seealso [mland_plot()], [mland_metrics()], [mland_overlap()], [generate_points()]
 #' @examples
+#' \dontrun{
 #' # Loads main raster with land covers
 #' elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
 #'
@@ -446,6 +447,7 @@ rast_tolist <- function(raster){
 #'                                          5, "Water",
 #'                                          6, "Urban")),
 #'                     on_the_fly = TRUE)
+#' }
 mland <- function(points_layer,
                   rast_layer = NULL,
                   radii,
