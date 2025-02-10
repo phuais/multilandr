@@ -1,0 +1,12 @@
+citHeader("To cite multilandr or acknowledge its use, please cite the following paper:")
+
+bibentry(
+    bibtype = "Article",
+    title = {"multilandr: An R package for multi-scale landscape analysis"},
+    author = as.person("Pablo Yair Huais"),
+    journal = {"Landscape Ecology"},
+    volume = {"39"},
+	  number = {"140"},
+	  year = {"2024"},
+	  doi = {"10.1007/s10980-024-01930-z"},
+    textVersion  = "Huais, P.Y. multilandr: an R package for multi-scale landscape analysis. Landscape Ecology 39, 140 (2024). https://doi.org/10.1007/s10980-024-01930-z")

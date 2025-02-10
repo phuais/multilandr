@@ -299,8 +299,9 @@ of sites. Explore these functions and examples in the help pages.
 
 If you use **multilandr** for your research, use the following citation:
 
-Huais, P. Y. (2024). Multilandr: An r package for multi-scale landscape
-analysis. Landscape Ecology, 39(8), 140.
+Huais, P.Y. multilandr: an R package for multi-scale landscape analysis.
+Landscape Ecology 39, 140 (2024).
+<https://doi.org/10.1007/s10980-024-01930-z>
 
 ## References
 
