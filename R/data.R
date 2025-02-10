@@ -45,8 +45,3 @@
 #' Project MapBiomas Chaco – Collection 4.0 of annual land cover and land use maps,
 #' accessed during July 2022 through the following link: \href{https://chaco.mapbiomas.org/}{MapBiomas Chaco}
 "otf_metrics"
-
-#' multilandr_data
-#'
-#' A character vector containing the links to external data (.tif and .gpkg files) to be used in examples.
-"multilandr_data"

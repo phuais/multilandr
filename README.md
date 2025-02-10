@@ -68,7 +68,7 @@ library(multilandr)
 
 ``` r
 # Loads points
-elchaco_sites <- terra::vect(multilandr_data[4])
+elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.gpkg", package = "multilandr"))
 ```
 
 We also need at least one raster layer. This will typically represent
@@ -83,9 +83,9 @@ the U.S. Geological Survey) within the extent of analysis.
 
 ``` r
 # Loads main raster of land covers
-elchaco <- terra::rast(multilandr_data[1])
+elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
 # Loads extra raster of NDVI values
-elchaco_ndvi <- terra::rast(multilandr_data[3])
+elchaco_ndvi <- terra::rast(system.file("extdata", "elchaco_ndvi.tif", package = "multilandr"))
 ```
 
 We can define representative names for the land covers of the main

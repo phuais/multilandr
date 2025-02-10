@@ -211,7 +211,7 @@ patch_select <- function(df_tmp, patch_rast, patch_conditions){
 #' @examples
 #' \dontrun{
 #' # Loads raster
-#' elchaco <- terra::rast(multilandr_data[1])
+#' elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
 #'
 #' # Returns points at "random" locations, but inside cells of value equals to 1.
 #' chaco_coords <- generate_points(elchaco, approach = "random", values = 1, n = 500)

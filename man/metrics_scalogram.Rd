@@ -107,10 +107,10 @@ function (could be user-defined) can be provided in argument \code{fun}.
 # evaluate metrics across a wide range of spatial scales
 
 # Loads main raster with land covers
-elchaco <- terra::rast(multilandr_data[1])
+elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
 
 # Loads extra raster with NDVI values
-elchaco_ndvi <- terra::rast(multilandr_data[3])
+elchaco_ndvi <- terra::rast(system.file("extdata", "elchaco_ndvi.tif", package = "multilandr"))
 
 # Classes names
 cl_names <- c(1, "Forest",
@@ -121,7 +121,7 @@ cl_names <- c(1, "Forest",
               6, "Urban")
 
 # Loads points
-elchaco_sites <- terra::vect(multilandr_data[4])
+elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.gpkg", package = "multilandr"))
 
 # Creates 'MultiLand' object by loading main raster, an extra raster and points.
 ernesdesign1 <- mland(points_layer = elchaco_sites,

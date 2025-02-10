@@ -370,9 +370,8 @@ rast_tolist <- function(raster){
 #' @export
 #' @seealso [mland_plot()], [mland_metrics()], [mland_overlap()], [generate_points()]
 #' @examples
-#' \dontrun{
 #' # Loads main raster with land covers
-#' elchaco <- terra::rast(multilandr_data[1])
+#' elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
 #'
 #' # Main raster should have discrete values (e.g. land covers). This can be
 #' # checked with the function check_raster():
@@ -380,7 +379,7 @@ rast_tolist <- function(raster){
 #' check_raster(elchaco)
 #'
 #' # Loads extra raster with NDVI values
-#' elchaco_ndvi <- terra::rast(multilandr_data[3])
+#' elchaco_ndvi <- terra::rast(system.file("extdata", "elchaco_ndvi.tif", package = "multilandr"))
 #'
 #' # Classes names
 #' cl_names <- c(1, "Forest",
@@ -391,7 +390,7 @@ rast_tolist <- function(raster){
 #'               6, "Urban")
 #'
 #' # Loads points
-#' elchaco_sites <- terra::vect(multilandr_data[4])
+#' elchaco_sites <- terra::vect(system.file("extdata", "elchaco_sites.gpkg", package = "multilandr"))
 #'
 #' # Creates 'MultiLand' object by loading main raster, an extra raster and points.
 #' ernesdesign <- mland(points_layer = elchaco_sites,
@@ -410,7 +409,7 @@ rast_tolist <- function(raster){
 #' ernesdesign@classes
 #'
 #' # Loads another main raster. Same classes as "elchaco", but a different year.
-#' elchaco2 <- terra::rast(multilandr_data[2])
+#' elchaco2 <- terra::rast(system.file("extdata", "elchaco2.tif", package = "multilandr"))
 #'
 #' # Creates 'MultiLand' with two raster layers.
 #' ernesdesign2 <- mland(points_layer = elchaco_sites,
@@ -426,7 +425,7 @@ rast_tolist <- function(raster){
 #'                       radii = seq(1000, 5000, 1000),
 #'                       class_names = list(cl_names, cl_names),
 #'                       site_ref = "name",
-#'                       on_the_fly = T)
+#'                       on_the_fly = TRUE)
 #'
 #' # Creates a MultiLand object with hundreds of points. In this case, these
 #' # points were generated with generate_points(), another function from this
@@ -434,7 +433,7 @@ rast_tolist <- function(raster){
 #' # and the raster are created in this step.
 #'
 #' # Loads points
-#' otf_sites <- terra::vect(multilandr_data[5])
+#' otf_sites <- terra::vect(system.file("extdata", "otf_sites.gpkg", package = "multilandr"))
 #'
 #' # Creates MultiLand object
 #' otf_design <- mland(points_layer = otf_sites,
@@ -447,7 +446,6 @@ rast_tolist <- function(raster){
 #'                                          5, "Water",
 #'                                          6, "Urban")),
 #'                     on_the_fly = TRUE)
-#' }
 mland <- function(points_layer,
                   rast_layer = NULL,
                   radii,
