@@ -130,11 +130,10 @@ lsm_output <- function(tab, on_the_fly, i){
   if(length(class(tab$value)) >= 2){
     if(any(class(tab$value)[1:2] %in% c("simpleError", "error"))){
       if(grepl("Selected metrics do not exist", tab$value)){
-        cat("\n")
-        stop(strwrap("Selected metrics do not exist. Mispelled? Use metrics_list() to see all
+        stop(strwrap("Selected metrics do not exist. Mispelled? Run metrics_list() to see all
                   available metrics.", prefix = "\n", initial = ""), call. = FALSE)
       } else {
-        cat("\n")
+        message("\n")
         message("landscapemetrics errors:")
         stop(tab$value)
       }
@@ -328,7 +327,7 @@ final_details <- function(df, x, rasters_classes_tab, ext_calc_ref){
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Loads a 'MultiLand' object
 #' ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 #' ernesdesign <- mland_load(ernesdesign)

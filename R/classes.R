@@ -61,10 +61,9 @@ setClassUnion("null_chr", c("NULL", "character"))
 #'
 #' @examples
 #' # Shows information of object 'MultiLand'
-#' \dontrun{
+#' ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
+#' ernesdesign <- mland_load(ernesdesign)
 #' ernesdesign
-#' otf_design
-#'}
 #' @export
 setClass("MultiLand",
 
@@ -143,10 +142,8 @@ setClass("MultiLand",
 #'
 #' @examples
 #' # Shows information of object 'MultiLandMetrics'
-#' \dontrun{
 #' ed_metrics
 #' otf_metrics
-#' }
 setClass("MultiLandMetrics",
 
          slots = c(

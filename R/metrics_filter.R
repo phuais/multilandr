@@ -279,8 +279,8 @@ metrics_filter <- function(x,
       }
     }
 
-    cat(filtered_points, " points were retained out of ", x@n_points, " initial points (",
-        round(100*filtered_points/x@n_points, digits = 2), "%).\n", sep = "")
+    message(filtered_points, " points were retained out of ", x@n_points, " initial points (",
+            round(100*filtered_points/x@n_points, digits = 2), "%).\n", sep = "")
   } else {
     stop("- no landscapes were found that meet the required conditions.\n")
   }

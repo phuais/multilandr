@@ -25,8 +25,10 @@
 #' @return A list with as many elements as different radius in `x`. Each element contains a
 #' matrix with the percentages (or proportions if `perc = FALSE`) of overlapping of buffer areas.
 #'
+#' @export
+#'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Loads a 'MultiLand' object
 #' ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 #' ernesdesign <- mland_load(ernesdesign)
@@ -37,8 +39,6 @@
 #' # Selects only one radius and return the site names rather than the ids
 #' mland_overlap(ernesdesign, radii = 5000, title = "sitename")
 #' }
-#'
-#' @export
 mland_overlap <- function(x,
                           points = NULL,
                           radii = NULL,

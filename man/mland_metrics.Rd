@@ -155,7 +155,7 @@ with empty classes from the previous call will be mantained. If the intention is
 the user should create a fresh new 'MultiLandMetrics' from scratch.
 }
 \examples{
-\dontrun{
+\donttest{
 # Loads a 'MultiLand' object
 ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 ernesdesign <- mland_load(ernesdesign)

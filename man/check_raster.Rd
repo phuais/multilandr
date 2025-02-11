@@ -4,13 +4,16 @@
 \alias{check_raster}
 \title{Check input raster}
 \usage{
-check_raster(raster, verbose = T)
+check_raster(raster, verbose = TRUE)
 }
 \arguments{
 \item{raster}{An object of class 'RasterLayer', 'RasterStack', 'RasterBrick', 'SpatRaster',
 or a list of raster objects (one of 'RasterLayer' or 'SpatRaster').}
 
-\item{verbose}{Print warning messages.}
+\item{verbose}{Print warning messages in the console? Default is TRUE.}
+}
+\value{
+A data frame with relevant information about the inputted raster.
 }
 \description{
 Checks the validity of raster layers to be inputted in \code{\link[=mland]{mland()}}, intended to represent land cover. The function directly calls

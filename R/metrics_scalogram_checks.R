@@ -43,12 +43,12 @@
       args <- list(1:5)
       val_test <- tryCatch(do.call(fun, args),
                            error = c)
-      bad <- F
-      if(is.list(val_test)) bad <- T
+      bad <- FALSE
+      if(is.list(val_test)) bad <- TRUE
       if(is.numeric(val_test)){
-        if(length(val_test) != 1) bad <- T
+        if(length(val_test) != 1) bad <- TRUE
       } else {
-        bad <- T
+        bad <- TRUE
       }
       if(bad){
         messages <- append(messages,

@@ -33,6 +33,7 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #' @param gdal GeoTiff creation options for rasters (\href{https://gdal.org/en/stable/drivers/raster/gtiff.html}{GeoTiff file format}).
 #' [mland_save()] uses the following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"). Only relevant
 #' if `x` is an object of class 'MultiLand'.
+#' @param verbose Print messages in the console? Default is TRUE.
 #' @param ... If `x` is an object of class 'MultiLand', `...` should depict other arguments passed to
 #' [terra::writeRaster], the function to write raster layers (from intersections and plain raster layers).
 #' Otherwise, if `x` is an object of class 'MultiLandMetrics', `...` should depict other arguments passed
@@ -75,7 +76,7 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #'
 #' # Loads a MultiLandMetrics object previously generated with mland_metrics()
 #' mlm_obj <- system.file("extdata", "ed_metrics.rds", package = "multilandr")
-#' ed_metrics2 <- mland_save(mlm_obj)
+#' ed_metrics2 <- mland_load(mlm_obj)
 #'
 #' # Save it again. In this case, mland_save() is the same as using saveRDS()
 #' mland_save(ed_metrics2)
@@ -83,6 +84,7 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 mland_save <- function(x,
                        name = NULL,
                        gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
+                       verbose = TRUE,
                        ...){
 
   if(!is(x, "MultiLand") & !is(x, "MultiLandMetrics"))
@@ -110,6 +112,9 @@ mland_save <- function(x,
 
   if(file.exists(paste0(name, ".zip")))
     stop("name: a file with the same name for the zip file already exist. Please choose another one.")
+
+  if(!is.logical(verbose))
+    warning("- argument 'verbose' must be logical. Default TRUE was taken.")
 
   dir.create(tmp <- tempfile())
   dir.create(file.path(tmp, "MultiLand"))
@@ -143,12 +148,14 @@ mland_save <- function(x,
   }
   saveRDS(info, file = file.path(tmp, "MultiLand", "info.rds"))
 
-  cat(strwrap("MultiLand\n\n
+  if(verbose){
+    cat(strwrap("MultiLand\n\n
               This directory was created by R package multilandr.\n
               No modifications of folders or files should be made by hand.\n
               This folder may be loaded into an R session as a 'MultiLand' object with function
               mland_load().",
-              prefix = "\n", initial = ""), file = file.path(tmp, "MultiLand", "README.txt"))
+                prefix = "\n", initial = ""), file = file.path(tmp, "MultiLand", "README.txt"))
+  }
 
   # Generates zip file
   last_wd <- getwd()

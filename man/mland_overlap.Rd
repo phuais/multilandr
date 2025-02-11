@@ -47,7 +47,7 @@ identification names. Otherwise, if a numeric vector is declared, the inputted v
 will be taken as the automatically generated point ids (created when executing \code{\link[=mland]{mland()}}).
 }
 \examples{
-\dontrun{
+\donttest{
 # Loads a 'MultiLand' object
 ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 ernesdesign <- mland_load(ernesdesign)
@@ -58,5 +58,4 @@ mland_overlap(ernesdesign)
 # Selects only one radius and return the site names rather than the ids
 mland_overlap(ernesdesign, radii = 5000, title = "sitename")
 }
-
 }

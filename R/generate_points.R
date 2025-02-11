@@ -209,7 +209,7 @@ patch_select <- function(df_tmp, patch_rast, patch_conditions){
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Loads raster
 #' elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
 #'
@@ -219,13 +219,13 @@ patch_select <- function(df_tmp, patch_rast, patch_conditions){
 #' # The same but points must be separated by at least 300 m between each other. Also, each point
 #' # is randomly displaced inside the raster cell.
 #' chaco_coords2 <- generate_points(elchaco, approach = "random", values = 1, n = 500,
-#'                              try = 100, distance = 300, offset = TRUE)
+#'                                  try = 100, distance = 300, offset = TRUE)
 #'
 #' # Returns as many points as patches that meet the defined condition. This is
 #' # all patches of value equal to 1 of area between 9 and 11 hectares.
 #' patch_sites <- generate_points(elchaco, approach = "patch",
-#'                            patch_conditions = conditions(list(1, "area", 8, 12)),
-#'                            padding = 2000)
+#'                                patch_conditions = conditions(list(1, "area", 8, 12)),
+#'                                padding = 2000)
 #'}
 generate_points <- function(raster,
                             approach = "grid",

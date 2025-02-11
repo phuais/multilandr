@@ -116,7 +116,6 @@ and two unique values for the second one), a plausible definition would be:
 }
 }
 \examples{
-\dontrun{
 # Loads main raster with land covers
 elchaco <- terra::rast(system.file("extdata", "elchaco.tif", package = "multilandr"))
 
@@ -155,6 +154,7 @@ ernesdesign
 # Returns the classes of each rasterlayer and its names, if initially provided
 ernesdesign@classes
 
+\donttest{
 # Loads another main raster. Same classes as "elchaco", but a different year.
 elchaco2 <- terra::rast(system.file("extdata", "elchaco2.tif", package = "multilandr"))
 
@@ -165,7 +165,7 @@ ernesdesign2 <- mland(points_layer = elchaco_sites,
                       class_names = list(cl_names, cl_names),
                       site_ref = "name")
 
-# Creates the same object but with "on_the_fly = T". Intersections between
+# Creates the same object but with "on_the_fly = TRUE". Intersections between
 # buffers and rasters will not be generated in this step
 ernesdesign3 <- mland(points_layer = elchaco_sites,
                       rast_layer = list(elchaco, elchaco2),

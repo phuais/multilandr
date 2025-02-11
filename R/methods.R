@@ -8,6 +8,8 @@ if(!isGeneric("show"))
 #'
 #' @param object Prints relevant information about a 'MultiLand' object.
 #'
+#' @return No return value, called for side effects.
+#'
 #' @export
 methods::setMethod(f = "show", signature = "MultiLand",
           definition =
@@ -38,6 +40,8 @@ methods::setMethod(f = "show", signature = "MultiLand",
 #' Show 'MultiLandMetrics' object
 #'
 #' @param object Prints relevant information about a 'MultiLandMetrics' object.
+#'
+#' @return No return value, called for side effects.
 #'
 #' @export
 methods::setMethod(f = "show", signature = "MultiLandMetrics",

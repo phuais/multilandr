@@ -8,6 +8,7 @@ mland_save(
   x,
   name = NULL,
   gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
+  verbose = TRUE,
   ...
 )
 }
@@ -21,6 +22,8 @@ the name will be 'mland_' or 'mlandmetrics_' + a large random number.}
 \item{gdal}{GeoTiff creation options for rasters (\href{https://gdal.org/en/stable/drivers/raster/gtiff.html}{GeoTiff file format}).
 \code{\link[=mland_save]{mland_save()}} uses the following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"). Only relevant
 if \code{x} is an object of class 'MultiLand'.}
+
+\item{verbose}{Print messages in the console? Default is TRUE.}
 
 \item{...}{If \code{x} is an object of class 'MultiLand', \code{...} should depict other arguments passed to
 \link[terra:writeRaster]{terra::writeRaster}, the function to write raster layers (from intersections and plain raster layers).
@@ -68,7 +71,7 @@ mland_save(ernesdesign2, gdal = "COMPRESS=DEFLATE")
 
 # Loads a MultiLandMetrics object previously generated with mland_metrics()
 mlm_obj <- system.file("extdata", "ed_metrics.rds", package = "multilandr")
-ed_metrics2 <- mland_save(mlm_obj)
+ed_metrics2 <- mland_load(mlm_obj)
 
 # Save it again. In this case, mland_save() is the same as using saveRDS()
 mland_save(ed_metrics2)

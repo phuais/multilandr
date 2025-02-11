@@ -40,15 +40,8 @@ metrics_list <- function(level = NULL,
 
   if(length(class(tab$value)) >= 2){
     if(any(class(tab$value)[1:2] %in% c("simpleError", "error"))){
-      if(grepl("Selected metrics do not exist", tab$value)){
-        cat("\n")
-        stop(strwrap("Selected metrics do not exist. Use metrics_list() to see all
+      stop(strwrap("Selected metrics do not exist. Run metrics_list() to see all
                   available metrics.", prefix = "\n", initial = ""))
-      } else {
-        cat("\n")
-        message("landscapemetrics errors:")
-        stop(tab$value)
-      }
     } else { tab <- tab$value }
   }
   tab <- as.data.frame(tab)

@@ -110,7 +110,6 @@ Note that patch-level metrics, if exists in \code{x} metric's data.frame, are ex
 calculations, as this function works at a landscape scale.
 }
 \examples{
-\dontrun{
 # Pair plots between metrics "pland" of classes 1 to 4, for radius 3000 m
 metrics_plots(ed_metrics, classes = 1:4, radii = 3000, show_class_names = TRUE,
               c_level = "pland")
@@ -119,6 +118,7 @@ metrics_plots(ed_metrics, classes = 1:4, radii = 3000, show_class_names = TRUE,
 metrics_plots(ed_metrics, classes = 1:4, radii = 3000, show_class_names = TRUE,
               c_level = "pland", smooth = FALSE)
 
+\donttest{
 # Changing aesthetics
 metrics_plots(ed_metrics, classes = 1:4, radii = 3000, show_class_names = TRUE,
               c_level = "pland", smooth = FALSE, size = 1.5, shape = 21,
@@ -133,9 +133,8 @@ metrics_plots(ed_metrics, classes = 1:4, radii = c(1000, 5000),
 metrics_plots(otf_metrics, classes = c("Forest", "Crops"))
 
 # Plots can be combined with ggplot2::theme
-# library(ggplot2)
 metrics_plots(otf_metrics, classes = c("Forest", "Crops")) +
-  theme_bw()
+  ggplot2::theme_bw()
 }
 }
 \seealso{

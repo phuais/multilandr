@@ -12,6 +12,7 @@ mland_export_gis(
   ext_raster = NULL,
   name = NULL,
   gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
+  verbose = TRUE,
   ...
 )
 }
@@ -29,6 +30,8 @@ mland_export_gis(
 \item{gdal}{GeoTiff creation options for rasters (\href{https://gdal.org/en/stable/drivers/raster/gtiff.html}{GeoTiff file format}).
 \code{\link[=mland_export_gis]{mland_export_gis()}} uses the following compression options:
 c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9").}
+
+\item{verbose}{Print messages in the console? Default is TRUE.}
 
 \item{...}{Other arguments passed to \link[terra:writeRaster]{terra::writeRaster}.}
 }
@@ -54,7 +57,7 @@ ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 ernesdesign <- mland_load(ernesdesign)
 
 # Exports as GIS data
-mland_export_gis(ernesdesign, dir = "ernesdesign")
+mland_export_gis(ernesdesign)
 }
 }
 \seealso{

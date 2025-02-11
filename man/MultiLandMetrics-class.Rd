@@ -49,8 +49,6 @@ raster layers.}
 
 \examples{
 # Shows information of object 'MultiLandMetrics'
-\dontrun{
 ed_metrics
 otf_metrics
-}
 }

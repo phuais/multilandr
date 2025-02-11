@@ -9,6 +9,9 @@
 \arguments{
 \item{object}{Prints relevant information about a 'MultiLandMetrics' object.}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 Show 'MultiLandMetrics' object
 }

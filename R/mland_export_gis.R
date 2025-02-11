@@ -70,6 +70,13 @@
   messages <- chk_radii[[1]]
   what     <- chk_radii[[2]]
 
+  # verbose
+  if(!is.logical(verbose)){
+    messages <- append(messages, "- argument 'verbose' must be logical. Default TRUE was taken.")
+    what     <- append(what, 1)
+    verbose  <- TRUE
+  }
+
   errors   <- messages[which(what == 2)]
   warnings <- messages[which(what == 1)]
 
@@ -77,7 +84,8 @@
               errors = errors,
               points = points,
               raster = raster,
-              ext_raster = ext_raster)
+              ext_raster = ext_raster,
+              verbose = verbose)
 
   return(out)
 }
@@ -95,6 +103,7 @@
 #' @param gdal GeoTiff creation options for rasters (\href{https://gdal.org/en/stable/drivers/raster/gtiff.html}{GeoTiff file format}).
 #' [mland_export_gis()] uses the following compression options:
 #' c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9").
+#' @param verbose Print messages in the console? Default is TRUE.
 #' @param ... Other arguments passed to [terra::writeRaster].
 #'
 #' @details
@@ -118,7 +127,7 @@
 #' ernesdesign <- mland_load(ernesdesign)
 #'
 #' # Exports as GIS data
-#' mland_export_gis(ernesdesign, dir = "ernesdesign")
+#' mland_export_gis(ernesdesign)
 #' }
 mland_export_gis <- function(x,
                              raster = NULL,
@@ -127,6 +136,7 @@ mland_export_gis <- function(x,
                              ext_raster = NULL,
                              name = NULL,
                              gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
+                             verbose = TRUE,
                              ...){
 
   # Check arguments
@@ -211,10 +221,12 @@ mland_export_gis <- function(x,
     message("- in 'x': on_the_fly = TRUE. No intersections were exported.")
   }
 
-  cat(strwrap("MultiLand-GIS_data\n\n
+  if(verbose){
+    cat(strwrap("MultiLand-GIS_data\n\n
               This directory was created by R package multilandr.\n
               GIS data was generated while exporting an object of class 'MultiLand'.",
-              prefix = "\n", initial = ""), file = file.path(tmp, "MultiLand-GIS_data", "README.txt"))
+                prefix = "\n", initial = ""), file = file.path(tmp, "MultiLand-GIS_data", "README.txt"))
+  }
 
   # Generates zip file
   last_wd <- getwd()

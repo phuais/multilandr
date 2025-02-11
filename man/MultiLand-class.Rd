@@ -79,8 +79,7 @@ and extra raster layers defined in argument \code{rast_layer} and \code{ext_rast
 
 \examples{
 # Shows information of object 'MultiLand'
-\dontrun{
+ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
+ernesdesign <- mland_load(ernesdesign)
 ernesdesign
-otf_design
-}
 }

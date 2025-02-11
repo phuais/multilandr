@@ -102,7 +102,7 @@ calculate the mean value from the values of all available sites/points. A differ
 function (could be user-defined) can be provided in argument \code{fun}.
 }
 \examples{
-\dontrun{
+\donttest{
 # We will generate a 'MultiLand' obejct with several radii. The objective is
 # evaluate metrics across a wide range of spatial scales
 
@@ -143,34 +143,34 @@ ed_metrics5 <- mland_metrics(ernesdesign1,
 # and metric "np"
 metrics_scalogram(ed_metrics5, points = c("Algarrobo", "Peje", "Itin"),
                   raster = "landcover", c_level = "np",
-                 aggregation = F, show_class_names = T)
+                 aggregation = FALSE, show_class_names = TRUE)
 
 # Scalogram with aggregation across sites. By default, a mean value among all
 # considered sites is calculated.
 metrics_scalogram(ed_metrics5, raster = 1,
-                  aggregation = T, show_class_names = T)
+                  aggregation = TRUE, show_class_names = TRUE)
 
 # Here, we only plot those metrics calculated for the extra raster layer
 # named "NDVI", which in this case is only one metric
 metrics_scalogram(ed_metrics5, points = c("Algarrobo", "Peje", "Itin"),
                   ext_raster = "NDVI",
-                  aggregation = F, show_class_names = T)
+                  aggregation = FALSE, show_class_names = TRUE)
 
 # Scalogram with aggregation across three sites. By default, a mean value among
 # the three considered sites is calculated.
 metrics_scalogram(ed_metrics5, ext_raster = 1,
                   points = c("Yuchan", "Coco", "Tala"),
-                  aggregation = F, show_class_names = T)
+                  aggregation = FALSE, show_class_names = TRUE)
 
 # The output can be customized as every ggplot object
 library(ggplot2)
 metrics_scalogram(ed_metrics5, points = c("Algarrobo", "Peje", "Itin"), raster = 1,
                   c_level = "np",
-                  aggregation = F, show_class_names = T, lwd = 1) +
+                  aggregation = FALSE, show_class_names = TRUE, lwd = 1) +
   scale_color_brewer(type = "div", palette = 1) +
   theme_bw() +
   theme(aspect.ratio = 1, legend.title = element_blank())
-  }
+}
 }
 \references{
 Wu, J. (2004). Effects of changing scale on landscape pattern analysis: scaling relations. Landscape ecology, 19, 125-138.

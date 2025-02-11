@@ -85,7 +85,7 @@ could be the following:
 }
 }
 \examples{
-\dontrun{
+\donttest{
 # Loads a 'MultiLand' object
 ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 ernesdesign <- mland_load(ernesdesign)

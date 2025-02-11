@@ -142,7 +142,7 @@ get_ext_range <- function(x, ext_range){
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Loads a 'MultiLand' object
 #' ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 #' ernesdesign <- mland_load(ernesdesign)
