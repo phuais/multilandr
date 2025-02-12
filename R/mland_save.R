@@ -63,7 +63,7 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #' @seealso [mland_load()], [mland()], [mland_metrics()]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Load MultiLand object
 #' mland_obj <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 #' ernesdesign2 <- mland_load(mland_obj)

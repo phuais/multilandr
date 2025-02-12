@@ -51,7 +51,7 @@ identification names. Otherwise, if a numeric vector is declared, the inputted v
 will be taken as the automatically generated point ids (created when running \code{\link[=mland]{mland()}}).
 }
 \examples{
-\dontrun{
+\donttest{
 # Loads a 'MultiLand' object
 ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 ernesdesign <- mland_load(ernesdesign)

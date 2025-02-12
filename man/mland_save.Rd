@@ -58,7 +58,7 @@ and can be exported as regular R objects with \code{\link[=saveRDS]{saveRDS()}}.
 \code{\link[=mland_save]{mland_save()}}, and the outcome will be identical.
 }
 \examples{
-\dontrun{
+\donttest{
 # Load MultiLand object
 mland_obj <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 ernesdesign2 <- mland_load(mland_obj)
