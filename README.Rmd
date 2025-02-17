@@ -18,12 +18,28 @@ knitr::opts_chunk$set(
 
 <!-- # multilandr <img src="man/figures/logo.png" align="right" width="150"/> -->
 
-# multilandr
-
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/phuais/multilandr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/phuais/multilandr/actions/workflows/R-CMD-check.yaml)
+
 <!-- badges: end -->
+
+# multilandr
+
+<!-- Start Badges -->
+
+README last updated: `r Sys.Date()`
+
+<!-- Start Badges -->
+
+| Development | CRAN | License |
+|-------------|------|---------|
+| [![Lifecycle](https://img.shields.io/badge/Lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html) | [![CRAN status](https://www.r-pkg.org/badges/version/multilandr)](https://cran.r-project.org/package=multilandr) | [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) |
+| [![Project Status](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/) | [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/multilandr)](https://cran.r-project.org/package=multilandr) | [![DOI](https://img.shields.io/badge/DOI-10.1007%2Fs10980--024--01930--z-yellow)](https://doi.org/10.1007/s10980-024-01930-z) |
+
+<!-- End Badges -->
+
+## Overview
 
 The goal of **multilandr** is to provide a clean platform for general
 landscape-scale analysis. The package builds on several spatial-oriented
@@ -72,7 +88,7 @@ design in the literature, such as De Camargo et al. (2018), Melo et al.,
 **multilandr** provides tools to generate landscapes at different
 spatial scales and calculate landscape metrics at each spatial scale.
 
-### Generates 'MultiLand' object
+### Generating 'MultiLand' object
 
 We will first generate an object of class 'MultiLand'. For this, we need
 a vector of points depicting the location of the sites, around which
