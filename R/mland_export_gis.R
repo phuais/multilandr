@@ -103,6 +103,9 @@
 #' @param gdal GeoTiff creation options for rasters (\href{https://gdal.org/en/stable/drivers/raster/gtiff.html}{GeoTiff file format}).
 #' [mland_export_gis()] uses the following compression options:
 #' c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9").
+#' @param dir Path to the export directory. This must be specified explicitly.
+#' To export to the current directory, use `dir = getwd()`. Otherwise, provide
+#' a valid path to an existing directory, ensuring it does not end with "/".
 #' @param verbose Print messages in the console? Default is TRUE.
 #' @param ... Other arguments passed to [terra::writeRaster].
 #'
@@ -126,8 +129,11 @@
 #' ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 #' ernesdesign <- mland_load(ernesdesign)
 #'
-#' # Exports as GIS data
-#' mland_export_gis(ernesdesign)
+#' # Exports as GIS data, in temporary directory for this example and with a given name
+#' mland_export_gis(ernesdesign, dir = tempdir(), name = "mland-GIS_example")
+#'
+#' # Remove file for this example
+#' unlink(file.path(tempdir(), "mland-GIS_example.zip"))
 #' }
 mland_export_gis <- function(x,
                              raster = NULL,
@@ -136,6 +142,7 @@ mland_export_gis <- function(x,
                              ext_raster = NULL,
                              name = NULL,
                              gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
+                             dir = NULL,
                              verbose = TRUE,
                              ...){
 
@@ -155,6 +162,13 @@ mland_export_gis <- function(x,
   } else {
     objs <- names(chk)
     for(i in 3:length(chk)){ assign(objs[i], chk[[i]]) }
+  }
+
+  if(is.null(dir)){
+    stop("dir: exporting directory must be defined explicitly. To set the working directory use dir = getwd()")
+  } else {
+    if(!dir.exists(dir))
+      stop("dir: could not find the provided directory.")
   }
 
   if(!is.null(name)){
@@ -230,7 +244,7 @@ mland_export_gis <- function(x,
 
   # Generates zip file
   last_wd <- getwd()
-  zipfile <- paste0(last_wd, "/", name, ".zip")
+  zipfile <- paste0(dir, "/", name, ".zip")
   setwd(tmp)
   utils::zip(zipfile, ".")
   setwd(last_wd)

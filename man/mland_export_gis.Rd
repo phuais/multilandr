@@ -12,6 +12,7 @@ mland_export_gis(
   ext_raster = NULL,
   name = NULL,
   gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
+  dir = NULL,
   verbose = TRUE,
   ...
 )
@@ -30,6 +31,10 @@ mland_export_gis(
 \item{gdal}{GeoTiff creation options for rasters (\href{https://gdal.org/en/stable/drivers/raster/gtiff.html}{GeoTiff file format}).
 \code{\link[=mland_export_gis]{mland_export_gis()}} uses the following compression options:
 c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9").}
+
+\item{dir}{Path to the export directory. This must be specified explicitly.
+To export to the current directory, use \code{dir = getwd()}. Otherwise, provide
+a valid path to an existing directory, ensuring it does not end with "/".}
 
 \item{verbose}{Print messages in the console? Default is TRUE.}
 
@@ -56,8 +61,11 @@ will be taken as the automatically generated point ids (created when running \co
 ernesdesign <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 ernesdesign <- mland_load(ernesdesign)
 
-# Exports as GIS data
-mland_export_gis(ernesdesign)
+# Exports as GIS data, in temporary directory for this example and with a given name
+mland_export_gis(ernesdesign, dir = tempdir(), name = "mland-GIS_example")
+
+# Remove file for this example
+unlink(file.path(tempdir(), "mland-GIS_example.zip"))
 }
 }
 \seealso{

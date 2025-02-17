@@ -8,6 +8,7 @@ mland_save(
   x,
   name = NULL,
   gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
+  dir = NULL,
   verbose = TRUE,
   ...
 )
@@ -22,6 +23,10 @@ the name will be 'mland_' or 'mlandmetrics_' + a large random number.}
 \item{gdal}{GeoTiff creation options for rasters (\href{https://gdal.org/en/stable/drivers/raster/gtiff.html}{GeoTiff file format}).
 \code{\link[=mland_save]{mland_save()}} uses the following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"). Only relevant
 if \code{x} is an object of class 'MultiLand'.}
+
+\item{dir}{Path to the export directory. This must be specified explicitly.
+To export to the current directory, use \code{dir = getwd()}. Otherwise, provide
+a valid path to an existing directory, ensuring it does not end with "/".}
 
 \item{verbose}{Print messages in the console? Default is TRUE.}
 
@@ -63,18 +68,26 @@ and can be exported as regular R objects with \code{\link[=saveRDS]{saveRDS()}}.
 mland_obj <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 ernesdesign2 <- mland_load(mland_obj)
 
-# Save it again
-mland_save(ernesdesign2)
+# Save it again, in temporary directory for this example and with a given name
+mland_save(ernesdesign2, name = "mland_example", dir = tempdir())
+
+# Remove file for this example
+unlink(file.path(tempdir(), "mland_example.zip"))
 
 # Save it again but defining a higher compression for raster layers
-mland_save(ernesdesign2, gdal = "COMPRESS=DEFLATE")
+mland_save(ernesdesign2, gdal = "COMPRESS=DEFLATE", name = "mland_example", dir = tempdir())
+
+# Remove file for this example
+unlink(file.path(tempdir(), "mland_example.zip"))
 
 # Loads a MultiLandMetrics object previously generated with mland_metrics()
 mlm_obj <- system.file("extdata", "ed_metrics.rds", package = "multilandr")
 ed_metrics2 <- mland_load(mlm_obj)
 
 # Save it again. In this case, mland_save() is the same as using saveRDS()
-mland_save(ed_metrics2)
+mland_save(ed_metrics2, dir = tempdir(), name = "mlandmetrics_example")
+
+unlink(file.path(tempdir(), "mlandmetrics_example.rds"))
 }
 }
 \seealso{

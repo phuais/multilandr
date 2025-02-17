@@ -31,8 +31,8 @@ mland_load <- function(path,
     if(substr(path, (nchar(path) + 1) - 4, nchar(path)) == ".zip"){
       if(!file.exists(path))
         stop("Could not find required zip file.")
-
-      objs <- utils::unzip(path, exdir = tempdir())
+      tmp <- tempdir()
+      objs <- utils::unzip(path, exdir = tmp)
     } else {
       if(substr(path, (nchar(path) + 1) - 4, nchar(path)) == tolower(".rds")){
         if(!file.exists(path))

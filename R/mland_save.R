@@ -33,11 +33,15 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #' @param gdal GeoTiff creation options for rasters (\href{https://gdal.org/en/stable/drivers/raster/gtiff.html}{GeoTiff file format}).
 #' [mland_save()] uses the following compression options: c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"). Only relevant
 #' if `x` is an object of class 'MultiLand'.
+#' @param dir Path to the export directory. This must be specified explicitly.
+#' To export to the current directory, use `dir = getwd()`. Otherwise, provide
+#' a valid path to an existing directory, ensuring it does not end with "/".
 #' @param verbose Print messages in the console? Default is TRUE.
 #' @param ... If `x` is an object of class 'MultiLand', `...` should depict other arguments passed to
 #' [terra::writeRaster], the function to write raster layers (from intersections and plain raster layers).
 #' Otherwise, if `x` is an object of class 'MultiLandMetrics', `...` should depict other arguments passed
 #' to [save()]. See Details.
+#'
 #' @details 'MultiLand' objects should be exported with this function rather than exporting as an
 #' external representation of R objects with [saveRDS()]. This is because objects of classes
 #' 'SpatVector' and 'SpatRaster' (from package terra) contained inside a 'MultiLand'
@@ -68,22 +72,31 @@ save_rasts <- function(tmp, rast_dir, x_obj, gdal, ...){
 #' mland_obj <- system.file("extdata", "ernesdesign.zip", package = "multilandr")
 #' ernesdesign2 <- mland_load(mland_obj)
 #'
-#' # Save it again
-#' mland_save(ernesdesign2)
+#' # Save it again, in temporary directory for this example and with a given name
+#' mland_save(ernesdesign2, name = "mland_example", dir = tempdir())
+#'
+#' # Remove file for this example
+#' unlink(file.path(tempdir(), "mland_example.zip"))
 #'
 #' # Save it again but defining a higher compression for raster layers
-#' mland_save(ernesdesign2, gdal = "COMPRESS=DEFLATE")
+#' mland_save(ernesdesign2, gdal = "COMPRESS=DEFLATE", name = "mland_example", dir = tempdir())
+#'
+#' # Remove file for this example
+#' unlink(file.path(tempdir(), "mland_example.zip"))
 #'
 #' # Loads a MultiLandMetrics object previously generated with mland_metrics()
 #' mlm_obj <- system.file("extdata", "ed_metrics.rds", package = "multilandr")
 #' ed_metrics2 <- mland_load(mlm_obj)
 #'
 #' # Save it again. In this case, mland_save() is the same as using saveRDS()
-#' mland_save(ed_metrics2)
+#' mland_save(ed_metrics2, dir = tempdir(), name = "mlandmetrics_example")
+#'
+#' unlink(file.path(tempdir(), "mlandmetrics_example.rds"))
 #' }
 mland_save <- function(x,
                        name = NULL,
                        gdal = c("COMPRESS=DEFLATE", "PREDICTOR=2", "ZLEVEL=9"),
+                       dir = NULL,
                        verbose = TRUE,
                        ...){
 
@@ -103,15 +116,22 @@ mland_save <- function(x,
   }
 
   if(is(x, "MultiLandMetrics")){
-    if(!substr(name, (nchar(name) + 1) - 4, nchar(name)) == ".rds"){
-      name <- paste0(name, ".rds")
-    }
+    #if(!substr(name, (nchar(name) + 1) - 4, nchar(name)) == ".rds"){
+      name <- paste0(dir, "/", name, ".rds")
+    #}
     saveRDS(x, file = name, ...)
     return(invisible())
   }
 
   if(file.exists(paste0(name, ".zip")))
     stop("name: a file with the same name for the zip file already exist. Please choose another one.")
+
+  if(is.null(dir)){
+    stop("dir: exporting directory must be defined explicitly. To set the working directory use dir = getwd()")
+  } else {
+    if(!dir.exists(dir))
+      stop("dir: could not find the provided directory.")
+  }
 
   if(!is.logical(verbose))
     warning("- argument 'verbose' must be logical. Default TRUE was taken.")
@@ -152,14 +172,14 @@ mland_save <- function(x,
     cat(strwrap("MultiLand\n\n
               This directory was created by R package multilandr.\n
               No modifications of folders or files should be made by hand.\n
-              This folder may be loaded into an R session as a 'MultiLand' object with function
+              This folder, as a zip file, may be loaded into an R session as a 'MultiLand' object with function
               mland_load().",
                 prefix = "\n", initial = ""), file = file.path(tmp, "MultiLand", "README.txt"))
   }
 
   # Generates zip file
   last_wd <- getwd()
-  zipfile <- paste0(last_wd, "/", name, ".zip")
+  zipfile <- paste0(dir, "/", name, ".zip")
   setwd(tmp)
   utils::zip(zipfile, ".")
   setwd(last_wd)

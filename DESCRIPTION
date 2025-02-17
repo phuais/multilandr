@@ -5,7 +5,7 @@ Authors@R:
     person("Pablo Yair", "Huais", , "pablo.huais@unc.edu.ar", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-4062-0779"))
 Maintainer: Pablo Yair Huais <pablo.huais@unc.edu.ar>
-Description: Provides a tidy workflow for landscape-scale analysis. 'multilandr' offers tools to generate landscapes at multiple spatial scales and compute landscape metrics, primarily using the 'landscapemetrics' package. It also features utility functions for plotting and analyzing multi-scale landscapes, exploring correlations between metrics, filtering landscapes based on specific conditions, generating landscape gradients for a given metric, and preparing datasets for further statistical analysis. Documentation about 'multilandr' is provided in an introductory vignette included in this package and in the paper by Huais (2024, <doi:10.1007/s10980-024-01930-z>); see 'citation("multilandr")' for details.
+Description: Provides a tidy workflow for landscape-scale analysis. 'multilandr' offers tools to generate landscapes at multiple spatial scales and compute landscape metrics, primarily using the 'landscapemetrics' package. It also features utility functions for plotting and analyzing multi-scale landscapes, exploring correlations between metrics, filtering landscapes based on specific conditions, generating landscape gradients for a given metric, and preparing datasets for further statistical analysis. Documentation about 'multilandr' is provided in an introductory vignette included in this package and in the paper by Huais (2024) <doi:10.1007/s10980-024-01930-z>; see citation("multilandr") for details.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
